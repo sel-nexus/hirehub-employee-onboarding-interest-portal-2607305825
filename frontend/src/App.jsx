@@ -5,12 +5,13 @@ import { Header } from './components/Header';
 import Home from './features/home/Home';
 import Apply from './features/apply/Apply';
 import Login from './features/admin/Login';
+import Dashboard from './features/admin/Dashboard';
 import { isAuthenticated, logout } from './features/admin/auth';
 
 /**
  * Share the persisted demo session across navigation and the admin route.
  * Returns:
- *   Public pages or the login gate and authenticated session status.
+ *   Public pages or the login gate and authenticated submissions dashboard.
  * Notes:
  *   Storage errors never imply successful login or logout.
  */
@@ -70,17 +71,7 @@ export default function App() {
         <Route
           path="/admin"
           element={authenticated ? (
-            <main id="main-content" className="auth-page">
-              <section className="auth-card submission-form" aria-labelledby="session-title">
-                <h1 id="session-title">Admin Session</h1>
-                <p className="auth-session-status" role="status">
-                  Demo admin session is active.
-                </p>
-                <p className="auth-disclaimer">
-                  Browser-only demo. This is not real authentication or secure access control.
-                </p>
-              </section>
-            </main>
+            <Dashboard onLogout={onLogout} />
           ) : (
             <Login onLogin={onLogin} />
           )}

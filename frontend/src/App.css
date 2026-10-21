@@ -477,3 +477,221 @@ button:focus-visible {
     scroll-behavior: auto !important;
   }
 }
+
+/* Extend HireHub's existing cards and controls for submission maintenance. */
+.dashboard-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--space-10) var(--space-5);
+}
+
+.dashboard-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
+}
+
+.dashboard-heading h1 {
+  font-size: 28px;
+  line-height: 1.25;
+}
+
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-6);
+  margin: 0 0 var(--space-8);
+}
+
+.stat-card {
+  padding: var(--space-5);
+  border-left: 4px solid var(--color-primary);
+  border-radius: 8px;
+  background: var(--color-card);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.stat-departments {
+  border-left-color: var(--color-success);
+}
+
+.stat-latest {
+  border-left-color: var(--color-warning);
+}
+
+.stat-card dt {
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+.stat-card dd {
+  margin: var(--space-2) 0 0;
+  font-size: 32px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.dashboard-table-card {
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--color-card);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.table-scroll:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: -3px;
+}
+
+.submissions-table {
+  width: 100%;
+  min-width: 950px;
+  border-collapse: collapse;
+  font-size: 14px;
+  text-align: left;
+}
+
+.submissions-table th,
+.submissions-table td {
+  padding: var(--space-3) var(--space-4);
+  overflow-wrap: anywhere;
+}
+
+.submissions-table th {
+  color: var(--color-card);
+  background: var(--color-primary);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.submissions-table tbody tr {
+  background: var(--color-card);
+}
+
+.submissions-table tbody tr:nth-child(even) {
+  background: var(--color-row-alt);
+}
+
+.submissions-table tbody tr:hover {
+  background: rgba(37, 99, 235, 0.05);
+}
+
+.department-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  color: var(--color-card);
+  background: var(--color-primary);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.row-actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.row-actions button {
+  height: 30px;
+  padding: 0 var(--space-2);
+  border: 1px solid;
+  border-radius: 6px;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.row-edit {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.row-delete {
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+.row-edit:hover {
+  color: var(--color-card);
+  background: var(--color-primary);
+}
+
+.row-delete:hover {
+  color: var(--color-card);
+  background: var(--color-danger);
+}
+
+.dashboard-empty {
+  padding: var(--space-10) var(--space-5);
+  text-align: center;
+}
+
+.edit-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-5);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.edit-dialog {
+  width: 100%;
+  max-width: 500px;
+  max-height: calc(100dvh - 40px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.edit-dialog h2 {
+  margin-bottom: var(--space-6);
+}
+
+.edit-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.cancel-button {
+  min-height: 44px;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  background: var(--color-card);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.cancel-button:hover {
+  background: var(--color-row-alt);
+}
+
+.dashboard-page .submission-storage-error .cancel-button {
+  margin-top: var(--space-3);
+}
+
+@media (max-width: 767px) {
+  .dashboard-stats {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dashboard-heading {
+    align-items: flex-start;
+  }
+
+  .edit-overlay {
+    padding: max(var(--space-3), env(safe-area-inset-top)) var(--space-3)
+      max(var(--space-3), env(safe-area-inset-bottom));
+  }
+}
