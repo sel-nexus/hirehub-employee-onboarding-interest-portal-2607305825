@@ -303,6 +303,130 @@ button:focus-visible {
   }
 }
 
+/* Extend the shared visual system with the focused candidate form. */
+.apply-page {
+  padding: var(--space-10) var(--space-5);
+}
+
+.apply-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.apply-container h1 {
+  font-size: 28px;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.apply-subtitle {
+  margin: var(--space-3) 0 var(--space-8);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.submission-form {
+  padding: var(--space-8);
+  border-radius: 12px;
+  background: var(--color-card);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.submission-field {
+  margin-bottom: var(--space-5);
+}
+
+.submission-field label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.submission-field input,
+.submission-field select {
+  width: 100%;
+  min-width: 0;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  background: var(--color-card);
+  font: inherit;
+  font-size: 16px;
+}
+
+.submission-field input:focus,
+.submission-field select:focus {
+  border-color: var(--color-primary);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.submission-field [aria-invalid='true'] {
+  border-color: var(--color-danger);
+}
+
+.submission-field input[readonly] {
+  background: var(--color-row-alt);
+}
+
+.field-error {
+  margin-top: var(--space-2);
+  color: var(--color-danger);
+  font-size: 13px;
+}
+
+.submission-success,
+.submission-storage-error {
+  margin-bottom: var(--space-6);
+  padding: var(--space-3) var(--space-4);
+  border-left: 4px solid;
+  border-radius: 8px;
+  overflow-wrap: anywhere;
+}
+
+.submission-success {
+  border-color: var(--color-success);
+  color: var(--color-text);
+  background: color-mix(in srgb, var(--color-success) 12%, var(--color-card));
+}
+
+.submission-storage-error {
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+  background: var(--color-row-alt);
+}
+
+.submission-button {
+  width: 100%;
+  height: 48px;
+  border: 0;
+  border-radius: 8px;
+  color: var(--color-card);
+  background: var(--color-primary);
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 150ms ease-out;
+}
+
+.submission-button:hover {
+  background: var(--color-primary-hover);
+}
+
+.back-home-link {
+  display: block;
+  width: fit-content;
+  margin: var(--space-6) auto 0;
+  color: var(--color-primary);
+}
+
+@media (max-width: 767px) {
+  .submission-form {
+    padding: var(--space-5);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
