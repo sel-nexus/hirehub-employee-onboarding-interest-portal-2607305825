@@ -10,6 +10,7 @@ const baseURL = env.BASE_URL || `http://${host}:${port}`;
 export default defineConfig({
   testDir: './e2e',
   workers: 1,
+  reporter: [['list'], ['html', { open: 'never' }]],
   fullyParallel: false,
   use: {
     baseURL,

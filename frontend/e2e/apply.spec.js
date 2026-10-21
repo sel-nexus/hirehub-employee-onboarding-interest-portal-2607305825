@@ -31,8 +31,43 @@ async function fillForm(page, email = 'alice@example.com') {
   await page.getByLabel('Department of Interest').selectOption('Engineering');
 }
 
+/** Attach meaningful invalid-form evidence using APIs supported by Playwright 1.50. */
+async function captureInvalidForm(page, testInfo, state) {
+  await testInfo.attach(`${state}-screenshot`, {
+    body: await page.screenshot({ fullPage: true }), contentType: 'image/png',
+  });
+  await testInfo.attach(`${state}-aria.yaml`, {
+    body: await page.locator('body').ariaSnapshot(), contentType: 'text/yaml',
+  });
+  await testInfo.attach(`${state}-page.html`, {
+    body: await page.content(), contentType: 'text/html',
+  });
+  const styles = await page.getByRole('form', { name: 'Application form' }).evaluate((form) => {
+    const elements = [form, ...form.querySelectorAll('label, input, select, [role="alert"], button')];
+    return elements.map((element) => {
+      const computed = getComputedStyle(element);
+      const rect = element.getBoundingClientRect();
+      return {
+        tag: element.tagName, id: element.id, text: element.textContent.trim(),
+        value: 'value' in element ? element.value : undefined,
+        ariaInvalid: element.getAttribute('aria-invalid'),
+        ariaDescribedby: element.getAttribute('aria-describedby'),
+        bounds: { x: rect.x, y: rect.y, width: rect.width, height: rect.height },
+        styles: Object.fromEntries([
+          'color', 'background-color', 'border-color', 'border-width', 'border-style',
+          'font-family', 'font-size', 'font-weight', 'line-height',
+          'display', 'visibility', 'opacity', 'margin-top', 'margin-bottom', 'padding',
+        ].map((property) => [property, computed.getPropertyValue(property)])),
+      };
+    });
+  });
+  await testInfo.attach(`${state}-computed-styles.json`, {
+    body: JSON.stringify(styles, null, 2), contentType: 'application/json',
+  });
+}
+
 /** Assert custom errors are visible, associated, and do not persist invalid records. */
-test('invalid application shows errors below all fields and preserves invalid input', async ({ page }) => {
+test('invalid application shows errors below all fields and preserves invalid input', async ({ page }, testInfo) => {
   await expect(page.getByRole('heading', { level: 1, name: 'Join Our Team' })).toBeVisible();
   await expect(page.getByText('Express your interest in working with us.')).toBeVisible();
   await expect(page.getByRole('link', { name: '← Back to Home' })).toHaveAttribute('href', '/');
@@ -44,6 +79,7 @@ test('invalid application shows errors below all fields and preserves invalid in
     const description = await field.getAttribute('aria-describedby');
     await expect(page.locator(`#${description}`)).toBeVisible();
   }
+  await captureInvalidForm(page, testInfo, 'empty-invalid-form');
   await page.getByLabel('Full Name').fill('Alice1');
   await page.getByLabel('Email Address').fill('not-an-email');
   await page.getByLabel('Mobile Number').fill('123456789');
@@ -54,6 +90,7 @@ test('invalid application shows errors below all fields and preserves invalid in
   await expect(page.getByLabel('Mobile Number')).toHaveValue('123456789');
   expect(await page.evaluate(() => localStorage.getItem('hirehub_submissions'))).toBeNull();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await captureInvalidForm(page, testInfo, 'malformed-invalid-form');
 });
 
 /** Prove complete record persistence, confirmation lifecycle, reload survival, and duplicate protection. */

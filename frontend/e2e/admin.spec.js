@@ -114,6 +114,7 @@ test('candidate submission is reviewed, edited, cancelled and deleted through th
     await expect(modal.getByLabel(label)).toHaveAttribute('aria-invalid', 'true');
   }
   expect(await storedRecords(page)).toEqual(original);
+  await captureState(page, testInfo, 'invalid-edit-modal');
   await modal.getByLabel('Full Name').fill('Alice Updated');
   await modal.getByLabel('Mobile Number').fill('9876543210');
   await modal.getByLabel('Department of Interest').selectOption('Design');
@@ -159,6 +160,7 @@ test('candidate submission is reviewed, edited, cancelled and deleted through th
   await expect(stats.locator('.stat-departments dd')).toHaveText('0');
   await expect(stats.locator('.stat-latest dd')).toHaveText('N/A');
   expect(await storedRecords(page)).toEqual([]);
+  await captureState(page, testInfo, 'empty-dashboard');
   await page.reload();
   await expect(page.getByText('No submissions yet.', { exact: true })).toBeVisible();
   expect(await storedRecords(page)).toEqual([]);
@@ -167,4 +169,38 @@ test('candidate submission is reviewed, edited, cancelled and deleted through th
   expect(await page.evaluate(() => sessionStorage.getItem('hirehub_admin_auth'))).toBeNull();
   await navigation.getByRole('link', { name: 'Admin', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Admin Login' })).toBeVisible();
+});
+
+/** Recover malformed JSON and invalid records through real browser storage and admin navigation. */
+test('admin dashboard resets corrupted submissions storage without browser errors', async ({ page }) => {
+  await page.goto('/');
+  await page.evaluate(() => localStorage.setItem('hirehub_submissions', '{malformed JSON'));
+  expect(await page.evaluate(() => localStorage.getItem('hirehub_submissions'))).toBe('{malformed JSON');
+  await page.getByRole('navigation', { name: 'Main navigation' })
+    .getByRole('link', { name: 'Admin', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Admin Login' })).toBeVisible();
+  await page.getByLabel('Username').fill('admin');
+  await page.getByLabel('Password', { exact: true }).fill('admin');
+  await page.getByRole('button', { name: 'Login', exact: true }).click();
+  await expect(page).toHaveURL(/\/admin$/);
+  await expect(page.getByRole('heading', { name: 'Submissions Dashboard' })).toBeVisible();
+  await expect(page.getByText('No submissions yet.', { exact: true })).toBeVisible();
+  const stats = page.locator('dl[aria-label="Submission summary"]');
+  await expect(stats.locator('.stat-total dd')).toHaveText('0');
+  await expect(stats.locator('.stat-departments dd')).toHaveText('0');
+  await expect(stats.locator('.stat-latest dd')).toHaveText('N/A');
+  expect(await storedRecords(page)).toEqual([]);
+  expect(await page.evaluate(() => localStorage.getItem('hirehub_submissions'))).toBe('[]');
+
+  await page.evaluate(() => localStorage.setItem('hirehub_submissions', '[{}]'));
+  expect(await storedRecords(page)).toEqual([{}]);
+  await page.reload();
+  await expect(page).toHaveURL(/\/admin$/);
+  await expect(page.getByRole('heading', { name: 'Submissions Dashboard' })).toBeVisible();
+  await expect(page.getByText('No submissions yet.', { exact: true })).toBeVisible();
+  await expect(stats.locator('.stat-total dd')).toHaveText('0');
+  await expect(stats.locator('.stat-departments dd')).toHaveText('0');
+  await expect(stats.locator('.stat-latest dd')).toHaveText('N/A');
+  expect(await storedRecords(page)).toEqual([]);
+  expect(await page.evaluate(() => localStorage.getItem('hirehub_submissions'))).toBe('[]');
 });

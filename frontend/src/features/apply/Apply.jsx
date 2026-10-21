@@ -20,6 +20,7 @@ export default function Apply() {
   const [errors, setErrors] = useState({});
   const [storageError, setStorageError] = useState('');
   const [success, setSuccess] = useState(false);
+  const [successGeneration, setSuccessGeneration] = useState(0);
 
   /** Read and repair the local dataset on mount, surfacing storage failures. */
   useEffect(() => {
@@ -30,12 +31,12 @@ export default function Apply() {
     }
   }, []);
 
-  /** Dismiss confirmation after four seconds and release pending timers. */
+  /** Restart the four-second deadline for each successful save and release pending timers. */
   useEffect(() => {
     if (!success) return undefined;
     const timer = setTimeout(() => setSuccess(false), 4000);
     return () => clearTimeout(timer);
-  }, [success]);
+  }, [success, successGeneration]);
 
   /**
    * Keep native input changes controlled without filtering typing or paste.
@@ -62,6 +63,7 @@ export default function Apply() {
     try {
       createSubmission(result.values);
       setValues(EMPTY_VALUES);
+      setSuccessGeneration((current) => current + 1);
       setSuccess(true);
     } catch (error) {
       if (error.fieldErrors) {

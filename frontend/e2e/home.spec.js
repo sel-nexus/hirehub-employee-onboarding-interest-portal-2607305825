@@ -78,8 +78,8 @@ test('home presents exact culture copy and responsive cards', async ({ page }, t
     contentType: 'image/png',
   });
   await testInfo.attach('home-accessibility', {
-    body: JSON.stringify(await page.accessibility.snapshot(), null, 2),
-    contentType: 'application/json',
+    body: await page.locator('body').ariaSnapshot(),
+    contentType: 'text/yaml',
   });
   await testInfo.attach('home-html', {
     body: await page.content(),

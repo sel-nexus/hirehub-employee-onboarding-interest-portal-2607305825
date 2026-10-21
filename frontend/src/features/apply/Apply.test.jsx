@@ -142,6 +142,40 @@ describe('Apply', () => {
     expect(readSubmissions()).toHaveLength(1);
   });
 
+  it('restarts the exact 4000ms success deadline after a second distinct valid save', async () => {
+    const user = setupTimerUser();
+    renderApply();
+    await fillForm(user);
+    await user.click(screen.getByRole('button', { name: 'Submit Application' }));
+    const firstRecords = readSubmissions();
+    expect(firstRecords).toEqual([{
+      ...valid, id: expect.any(String), submittedAt: expect.any(String),
+    }]);
+    expect(screen.getByRole('status')).toHaveTextContent(SUCCESS_MESSAGE);
+    act(() => vi.advanceTimersByTime(2000));
+
+    const secondValues = { ...valid, email: 'second@example.com' };
+    await fillForm(user, secondValues);
+    await user.click(screen.getByRole('button', { name: 'Submit Application' }));
+    const records = readSubmissions();
+    expect(records).toEqual([
+      firstRecords[0],
+      { ...secondValues, id: expect.any(String), submittedAt: expect.any(String) },
+    ]);
+    expectCleared();
+    expect(screen.getByRole('status')).toHaveTextContent(SUCCESS_MESSAGE);
+
+    act(() => vi.advanceTimersByTime(2000));
+    expect(screen.getByRole('status')).toBeVisible();
+    act(() => vi.advanceTimersByTime(1999));
+    expect(screen.getByRole('status')).toHaveTextContent(SUCCESS_MESSAGE);
+    expect(screen.getByRole('status')).toBeVisible();
+    expect(readSubmissions()).toEqual(records);
+    act(() => vi.advanceTimersByTime(1));
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+    expect(readSubmissions()).toEqual(records);
+  });
+
   it('cancels pending success dismissal when the page unmounts', async () => {
     const user = setupTimerUser();
     const view = renderApply();
