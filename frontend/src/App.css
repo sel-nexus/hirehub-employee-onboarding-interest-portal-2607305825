@@ -303,6 +303,47 @@ button:focus-visible {
   }
 }
 
+/* Add the demo login card without changing public page styles. */
+.auth-page {
+  padding: var(--space-10) var(--space-5);
+}
+
+.auth-card {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.auth-card h1 {
+  font-size: 28px;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.auth-hint {
+  margin-top: var(--space-5);
+  text-align: center;
+}
+
+.auth-disclaimer {
+  margin: var(--space-3) 0 var(--space-6);
+  color: var(--color-text-muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+.auth-session-status {
+  margin-top: var(--space-6);
+  text-align: center;
+}
+
+.auth-storage-error {
+  max-width: 600px;
+  margin: var(--space-5) auto;
+  padding: var(--space-3) var(--space-5);
+  color: var(--color-danger);
+  overflow-wrap: anywhere;
+}
+
 /* Extend the shared visual system with the focused candidate form. */
 .apply-page {
   padding: var(--space-10) var(--space-5);
