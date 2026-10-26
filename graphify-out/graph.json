@@ -65,6 +65,38 @@
       "_origin": "ast"
     },
     {
+      "id": "e2e_demo_spec",
+      "label": "demo.spec.js",
+      "file_type": "code",
+      "source_file": "frontend/e2e/demo.spec.js",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "e2e_demo_spec_captureerrors",
+      "label": "captureErrors()",
+      "file_type": "code",
+      "source_file": "frontend/e2e/demo.spec.js",
+      "source_location": "L6",
+      "_origin": "ast"
+    },
+    {
+      "id": "e2e_demo_spec_loginadmin",
+      "label": "loginAdmin()",
+      "file_type": "code",
+      "source_file": "frontend/e2e/demo.spec.js",
+      "source_location": "L16",
+      "_origin": "ast"
+    },
+    {
+      "id": "e2e_demo_spec_readstore",
+      "label": "readStore()",
+      "file_type": "code",
+      "source_file": "frontend/e2e/demo.spec.js",
+      "source_location": "L26",
+      "_origin": "ast"
+    },
+    {
       "id": "e2e_home_spec",
       "label": "home.spec.js",
       "file_type": "code",
@@ -337,7 +369,7 @@
       "label": "App()",
       "file_type": "code",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L18",
+      "source_location": "L20",
       "_origin": "ast"
     },
     {
@@ -353,7 +385,7 @@
       "label": "CurrentRoute()",
       "file_type": "code",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L22",
+      "source_location": "L25",
       "_origin": "ast"
     },
     {
@@ -361,7 +393,7 @@
       "label": "renderApp()",
       "file_type": "code",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L28",
+      "source_location": "L35",
       "_origin": "ast"
     },
     {
@@ -369,7 +401,7 @@
       "label": "header()",
       "file_type": "code",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L38",
+      "source_location": "L45",
       "_origin": "ast"
     },
     {
@@ -377,7 +409,7 @@
       "label": "expectLoginGate()",
       "file_type": "code",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L43",
+      "source_location": "L50",
       "_origin": "ast"
     },
     {
@@ -385,7 +417,7 @@
       "label": "expectDashboard()",
       "file_type": "code",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L51",
+      "source_location": "L58",
       "_origin": "ast"
     },
     {
@@ -717,11 +749,43 @@
       "_origin": "ast"
     },
     {
+      "id": "apply_submissions_submission_statuses",
+      "label": "SUBMISSION_STATUSES",
+      "file_type": "code",
+      "source_file": "frontend/src/features/apply/submissions.js",
+      "source_location": "L7",
+      "_origin": "ast"
+    },
+    {
+      "id": "apply_submissions_optional_keys",
+      "label": "OPTIONAL_KEYS",
+      "file_type": "code",
+      "source_file": "frontend/src/features/apply/submissions.js",
+      "source_location": "L8",
+      "_origin": "ast"
+    },
+    {
+      "id": "apply_submissions_validatedetails",
+      "label": "validateDetails()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/apply/submissions.js",
+      "source_location": "L21",
+      "_origin": "ast"
+    },
+    {
+      "id": "apply_submissions_optionalerrors",
+      "label": "optionalErrors()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/apply/submissions.js",
+      "source_location": "L36",
+      "_origin": "ast"
+    },
+    {
       "id": "apply_submissions_writesubmissions",
       "label": "writeSubmissions()",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L16",
+      "source_location": "L69",
       "_origin": "ast"
     },
     {
@@ -729,7 +793,7 @@
       "label": "validDataset()",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L33",
+      "source_location": "L86",
       "_origin": "ast"
     },
     {
@@ -737,7 +801,7 @@
       "label": "readSubmissions()",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L63",
+      "source_location": "L118",
       "_origin": "ast"
     },
     {
@@ -745,7 +809,7 @@
       "label": "requireValid()",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L96",
+      "source_location": "L151",
       "_origin": "ast"
     },
     {
@@ -753,7 +817,7 @@
       "label": "createSubmission()",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L117",
+      "source_location": "L177",
       "_origin": "ast"
     },
     {
@@ -761,7 +825,7 @@
       "label": "findIndex()",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L143",
+      "source_location": "L203",
       "_origin": "ast"
     },
     {
@@ -769,7 +833,7 @@
       "label": "updateSubmission()",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L162",
+      "source_location": "L222",
       "_origin": "ast"
     },
     {
@@ -777,7 +841,7 @@
       "label": "deleteSubmission()",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L189",
+      "source_location": "L249",
       "_origin": "ast"
     },
     {
@@ -866,6 +930,142 @@
       "file_type": "code",
       "source_file": "frontend/src/features/apply/validation.test.js",
       "source_location": "L5",
+      "_origin": "ast"
+    },
+    {
+      "id": "demo_demobar",
+      "label": "DemoBar.jsx",
+      "file_type": "code",
+      "source_file": "frontend/src/features/demo/DemoBar.jsx",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "demo_demobar_demobar",
+      "label": "DemoBar()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/demo/DemoBar.jsx",
+      "source_location": "L14",
+      "_origin": "ast"
+    },
+    {
+      "id": "demo_demobar_test",
+      "label": "DemoBar.test.jsx",
+      "file_type": "code",
+      "source_file": "frontend/src/features/demo/DemoBar.test.jsx",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "demo_mockdata",
+      "label": "mockData.js",
+      "file_type": "code",
+      "source_file": "frontend/src/features/demo/mockData.js",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "demo_mockdata_default_departments",
+      "label": "DEFAULT_DEPARTMENTS",
+      "file_type": "code",
+      "source_file": "frontend/src/features/demo/mockData.js",
+      "source_location": "L8",
+      "_origin": "ast"
+    },
+    {
+      "id": "demo_mockdata_sample_resumes",
+      "label": "SAMPLE_RESUMES",
+      "file_type": "code",
+      "source_file": "frontend/src/features/demo/mockData.js",
+      "source_location": "L9",
+      "_origin": "ast"
+    },
+    {
+      "id": "demo_mockdata_default_users",
+      "label": "DEFAULT_USERS",
+      "file_type": "code",
+      "source_file": "frontend/src/features/demo/mockData.js",
+      "source_location": "L15",
+      "_origin": "ast"
+    },
+    {
+      "id": "demo_mockdata_default_submissions",
+      "label": "DEFAULT_SUBMISSIONS",
+      "file_type": "code",
+      "source_file": "frontend/src/features/demo/mockData.js",
+      "source_location": "L23",
+      "_origin": "ast"
+    },
+    {
+      "id": "demo_mockdata_validusers",
+      "label": "validUsers()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/demo/mockData.js",
+      "source_location": "L81",
+      "_origin": "ast"
+    },
+    {
+      "id": "demo_mockdata_validdepartments",
+      "label": "validDepartments()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/demo/mockData.js",
+      "source_location": "L106",
+      "_origin": "ast"
+    },
+    {
+      "id": "demo_mockdata_stores",
+      "label": "STORES",
+      "file_type": "code",
+      "source_file": "frontend/src/features/demo/mockData.js",
+      "source_location": "L112",
+      "_origin": "ast"
+    },
+    {
+      "id": "demo_mockdata_seeddemodata",
+      "label": "seedDemoData()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/demo/mockData.js",
+      "source_location": "L127",
+      "_origin": "ast"
+    },
+    {
+      "id": "demo_mockdata_resettodefaults",
+      "label": "resetToDefaults()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/demo/mockData.js",
+      "source_location": "L164",
+      "_origin": "ast"
+    },
+    {
+      "id": "demo_mockdata_test",
+      "label": "mockData.test.js",
+      "file_type": "code",
+      "source_file": "frontend/src/features/demo/mockData.test.js",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "demo_mockdata_test_legacy",
+      "label": "legacy",
+      "file_type": "code",
+      "source_file": "frontend/src/features/demo/mockData.test.js",
+      "source_location": "L11",
+      "_origin": "ast"
+    },
+    {
+      "id": "demo_mockdata_test_stores",
+      "label": "stores",
+      "file_type": "code",
+      "source_file": "frontend/src/features/demo/mockData.test.js",
+      "source_location": "L12",
+      "_origin": "ast"
+    },
+    {
+      "id": "demo_mockdata_test_expectdefaults",
+      "label": "expectDefaults()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/demo/mockData.test.js",
+      "source_location": "L25",
       "_origin": "ast"
     },
     {
@@ -1030,6 +1230,43 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/auth.spec.js",
       "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_demo_spec",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/demo.spec.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_demo_spec",
+      "target": "e2e_demo_spec_captureerrors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/demo.spec.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_demo_spec",
+      "target": "e2e_demo_spec_loginadmin",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/demo.spec.js",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_demo_spec",
+      "target": "e2e_demo_spec_readstore",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/demo.spec.js",
+      "source_location": "L26",
       "weight": 1.0
     },
     {
@@ -1358,11 +1595,51 @@
     },
     {
       "source": "src_app",
+      "target": "demo_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "demo_mockdata_seeddemodata",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "demo_demobar",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "demo_demobar_demobar",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
       "target": "src_app_app",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L18",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
@@ -1377,12 +1654,52 @@
     },
     {
       "source": "src_app_test",
+      "target": "demo_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_test",
+      "target": "demo_mockdata_default_submissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_test",
+      "target": "demo_mockdata_default_users",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_test",
+      "target": "demo_mockdata_default_departments",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_test",
       "target": "admin_auth",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L7",
+      "source_location": "L10",
       "weight": 1.0
     },
     {
@@ -1391,7 +1708,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L22",
+      "source_location": "L25",
       "weight": 1.0
     },
     {
@@ -1400,7 +1717,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L28",
+      "source_location": "L35",
       "weight": 1.0
     },
     {
@@ -1409,7 +1726,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L38",
+      "source_location": "L45",
       "weight": 1.0
     },
     {
@@ -1418,7 +1735,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L43",
+      "source_location": "L50",
       "weight": 1.0
     },
     {
@@ -1427,7 +1744,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L51",
+      "source_location": "L58",
       "weight": 1.0
     },
     {
@@ -1437,7 +1754,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L46",
+      "source_location": "L53",
       "weight": 1.0
     },
     {
@@ -1447,7 +1764,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L55",
+      "source_location": "L64",
       "weight": 1.0
     },
     {
@@ -2184,11 +2501,47 @@
     },
     {
       "source": "apply_submissions",
+      "target": "apply_submissions_submission_statuses",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.js",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_submissions",
+      "target": "apply_submissions_optional_keys",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.js",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_submissions",
+      "target": "apply_submissions_validatedetails",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.js",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_submissions",
+      "target": "apply_submissions_optionalerrors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.js",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_submissions",
       "target": "apply_submissions_writesubmissions",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L16",
+      "source_location": "L69",
       "weight": 1.0
     },
     {
@@ -2197,7 +2550,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L33",
+      "source_location": "L86",
       "weight": 1.0
     },
     {
@@ -2206,7 +2559,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L63",
+      "source_location": "L118",
       "weight": 1.0
     },
     {
@@ -2215,7 +2568,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L96",
+      "source_location": "L151",
       "weight": 1.0
     },
     {
@@ -2224,7 +2577,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L117",
+      "source_location": "L177",
       "weight": 1.0
     },
     {
@@ -2233,7 +2586,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L143",
+      "source_location": "L203",
       "weight": 1.0
     },
     {
@@ -2242,7 +2595,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L162",
+      "source_location": "L222",
       "weight": 1.0
     },
     {
@@ -2251,7 +2604,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L189",
+      "source_location": "L249",
       "weight": 1.0
     },
     {
@@ -2261,7 +2614,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L75",
+      "source_location": "L130",
       "weight": 1.0
     },
     {
@@ -2271,7 +2624,27 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L78",
+      "source_location": "L133",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_submissions_requirevalid",
+      "target": "apply_submissions_validatedetails",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.js",
+      "source_location": "L152",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_submissions_requirevalid",
+      "target": "apply_submissions_optionalerrors",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.js",
+      "source_location": "L154",
       "weight": 1.0
     },
     {
@@ -2281,7 +2654,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L118",
+      "source_location": "L178",
       "weight": 1.0
     },
     {
@@ -2291,7 +2664,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L119",
+      "source_location": "L179",
       "weight": 1.0
     },
     {
@@ -2301,7 +2674,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L126",
+      "source_location": "L186",
       "weight": 1.0
     },
     {
@@ -2311,7 +2684,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L163",
+      "source_location": "L223",
       "weight": 1.0
     },
     {
@@ -2321,7 +2694,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L164",
+      "source_location": "L224",
       "weight": 1.0
     },
     {
@@ -2331,7 +2704,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L166",
+      "source_location": "L226",
       "weight": 1.0
     },
     {
@@ -2341,7 +2714,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L174",
+      "source_location": "L234",
       "weight": 1.0
     },
     {
@@ -2351,7 +2724,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L190",
+      "source_location": "L250",
       "weight": 1.0
     },
     {
@@ -2361,7 +2734,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L191",
+      "source_location": "L251",
       "weight": 1.0
     },
     {
@@ -2371,7 +2744,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L193",
+      "source_location": "L253",
       "weight": 1.0
     },
     {
@@ -2554,6 +2927,413 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/validation.test.js",
       "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_demobar",
+      "target": "demo_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/DemoBar.jsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_demobar",
+      "target": "demo_mockdata_resettodefaults",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/DemoBar.jsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_demobar",
+      "target": "demo_demobar_demobar",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/DemoBar.jsx",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_demobar_test",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/DemoBar.test.jsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_demobar_test",
+      "target": "apply_submissions",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/DemoBar.test.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_demobar_test",
+      "target": "demo_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/DemoBar.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_demobar_test",
+      "target": "demo_mockdata_default_submissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/DemoBar.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_demobar_test",
+      "target": "demo_mockdata_default_users",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/DemoBar.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_demobar_test",
+      "target": "demo_mockdata_default_departments",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/DemoBar.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_demobar_test",
+      "target": "demo_demobar",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/DemoBar.test.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_demobar_test",
+      "target": "demo_demobar_demobar",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/DemoBar.test.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata",
+      "target": "apply_submissions",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.js",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata",
+      "target": "apply_submissions_validdataset",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.js",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata",
+      "target": "demo_mockdata_default_departments",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.js",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata",
+      "target": "demo_mockdata_sample_resumes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.js",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata",
+      "target": "demo_mockdata_default_users",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.js",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata",
+      "target": "demo_mockdata_default_submissions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.js",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata",
+      "target": "demo_mockdata_validusers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.js",
+      "source_location": "L81",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata",
+      "target": "demo_mockdata_validdepartments",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.js",
+      "source_location": "L106",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata",
+      "target": "demo_mockdata_stores",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.js",
+      "source_location": "L112",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata",
+      "target": "demo_mockdata_seeddemodata",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.js",
+      "source_location": "L127",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata",
+      "target": "demo_mockdata_resettodefaults",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.js",
+      "source_location": "L164",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata_test",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata_test",
+      "target": "apply_validation",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata_test",
+      "target": "apply_validation_validatesubmission",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata_test",
+      "target": "apply_submissions",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.test.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata_test",
+      "target": "apply_submissions_readsubmissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.test.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata_test",
+      "target": "apply_submissions_submission_statuses",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.test.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata_test",
+      "target": "apply_submissions_validdataset",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.test.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata_test",
+      "target": "demo_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata_test",
+      "target": "demo_mockdata_default_submissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata_test",
+      "target": "demo_mockdata_default_users",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata_test",
+      "target": "demo_mockdata_default_departments",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata_test",
+      "target": "demo_mockdata_sample_resumes",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata_test",
+      "target": "demo_mockdata_seeddemodata",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata_test",
+      "target": "demo_mockdata_resettodefaults",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata_test",
+      "target": "demo_mockdata_validusers",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata_test",
+      "target": "demo_mockdata_validdepartments",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata_test",
+      "target": "demo_mockdata_test_legacy",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.test.js",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata_test",
+      "target": "demo_mockdata_test_stores",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.test.js",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "demo_mockdata_test",
+      "target": "demo_mockdata_test_expectdefaults",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/demo/mockData.test.js",
+      "source_location": "L25",
       "weight": 1.0
     },
     {
@@ -2790,31 +3570,21 @@
       "weight": 1.0
     },
     {
-      "source": "apply_submissions_validdataset",
+      "source": "apply_submissions_validatedetails",
       "target": "apply_validation_validatesubmission",
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L42",
-      "weight": 1.0
-    },
-    {
-      "source": "apply_submissions_requirevalid",
-      "target": "apply_validation_validatesubmission",
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L97",
+      "source_location": "L22",
       "weight": 1.0
     }
   ],
   "metadata": {
-    "built_at": "2026-10-26T16:54:34.548846+00:00",
+    "built_at": "2026-10-26T17:09:29.672352+00:00",
     "version": "graph_update-v1",
     "codebase_root": "/data/artifacts-v2/T011RNFvLqRR0008726102616342188/developer",
     "force": true,
-    "files_scanned": 32
+    "files_scanned": 37
   }
 }
