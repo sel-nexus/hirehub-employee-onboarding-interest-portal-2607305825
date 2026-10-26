@@ -155,12 +155,12 @@ describe('logout', () => {
 });
 
 describe('registerCandidate', () => {
-  it('normalizes name/email and persists a five-field candidate plus immediate session', () => {
+  it('normalizes name/email and retains validated mobile with an immediate candidate session', () => {
     expect(registerCandidate({ ...signup, fullName: ' New Candidate ', email: ' NEW@example.com ' })).toEqual({ success: true, error: '' });
     expect(validUsers(readUsers())).toBe(true);
     expect(readUsers()).toHaveLength(6);
     const account = readUsers().at(-1);
-    expect(account).toEqual({ id: expect.any(String), role: 'candidate', username: signup.email, password: signup.password, displayName: signup.fullName });
+    expect(account).toEqual({ id: expect.any(String), role: 'candidate', username: signup.email, password: signup.password, displayName: signup.fullName, mobile: signup.mobile });
     expect(readSession()).toEqual({ userId: account.id, role: 'candidate', displayName: signup.fullName, loginTimestamp: expect.any(String) });
     expect(isAuthenticated()).toBe(false); expect(isAuthenticated('candidate')).toBe(true);
     logout(); expect(login(signup.email, signup.password, 'candidate').success).toBe(true);
@@ -182,6 +182,8 @@ describe('registerCandidate', () => {
   });
   it('accepts validation boundaries and a formatted international mobile', () => {
     expect(registerCandidate({ ...signup, fullName: 'a'.repeat(100), password: '12345678', mobile: '+1 (415) 555-2671' }).success).toBe(true);
+    expect(JSON.parse(localStorage.getItem(USERS_KEY)).at(-1).mobile).toBe('+1 (415) 555-2671');
+    expect(readSession()).not.toBeNull();
   });
   it('rejects duplicate emails case-insensitively without changing identity or accounts', () => {
     login('admin', 'admin'); const before = localStorage.getItem(USERS_KEY); const session = readSession();

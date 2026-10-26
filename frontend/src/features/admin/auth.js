@@ -103,8 +103,8 @@ export function login(username, password, role = 'admin') {
  * Returns:
  *   A success/error result. Restore the exact prior users value on session failure.
  * Notes:
- *   Contact input is validated but accounts retain the five-field demo schema;
- *   mobile/contact profile persistence belongs to the candidate profile slice.
+ *   Retain validated mobile contact for candidates without applications;
+ *   legacy five-field accounts remain valid.
  * @param {{fullName: string, email: string, mobile: string, password: string}} input
  * @returns {{success: boolean, error: string}}
  */
@@ -129,7 +129,7 @@ export function registerCandidate(input) {
     if (users.some((user) => user.username.toLowerCase() === username)) {
       return { success: false, error: 'An account with this email already exists. Please log in.' };
     }
-    const user = { id: `u-${crypto.randomUUID()}`, role: 'candidate', username, password, displayName: fullName.trim() };
+    const user = { id: `u-${crypto.randomUUID()}`, role: 'candidate', username, password, displayName: fullName.trim(), mobile: mobile.trim() };
     window.localStorage.setItem(USERS_KEY, JSON.stringify([...users, user]));
     accountWritten = true;
     writeSession(user);

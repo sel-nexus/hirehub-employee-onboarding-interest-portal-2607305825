@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route, Link, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import Register from './features/access/Register';
+import Candidate from './features/candidate/Candidate';
 import { Header } from './components/Header';
 import Home from './features/home/Home';
 import Apply from './features/apply/Apply';
@@ -65,6 +66,13 @@ export default function App() {
     else if (identity?.role === 'candidate') navigate('/candidate');
   }
 
+  /** Refresh contact identity without navigation; retain failures if the gate closes. */
+  function onProfileSave(result) {
+    const identity = readSession();
+    setSession(identity);
+    setStorageError(identity ? '' : result.error);
+  }
+
   /** Return home only after session removal succeeds; retain failure feedback. */
   function onLogout() {
     const result = logout();
@@ -111,16 +119,7 @@ export default function App() {
           <Route
             path="/candidate"
             element={session?.role === 'candidate' ? (
-              <main id="main-content" className="auth-page">
-                <section className="auth-card" aria-labelledby="candidate-title">
-                  <h1 id="candidate-title">Candidate portal</h1>
-                  <p>Welcome, {session.displayName}.</p>
-                  <p>Your candidate account is ready. Application progress and contact profile tools are not available in this access demo yet.</p>
-                  <Link to="/apply">Submit an application</Link>
-                  <p className="auth-disclaimer">Browser-only demo. Your session remains in this browser until you log out.</p>
-                  <Link to="/admin">Recruiter access</Link>
-                </section>
-              </main>
+              <Candidate onProfileSave={onProfileSave} />
             ) : session ? (
               <main id="main-content" className="auth-page">
                 <section className="auth-card">

@@ -167,6 +167,18 @@ describe('curated demo seeding', () => {
 });
 
 describe('account and department validation', () => {
+  it.each(['0123456789', '+1 (415) 555-2671', '123456789012345'])('preserves optional validated account mobile %s without reseeding', (mobile) => {
+    const users = [{ ...DEFAULT_USERS[2], mobile }];
+    const raw = JSON.stringify(users, null, 2);
+    expect(validUsers(users)).toBe(true);
+    expect(validUsers(DEFAULT_USERS)).toBe(true);
+    localStorage.setItem(USERS_KEY, raw);
+    seedDemoData();
+    expect(localStorage.getItem(USERS_KEY)).toBe(raw);
+  });
+  it.each([null, undefined, 123, {}, [], '', '123456789', '1234567890123456', '123abc4567890', '++1234567890'])('rejects explicitly invalid optional account mobile %j', (mobile) => {
+    expect(validUsers([{ ...DEFAULT_USERS[2], mobile }])).toBe(false);
+  });
   it.each([null, {}, 42, [null], [[]], [{}], [{ ...DEFAULT_USERS[0], role: 'owner' }],
     ...['id', 'role', 'username', 'password', 'displayName'].flatMap((key) => [
       [{ ...DEFAULT_USERS[0], [key]: 42 }], [{ ...DEFAULT_USERS[0], [key]: '' }],

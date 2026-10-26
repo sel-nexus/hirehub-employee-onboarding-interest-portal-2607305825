@@ -86,6 +86,9 @@ export function validUsers(users) {
     if (!user || typeof user !== 'object' || Array.isArray(user)) return false;
     if (!['id', 'role', 'username', 'password', 'displayName'].every((key) => typeof user[key] === 'string' && user[key].trim())) return false;
     if (!['admin', 'candidate'].includes(user.role) || user.id !== user.id.trim() || user.username !== user.username.trim()) return false;
+    if (Object.hasOwn(user, 'mobile') && (typeof user.mobile !== 'string'
+      || !/^\+?[\d ()-]+$/.test(user.mobile.trim())
+      || !/^\d{10,15}$/.test(user.mobile.replace(/\D/g, '')))) return false;
     const username = user.username.toLowerCase();
     if (ids.has(user.id) || usernames.has(username)) return false;
     ids.add(user.id);

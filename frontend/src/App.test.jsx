@@ -62,7 +62,16 @@ function expectDashboard() {
 function expectCandidate(name = 'Alex Rivera') {
   expect(screen.getByRole('heading', { name: 'Candidate portal', exact: true })).toBeVisible();
   expect(screen.getByText(`Welcome, ${name}.`)).toBeVisible();
-  expect(screen.getByText(/Application progress and contact profile tools are not available/)).toBeVisible();
+  expect(screen.getByRole('heading', { name: 'Contact profile' })).toBeVisible();
+  expect(screen.getByRole('heading', { name: 'Your applications' })).toBeVisible();
+  if (name === 'Alex Rivera') {
+    expect(within(screen.getByRole('article')).getByRole('status')).toHaveTextContent('Current status: Interview Scheduled');
+    expect(screen.getByRole('heading', { name: 'Engineering application' })).toBeVisible();
+    expect(screen.queryByText('jordan@example.com')).not.toBeInTheDocument();
+    expect(screen.queryByText(/Strong background in React/)).not.toBeInTheDocument();
+  } else {
+    expect(screen.getByRole('heading', { name: 'No applications yet' })).toBeVisible();
+  }
   expect(screen.getByRole('link', { name: 'Submit an application' })).toHaveAttribute('href', '/apply');
   expect(screen.queryByRole('heading', { name: 'Submissions Dashboard' })).not.toBeInTheDocument();
   expect(header().queryByRole('link', { name: 'Admin', exact: true })).not.toBeInTheDocument();
@@ -205,6 +214,58 @@ describe('App session routing', () => {
   it.each(['/login', '/register'])('sends an existing valid identity from %s to its own portal', (route) => {
     authenticate('alex@example.com', 'password123', 'candidate'); renderApp(route); expectCandidate();
     expect(screen.getByLabelText('Current route')).toHaveTextContent(/^\/candidate$/);
+  });
+  it('retains candidate route and authenticated header after saving contact identity and using the new login email', async () => {
+    const user = userEvent.setup();
+    authenticate('alex@example.com', 'password123', 'candidate');
+    renderApp('/candidate');
+    const previousSession = readSession();
+    await user.click(screen.getByRole('button', { name: 'Edit profile' }));
+    await user.clear(screen.getByLabelText('Full Name'));
+    await user.type(screen.getByLabelText('Full Name'), 'Alex Updated');
+    await user.clear(screen.getByLabelText('Email Address'));
+    await user.type(screen.getByLabelText('Email Address'), 'updated@example.com');
+    await user.click(screen.getByRole('button', { name: 'Save profile' }));
+    expect(screen.getByText('Welcome, Alex Updated.')).toBeVisible();
+    expect(screen.getByText('Profile saved in this browser.')).toBeVisible();
+    expect(header().getByRole('button', { name: 'Logout' })).toBeVisible();
+    expect(screen.getByLabelText('Current route')).toHaveTextContent(/^\/candidate$/);
+    expect(readSession()).toEqual({ ...previousSession, displayName: 'Alex Updated' });
+    expect(JSON.parse(localStorage.getItem(USERS_KEY))[2]).toMatchObject({ id: 'u-201', username: 'updated@example.com', password: 'password123' });
+    expect(JSON.parse(localStorage.getItem('hirehub_submissions'))[0]).toMatchObject({ id: 'c-101', userId: 'u-201', email: 'updated@example.com' });
+    await user.click(header().getByRole('button', { name: 'Logout' }));
+    await user.click(header().getByRole('link', { name: 'Login', exact: true }));
+    await user.type(screen.getByLabelText('Username'), 'updated@example.com');
+    await user.type(screen.getByLabelText('Password'), 'password123');
+    await user.click(screen.getByRole('button', { name: 'Login', exact: true }));
+    expect(screen.getByText('Welcome, Alex Updated.')).toBeVisible();
+    expect(screen.getByRole('article')).toHaveTextContent('c-101');
+  });
+  it('retains partial rollback warning outside the closed candidate gate without stale details', async () => {
+    const user = userEvent.setup();
+    authenticate('alex@example.com', 'password123', 'candidate');
+    renderApp('/candidate');
+    const oldRecords = localStorage.getItem('hirehub_submissions');
+    await user.click(screen.getByRole('button', { name: 'Edit profile' }));
+    await user.clear(screen.getByLabelText('Full Name'));
+    await user.type(screen.getByLabelText('Full Name'), 'Alex Updated');
+    const set = Storage.prototype.setItem;
+    let usersChanged = false;
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(function (key, raw) {
+      if (key === SESSION_KEY || (key === USERS_KEY && usersChanged)) throw new Error('quota');
+      if (key === USERS_KEY) usersChanged = true;
+      return set.call(this, key, raw);
+    });
+    await user.click(screen.getByRole('button', { name: 'Save profile' }));
+    expect(screen.getByRole('heading', { name: 'Candidate Login' })).toBeVisible();
+    expect(screen.getByRole('alert')).toHaveTextContent('Rollback also failed');
+    expect(screen.getByRole('alert')).toHaveTextContent('changes may be partial');
+    expect(screen.queryByRole('article')).not.toBeInTheDocument();
+    expect(screen.queryByText(/Welcome,|Profile saved in this browser/)).not.toBeInTheDocument();
+    expect(header().getByRole('link', { name: 'Login', exact: true })).toBeVisible();
+    expect(readSession()).toBeNull();
+    expect(localStorage.getItem('hirehub_submissions')).toBe(oldRecords);
+    expect(JSON.parse(localStorage.getItem(USERS_KEY))[2].displayName).toBe('Alex Updated');
   });
   it('fails closed on stored account role tampering during storage synchronization', () => {
     authenticate(); renderApp('/admin'); expectDashboard();
