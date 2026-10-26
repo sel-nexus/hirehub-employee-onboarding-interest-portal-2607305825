@@ -2,7 +2,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   createSubmission, deleteSubmission, DUPLICATE_EMAIL_ERROR, readSubmissions, SUBMISSIONS_KEY, updateSubmission,
+  updateSubmissionStatus, validDataset, validateSubmissionMetadata, METADATA_LIMITS,
 } from './submissions';
+import { DEFAULT_SUBMISSIONS, SAMPLE_RESUMES, seedDemoData } from '../demo/mockData';
 
 const valid = { fullName: 'Alice Smith', email: 'alice@example.com', mobile: '0123456789', department: 'Engineering' };
 const stored = { id: 'record-one', ...valid, submittedAt: '2026-03-04T12:00:00.000Z' };
@@ -224,9 +226,8 @@ describe('optional demo submission schema', () => {
     localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([extended]));
     expect(readSubmissions()).toEqual([extended]);
     const changed = updateSubmission(extended.id, {
-      ...valid, fullName: 'Updated Name', userId: 'hijack', status: 'archived', notes: 'overwrite',
-      portfolioUrl: 'javascript:alert(1)', sampleResume: 'overwrite', interviewSchedule: 'overwrite',
-      id: 'changed', submittedAt: 'invalid', email: 'changed@example.com',
+      ...valid, fullName: 'Updated Name', userId: 'hijack', status: 'archived',
+      id: 'changed', submittedAt: 'invalid', email: 'changed@example.com', extra: 'ignored',
     });
     expect(changed).toEqual({ ...extended, fullName: 'Updated Name' });
     expect(persisted()).toEqual([changed]);
@@ -322,5 +323,169 @@ describe('optional demo submission schema', () => {
     localStorage.setItem(SUBMISSIONS_KEY, raw);
     expect(readSubmissions()).toEqual(records);
     expect(localStorage.getItem(SUBMISSIONS_KEY)).toBe(raw);
+  });
+});
+
+/** Exercise linked multi-applications and strict recruiter mutation boundaries. */
+describe('recruiter record mutations', () => {
+  it('round-trips linked repeated emails and preserves the exact dataset through seeding', () => {
+    const first = createSubmission({ ...valid, userId: 'u-alice', status: 'applied' });
+    const second = createSubmission({ ...valid, email: 'ALICE@EXAMPLE.COM', department: 'Product', userId: 'u-alice' });
+    const third = createSubmission({ ...valid, department: 'Design', userId: 'u-alice' });
+    const records = [first, second, third];
+    expect(new Set(records.map((record) => record.id)).size).toBe(3);
+    expect(validDataset(records)).toBe(true);
+    expect(readSubmissions()).toEqual(records);
+    const raw = JSON.stringify(records, null, 2);
+    localStorage.setItem(SUBMISSIONS_KEY, raw);
+    expect(seedDemoData().success).toBe(true);
+    expect(localStorage.getItem(SUBMISSIONS_KEY)).toBe(raw);
+    expect(readSubmissions()).toEqual(records);
+    const updated = updateSubmissionStatus(second.id, 'offer');
+    expect(readSubmissions()).toEqual([first, updated, third]);
+    deleteSubmission(first.id);
+    expect(readSubmissions()).toEqual([updated, third]);
+  });
+
+  it('preserves the eight fixtures plus an additional linked application through seed and read', () => {
+    seedDemoData();
+    const alex = DEFAULT_SUBMISSIONS[0];
+    const created = createSubmission({ ...alex, department: 'Product' });
+    const records = [...DEFAULT_SUBMISSIONS, created];
+    expect(validDataset(records)).toBe(true);
+    expect(readSubmissions()).toEqual(records);
+    const before = localStorage.getItem(SUBMISSIONS_KEY);
+    expect(seedDemoData().seededKeys).toEqual([]);
+    expect(localStorage.getItem(SUBMISSIONS_KEY)).toBe(before);
+    expect(readSubmissions()).toEqual(records);
+  });
+
+  it.each([
+    [undefined, undefined], ['u-alice', undefined], [undefined, 'u-alice'], ['u-alice', 'u-other'],
+  ])('rejects duplicate emails for linked/unlinked ownership %s/%s in create and stored datasets', (firstUser, secondUser) => {
+    const first = { ...stored, ...(firstUser ? { userId: firstUser } : {}) };
+    const second = { ...stored, id: 'second', email: 'ALICE@EXAMPLE.COM', ...(secondUser ? { userId: secondUser } : {}) };
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([first]));
+    expect(() => createSubmission(second)).toThrow(DUPLICATE_EMAIL_ERROR);
+    expect(persisted()).toEqual([first]);
+    expect(validDataset([first, second])).toBe(false);
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([first, second]));
+    expect(readSubmissions()).toEqual([]);
+    expect(persisted()).toEqual([]);
+  });
+
+  it('still rejects repeated record IDs even when email and user linkage agree', () => {
+    const first = { ...stored, userId: 'u-alice' };
+    expect(validDataset([first, { ...first, department: 'Product' }])).toBe(false);
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([first]));
+    vi.spyOn(crypto, 'randomUUID').mockReturnValue(first.id);
+    expect(() => createSubmission(first)).toThrow('unique submission identity');
+    expect(persisted()).toEqual([first]);
+  });
+
+  it('updates allowed metadata while preserving immutable identity, email, time, user and current status', () => {
+    const original = { ...stored, userId: 'u-alice', status: 'review', notes: 'Old notes' };
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([original]));
+    const metadata = {
+      notes: 'Follow up with the team', portfolioUrl: 'http://example.com/work',
+      sampleResume: 'UI/UX Case Study', interviewSchedule: 'Tuesday at 10 AM Pacific',
+    };
+    const updated = updateSubmission(original.id, {
+      ...valid, ...metadata, fullName: ' Alice Updated ', department: ' Product ',
+      id: 'spoof', userId: 'spoof', email: 'spoof@example.com', submittedAt: 'invalid', status: 'archived', extra: 'ignored',
+    });
+    expect(updated).toEqual({ ...original, ...metadata, fullName: 'Alice Updated', department: 'Product' });
+    expect(readSubmissions()).toEqual([updated]);
+    expect(persisted()).toEqual([updated]);
+    const cleared = updateSubmission(original.id, { ...valid, notes: '', portfolioUrl: '', sampleResume: '', interviewSchedule: '' });
+    expect(readSubmissions()).toEqual([cleared]);
+    expect(cleared).toMatchObject({ userId: 'u-alice', status: 'review', notes: '', portfolioUrl: '', sampleResume: '', interviewSchedule: '' });
+  });
+
+  it.each(['applied', 'review', 'interview', 'offer', 'archived'])('persists status-only %s without overwriting any other field', (status) => {
+    const current = { ...DEFAULT_SUBMISSIONS[0], notes: 'Latest external notes' };
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([current]));
+    expect(updateSubmissionStatus(current.id, status)).toEqual({ ...current, status });
+    expect(readSubmissions()).toEqual([{ ...current, status }]);
+    expect(persisted()).toEqual([{ ...current, status }]);
+  });
+
+  it.each([undefined, null, 42, {}, [], '', 'Offer', 'unknown', ' review '])('rejects status %j without mutation', (status) => {
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([stored]));
+    expect(() => updateSubmissionStatus(stored.id, status)).toThrow('Select a valid hiring status.');
+    expect(readSubmissions()).toEqual([stored]);
+    expect(persisted()).toEqual([stored]);
+  });
+
+  it.each([undefined, null, '', ' ', 42, {}, 'missing'])('rejects stale or invalid status identity %j', (id) => {
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([stored]));
+    expect(() => updateSubmissionStatus(id, 'offer')).toThrow('Submission not found.');
+    expect(persisted()).toEqual([stored]);
+  });
+
+  const badMetadata = [
+    ...['notes', 'portfolioUrl', 'sampleResume', 'interviewSchedule'].flatMap((key) => [
+      [key, undefined], [key, null], [key, 42], [key, false], [key, []], [key, {}],
+    ]),
+    ['sampleResume', 'Unknown resume'], ['sampleResume', 'toString'],
+    ['portfolioUrl', 'javascript:alert(1)'], ['portfolioUrl', 'data:text/html,bad'], ['portfolioUrl', '/relative'],
+    ...Object.entries(METADATA_LIMITS).filter(([key]) => key !== 'userId').map(([key, limit]) => [key, 'x'.repeat(limit + 1)]),
+  ];
+  it.each(badMetadata)('rejects supplied metadata %s=%j on update, retaining all records', (key, value) => {
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([stored]));
+    let error;
+    try { updateSubmission(stored.id, { ...valid, [key]: value }); } catch (caught) { error = caught; }
+    expect(error?.fieldErrors[key]).toEqual(expect.any(String));
+    expect(persisted()).toEqual([stored]);
+    expect(readSubmissions()).toEqual([stored]);
+  });
+
+  it('accepts maximum notes, URL and schedule lengths but rejects the next character', () => {
+    const values = { notes: 'n'.repeat(5000), interviewSchedule: 's'.repeat(500), portfolioUrl: 'https://example.com/' + 'x'.repeat(2028) };
+    expect(values.portfolioUrl).toHaveLength(2048);
+    expect(validateSubmissionMetadata(values)).toEqual({});
+    const record = createSubmission({ ...valid, ...values });
+    expect(readSubmissions()).toEqual([record]);
+    for (const key of Object.keys(values)) {
+      expect(validateSubmissionMetadata({ [key]: values[key] + 'x' })[key]).toEqual(expect.any(String));
+    }
+  });
+
+  it('accepts every bundled label and rejects unknown labels, keeping fixture contracts aligned', () => {
+    expect(Object.keys(SAMPLE_RESUMES)).toEqual([
+      'Frontend Software Engineer (5 YOE)', 'Full-Stack Developer Resume (Sample)', 'UI/UX Case Study',
+    ]);
+    Object.keys(SAMPLE_RESUMES).forEach((sampleResume) => expect(validateSubmissionMetadata({ sampleResume })).toEqual({}));
+    expect(validateSubmissionMetadata({ sampleResume: 'not bundled' }).sampleResume).toBe('Select a bundled sample resume.');
+  });
+
+  it('preserves current data on quota failures for notes and quick status, then saves on retry', () => {
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([stored]));
+    const spy = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('quota'); });
+    expect(() => updateSubmissionStatus(stored.id, 'offer')).toThrow('Unable to save submissions.');
+    expect(() => updateSubmission(stored.id, { ...valid, notes: 'New notes' })).toThrow('Unable to save submissions.');
+    expect(persisted()).toEqual([stored]);
+    spy.mockRestore();
+    updateSubmissionStatus(stored.id, 'offer');
+    updateSubmission(stored.id, { ...valid, notes: 'New notes' });
+    expect(readSubmissions()).toEqual([{ ...stored, status: 'offer', notes: 'New notes' }]);
+  });
+
+  it('never reports success when storage silently drops a write or read-back fails', () => {
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([stored]));
+    const spy = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {});
+    expect(() => updateSubmissionStatus(stored.id, 'offer')).toThrow('Unable to save submissions.');
+    expect(() => updateSubmission(stored.id, { ...valid, notes: 'New notes' })).toThrow('Unable to save submissions.');
+    expect(persisted()).toEqual([stored]);
+    spy.mockRestore();
+    const get = Storage.prototype.getItem;
+    let reads = 0;
+    vi.spyOn(Storage.prototype, 'getItem').mockImplementation(function (key) {
+      reads += 1;
+      if (reads === 2) throw new Error('read-back denied');
+      return get.call(this, key);
+    });
+    expect(() => updateSubmissionStatus(stored.id, 'offer')).toThrow('Unable to save submissions.');
+    expect(persisted()).toEqual([{ ...stored, status: 'offer' }]);
   });
 });

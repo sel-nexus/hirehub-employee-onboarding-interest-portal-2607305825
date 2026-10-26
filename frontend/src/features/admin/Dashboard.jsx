@@ -1,8 +1,12 @@
 /** Review browser-persisted submissions and maintain them without optimistic data loss. */
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { deleteSubmission, readSubmissions } from '../apply/submissions';
+import { useSearchParams } from 'react-router-dom';
+import { deleteSubmission, readSubmissions, STATUS_LABELS, SUBMISSION_STATUSES, updateSubmissionStatus } from '../apply/submissions';
 import EditSubmission from './EditSubmission';
+import ResumeDrawer from './ResumeDrawer';
+
+const FILTER_DEPARTMENTS = ['Engineering', 'Design', 'Product', 'Marketing', 'Operations'];
 
 /** Format a valid persisted timestamp using the specified US abbreviated date. */
 function formatDate(timestamp) {
@@ -23,6 +27,33 @@ export default function Dashboard({ onLogout }) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState('');
   const [editing, setEditing] = useState(null);
+  const [previewing, setPreviewing] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get('q') || '';
+  const selectedDepartment = FILTER_DEPARTMENTS.includes(searchParams.get('department')) ? searchParams.get('department') : '';
+  const visibleRecords = records.filter((record) => {
+    const term = query.trim().toLowerCase();
+    return (!selectedDepartment || record.department === selectedDepartment)
+      && (record.fullName.toLowerCase().includes(term) || record.email.toLowerCase().includes(term));
+  });
+
+  /** Preserve unrelated URL state and use history for refresh and Back navigation. */
+  function updateFilter(key, value) {
+    const next = new URLSearchParams(searchParams);
+    if (value) next.set(key, value);
+    else next.delete(key);
+    setSearchParams(next);
+  }
+
+  /** Persist a status without optimistic changes or overwriting current metadata. */
+  function handleStatus(id, status) {
+    try {
+      updateSubmissionStatus(id, status);
+      refresh();
+    } catch (cause) {
+      setError(cause.message);
+    }
+  }
 
   useEffect(() => {
     try {
@@ -111,17 +142,65 @@ export default function Dashboard({ onLogout }) {
               <dd>{records.length ? formatDate(latest) : 'N/A'}</dd>
             </div>
           </dl>
+          <section aria-label="Pipeline distribution">
+            <h2>
+              Pipeline distribution
+            </h2>
+            <dl>
+              {SUBMISSION_STATUSES.map((status) => (
+                <div key={status}>
+                  <dt>
+                    {STATUS_LABELS[status]}
+                  </dt>
+                  <dd>
+                    {records.filter((record) => (record.status || 'applied') === status).length}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+          <section aria-label="Filter submissions">
+            <label htmlFor="submission-search">
+              Search by name or email
+            </label>
+            <input
+              id="submission-search"
+              type="search"
+              value={query}
+              onChange={(event) => updateFilter('q', event.target.value)}
+            />
+            <div role="group" aria-label="Department filters">
+              {['', ...FILTER_DEPARTMENTS].map((department) => (
+                <button
+                  key={department}
+                  type="button"
+                  className="cancel-button department-filter"
+                  aria-pressed={selectedDepartment === department}
+                  onClick={() => updateFilter('department', department)}
+                >
+                  {department || 'All departments'}
+                </button>
+              ))}
+            </div>
+            <p role="status">
+              {visibleRecords.length} of {records.length} submissions shown.
+            </p>
+          </section>
           <section className="dashboard-table-card" aria-label="Submission records">
             {records.length === 0 ? (
               <p className="dashboard-empty">
                 No submissions yet.
+              </p>
+            ) : visibleRecords.length === 0 ? (
+              <p className="dashboard-empty">
+                No submissions match your search and department filter.
               </p>
             ) : (
               <div className="table-scroll" role="region" aria-label="Submissions table, scroll horizontally" tabIndex={0}>
                 <table className="submissions-table" aria-label="Submissions">
                   <thead>
                     <tr>
-                      {['#', 'Full Name', 'Email', 'Mobile', 'Department', 'Submitted On', 'Actions'].map((column) => (
+                      {['#', 'Full Name', 'Email', 'Mobile', 'Department', 'Submitted On', 'Status', 'Actions'].map((column) => (
                         <th key={column} scope="col">
                           {column}
                         </th>
@@ -129,7 +208,7 @@ export default function Dashboard({ onLogout }) {
                     </tr>
                   </thead>
                   <tbody>
-                    {records.map((record, index) => (
+                    {visibleRecords.map((record, index) => (
                       <tr key={record.id}>
                         <td>{index + 1}</td>
                         <td>{record.fullName}</td>
@@ -140,9 +219,32 @@ export default function Dashboard({ onLogout }) {
                             {record.department}
                           </span>
                         </td>
-                        <td>{formatDate(record.submittedAt)}</td>
+                        <td>
+                          {formatDate(record.submittedAt)}
+                        </td>
+                        <td>
+                          <select
+                            aria-label={`Status for ${record.fullName}, ${record.email}`}
+                            value={record.status || 'applied'}
+                            onChange={(event) => handleStatus(record.id, event.target.value)}
+                          >
+                            {SUBMISSION_STATUSES.map((status) => (
+                              <option key={status} value={status}>
+                                {STATUS_LABELS[status]}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
                         <td>
                           <div className="row-actions">
+                            <button
+                              className="row-edit"
+                              type="button"
+                              aria-label={`Preview resume and portfolio for ${record.fullName}, ${record.email}`}
+                              onClick={() => setPreviewing(record)}
+                            >
+                              Preview
+                            </button>
                             <button
                               className="row-edit"
                               type="button"
@@ -172,6 +274,9 @@ export default function Dashboard({ onLogout }) {
       )}
       {editing && (
         <EditSubmission submission={editing} onSaved={handleSaved} onCancel={cancelEdit} />
+      )}
+      {previewing && (
+        <ResumeDrawer submission={previewing} onClose={() => setPreviewing(null)} />
       )}
     </main>
   );

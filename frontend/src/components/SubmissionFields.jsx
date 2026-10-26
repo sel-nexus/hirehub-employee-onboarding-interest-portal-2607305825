@@ -1,6 +1,7 @@
 /** Share controlled, accessible candidate fields between application and later editing. */
 import PropTypes from 'prop-types';
 import { DEPARTMENTS } from '../features/apply/validation';
+import { SAMPLE_RESUMES } from '../features/demo/mockData';
 
 const TEXT_FIELDS = [
   { name: 'fullName', label: 'Full Name', type: 'text', autoComplete: 'name' },
@@ -11,15 +12,16 @@ const TEXT_FIELDS = [
 /**
  * Render labeled inputs with adjacent, associated validation errors.
  * Args:
- *   values: The four controlled string values.
+ *   values: Controlled contact strings and optional material strings.
  *   errors: Field-specific validation messages.
  *   onChange: The native change handler supplied by the owning form.
  *   readOnlyEmail: Whether email should remain visible but immutable.
+ *   includeMaterials: Opt into optional portfolio and locally bundled sample selection.
  *   idPrefix: A stable prefix to avoid IDs colliding across forms.
  * Returns:
- *   Three text inputs and the fixed department selector.
+ *   Contact controls and, when requested, optional material controls with associated errors.
  */
-export function SubmissionFields({ values, errors = {}, onChange, readOnlyEmail = false, idPrefix = 'submission' }) {
+export function SubmissionFields({ values, errors = {}, onChange, readOnlyEmail = false, includeMaterials = false, idPrefix = 'submission' }) {
   return (
     <>
       {TEXT_FIELDS.map(({ name, label, type, autoComplete }) => (
@@ -75,6 +77,59 @@ export function SubmissionFields({ values, errors = {}, onChange, readOnlyEmail 
           </p>
         )}
       </div>
+      {includeMaterials && (
+        <>
+          <div className="submission-field">
+            <label htmlFor={`${idPrefix}-portfolioUrl`}>
+              Portfolio URL (optional)
+            </label>
+            <input
+              id={`${idPrefix}-portfolioUrl`}
+              name="portfolioUrl"
+              type="url"
+              value={values.portfolioUrl || ''}
+              onChange={onChange}
+              aria-invalid={Boolean(errors.portfolioUrl)}
+              aria-describedby={errors.portfolioUrl ? `${idPrefix}-portfolioUrl-error` : undefined}
+            />
+            {errors.portfolioUrl && (
+              <p className="field-error" id={`${idPrefix}-portfolioUrl-error`} role="alert">
+                {errors.portfolioUrl}
+              </p>
+            )}
+          </div>
+          <div className="submission-field">
+            <label htmlFor={`${idPrefix}-sampleResume`}>
+              Sample Resume (optional)
+            </label>
+            <select
+              id={`${idPrefix}-sampleResume`}
+              name="sampleResume"
+              value={values.sampleResume || ''}
+              onChange={onChange}
+              aria-invalid={Boolean(errors.sampleResume)}
+              aria-describedby={errors.sampleResume ? `${idPrefix}-sampleResume-error` : `${idPrefix}-materials-help`}
+            >
+              <option value="">
+                No sample resume
+              </option>
+              {Object.keys(SAMPLE_RESUMES).map((label) => (
+                <option key={label} value={label}>
+                  {label}
+                </option>
+              ))}
+            </select>
+            <p id={`${idPrefix}-materials-help`}>
+              Bundled mock resume text only; no upload or remote PDF request.
+            </p>
+            {errors.sampleResume && (
+              <p className="field-error" id={`${idPrefix}-sampleResume-error`} role="alert">
+                {errors.sampleResume}
+              </p>
+            )}
+          </div>
+        </>
+      )}
     </>
   );
 }
@@ -85,9 +140,12 @@ SubmissionFields.propTypes = {
     email: PropTypes.string.isRequired,
     mobile: PropTypes.string.isRequired,
     department: PropTypes.string.isRequired,
+    portfolioUrl: PropTypes.string,
+    sampleResume: PropTypes.string,
   }).isRequired,
   errors: PropTypes.objectOf(PropTypes.string),
   onChange: PropTypes.func.isRequired,
   readOnlyEmail: PropTypes.bool,
+  includeMaterials: PropTypes.bool,
   idPrefix: PropTypes.string,
 };

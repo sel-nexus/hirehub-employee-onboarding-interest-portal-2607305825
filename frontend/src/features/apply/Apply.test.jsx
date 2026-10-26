@@ -1,6 +1,8 @@
 /** Exercise candidate form behavior and shared field accessibility against real localStorage. */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { act, cleanup, configure, getConfig, render, screen } from '@testing-library/react';
+import { act, cleanup, configure, getConfig, render, screen, fireEvent } from '@testing-library/react';
+import { seedDemoData, SAMPLE_RESUMES, DEFAULT_SUBMISSIONS, USERS_KEY } from '../demo/mockData';
+import { login, registerCandidate } from '../admin/auth';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import Apply, { SUCCESS_MESSAGE } from './Apply';
@@ -77,7 +79,7 @@ describe('Apply', () => {
       expect(screen.getByLabelText(label)).toHaveAttribute('aria-invalid', 'false');
       expect(screen.getByLabelText(label)).not.toHaveAttribute('aria-describedby');
     }
-    expect(screen.getAllByRole('option').map((option) => option.textContent.trim())).toEqual(['Select a department', ...DEPARTMENTS]);
+    expect(Array.from(screen.getByLabelText('Department of Interest').options).map((option) => option.textContent.trim())).toEqual(['Select a department', ...DEPARTMENTS]);
     expect(screen.queryByRole('status')).not.toBeInTheDocument();
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   });
@@ -308,5 +310,177 @@ describe('SubmissionFields', () => {
     await user.click(mobile);
     await user.paste('0123456789');
     expect(mobile).toHaveValue('0123456789');
+  });
+});
+
+/** Verify optional materials and candidate ownership without mocking the local data services. */
+describe('application materials and candidate linkage', () => {
+  it.each(Object.keys(SAMPLE_RESUMES))('saves the bundled %s resume and safe portfolio for a public applicant', async (sampleResume) => {
+    const user = userEvent.setup();
+    renderApply();
+    const selector = screen.getByLabelText('Sample Resume (optional)');
+    expect(Array.from(selector.options).map((option) => option.value)).toEqual(['', ...Object.keys(SAMPLE_RESUMES)]);
+    await fillForm(user);
+    await user.type(screen.getByLabelText('Portfolio URL (optional)'), 'https://example.com/work');
+    await user.selectOptions(selector, sampleResume);
+    await user.click(screen.getByRole('button', { name: 'Submit Application' }));
+    expect(screen.getByRole('status')).toHaveTextContent(SUCCESS_MESSAGE);
+    expectCleared();
+    expect(selector).toHaveValue('');
+    expect(screen.getByLabelText('Portfolio URL (optional)')).toHaveValue('');
+    expect(readSubmissions()).toEqual([{
+      ...valid, portfolioUrl: 'https://example.com/work', sampleResume, id: expect.any(String), submittedAt: expect.any(String),
+    }]);
+  });
+
+  it.each(['javascript:alert(1)', 'data:text/html,bad', '/relative', 'ftp://example.com', 'https://', 'https://example.com/' + 'x'.repeat(2048)])('rejects unsafe or oversized portfolio %s without a false success', async (value) => {
+    const user = userEvent.setup();
+    renderApply();
+    await fillForm(user);
+    const portfolio = screen.getByLabelText('Portfolio URL (optional)');
+    fireEvent.change(portfolio, { target: { value } });
+    await user.click(screen.getByRole('button', { name: 'Submit Application' }));
+    expect(portfolio).toHaveValue(value);
+    expect(portfolio).toHaveAttribute('aria-invalid', 'true');
+    expect(portfolio).toHaveAccessibleDescription(screen.getByRole('alert').textContent);
+    expect(readSubmissions()).toEqual([]);
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+  });
+
+  it('rejects a synthetic unknown resume choice even when contact details are valid', async () => {
+    const user = userEvent.setup();
+    renderApply();
+    await fillForm(user);
+    const select = screen.getByLabelText('Sample Resume (optional)');
+    const option = document.createElement('option');
+    option.value = 'Unknown resume';
+    select.append(option);
+    fireEvent.change(select, { target: { value: 'Unknown resume' } });
+    await user.click(screen.getByRole('button', { name: 'Submit Application' }));
+    expect(select).toHaveAttribute('aria-invalid', 'true');
+    expect(select).toHaveAccessibleDescription('Select a bundled sample resume.');
+    expect(readSubmissions()).toEqual([]);
+  });
+
+  it('links a newly registered candidate first application and prevents synthetic email/userId spoofing', async () => {
+    seedDemoData();
+    expect(registerCandidate({ ...valid, password: 'password123' }).success).toBe(true);
+    const account = JSON.parse(localStorage.getItem(USERS_KEY)).find((user) => user.username === valid.email);
+    const user = userEvent.setup();
+    renderApply();
+    const email = screen.getByLabelText('Email Address');
+    expect(email).toHaveValue(valid.email);
+    expect(email).toHaveAttribute('readonly');
+    await user.type(email, 'spoof@example.com');
+    fireEvent.change(email, { target: { value: 'spoof@example.com' } });
+    fireEvent.change(email, { target: { name: 'userId', value: 'u-202' } });
+    await fillForm(user);
+    await user.selectOptions(screen.getByLabelText('Department of Interest'), 'Product');
+    await user.type(screen.getByLabelText('Portfolio URL (optional)'), 'http://example.com/alice');
+    await user.selectOptions(screen.getByLabelText('Sample Resume (optional)'), 'UI/UX Case Study');
+    await user.click(screen.getByRole('button', { name: 'Submit Application' }));
+    expect(screen.getByRole('status')).toHaveTextContent(SUCCESS_MESSAGE);
+    expect(readSubmissions()).toEqual([
+      ...DEFAULT_SUBMISSIONS,
+      { ...valid, department: 'Product', userId: account.id, status: 'applied', portfolioUrl: 'http://example.com/alice', sampleResume: 'UI/UX Case Study', id: expect.any(String), submittedAt: expect.any(String) },
+    ]);
+    expect(email).toHaveValue(valid.email);
+    expect(screen.getByLabelText('Full Name')).toHaveValue('');
+  });
+
+  it('allows a seeded candidate to persist multiple applications under the same account and email', async () => {
+    seedDemoData();
+    expect(login('alex@example.com', 'password123', 'candidate').success).toBe(true);
+    const user = userEvent.setup();
+    const view = renderApply();
+    for (const department of ['Product', 'Design']) {
+      await user.type(screen.getByLabelText('Full Name'), 'Alex Rivera');
+      await user.type(screen.getByLabelText('Mobile Number'), '4155552671');
+      await user.selectOptions(screen.getByLabelText('Department of Interest'), department);
+      await user.click(screen.getByRole('button', { name: 'Submit Application' }));
+      expect(screen.getByRole('status')).toHaveTextContent(SUCCESS_MESSAGE);
+    }
+    const records = readSubmissions();
+    expect(records).toHaveLength(10);
+    expect(records.slice(0, 8)).toEqual(DEFAULT_SUBMISSIONS);
+    expect(records.slice(8)).toEqual(['Product', 'Design'].map((department) => ({
+      fullName: 'Alex Rivera', email: 'alex@example.com', mobile: '4155552671', department,
+      userId: 'u-201', status: 'applied', id: expect.any(String), submittedAt: expect.any(String),
+    })));
+    view.unmount();
+    renderApply();
+    expect(readSubmissions()).toEqual(records);
+  });
+
+  it('still rejects an existing unlinked email for a candidate rather than claiming or replacing it', async () => {
+    seedDemoData();
+    const existing = createSubmission(valid);
+    expect(registerCandidate({ ...valid, password: 'password123' }).success).toBe(true);
+    const user = userEvent.setup();
+    renderApply();
+    await fillForm(user);
+    await user.click(screen.getByRole('button', { name: 'Submit Application' }));
+    expect(screen.getByRole('alert')).toHaveTextContent(DUPLICATE_EMAIL_ERROR);
+    expect(readSubmissions()).toEqual([...DEFAULT_SUBMISSIONS, existing]);
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+  });
+
+  it.each(['logout', 'different candidate', 'changed account email'])('rejects submit when candidate identity becomes %s after mount', async (change) => {
+    seedDemoData();
+    login('alex@example.com', 'password123', 'candidate');
+    const user = userEvent.setup();
+    renderApply();
+    await user.type(screen.getByLabelText('Full Name'), 'Alex Rivera');
+    await user.type(screen.getByLabelText('Mobile Number'), '4155552671');
+    await user.selectOptions(screen.getByLabelText('Department of Interest'), 'Product');
+    if (change === 'logout') localStorage.removeItem('hirehub_session');
+    else if (change === 'different candidate') login('jordan@example.com', 'password123', 'candidate');
+    else {
+      const accounts = JSON.parse(localStorage.getItem(USERS_KEY));
+      accounts.find((account) => account.id === 'u-201').username = 'newalex@example.com';
+      localStorage.setItem(USERS_KEY, JSON.stringify(accounts));
+    }
+    await user.click(screen.getByRole('button', { name: 'Submit Application' }));
+    expect(screen.getByRole('alert')).toHaveTextContent(change === 'changed account email' ? 'Use the email of your signed-in candidate account.' : 'Your candidate session changed.');
+    expect(screen.getByLabelText('Full Name')).toHaveValue('Alex Rivera');
+    expect(readSubmissions()).toEqual(DEFAULT_SUBMISSIONS);
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+  });
+
+  it('preserves noncandidate admin public apply behavior without linking the admin identity', async () => {
+    seedDemoData();
+    login('admin', 'admin');
+    const user = userEvent.setup();
+    renderApply();
+    expect(screen.getByLabelText('Email Address')).not.toHaveAttribute('readonly');
+    await fillForm(user);
+    await user.click(screen.getByRole('button', { name: 'Submit Application' }));
+    expect(readSubmissions().at(-1)).toEqual({ ...valid, id: expect.any(String), submittedAt: expect.any(String) });
+  });
+
+  it('retains materials on failed writes and reports success only after retry persists them', async () => {
+    const user = userEvent.setup();
+    renderApply();
+    await fillForm(user);
+    await user.type(screen.getByLabelText('Portfolio URL (optional)'), 'https://example.com/work');
+    await user.selectOptions(screen.getByLabelText('Sample Resume (optional)'), 'UI/UX Case Study');
+    const spy = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('quota'); });
+    await user.click(screen.getByRole('button', { name: 'Submit Application' }));
+    expect(screen.getByRole('alert')).toHaveTextContent('Unable to save submissions.');
+    expect(screen.getByLabelText('Portfolio URL (optional)')).toHaveValue('https://example.com/work');
+    expect(screen.getByLabelText('Sample Resume (optional)')).toHaveValue('UI/UX Case Study');
+    expect(readSubmissions()).toEqual([]);
+    spy.mockRestore();
+    await user.click(screen.getByRole('button', { name: 'Submit Application' }));
+    expect(readSubmissions()[0]).toMatchObject({ portfolioUrl: 'https://example.com/work', sampleResume: 'UI/UX Case Study' });
+  });
+
+  it('keeps material controls opt-in for shared-field callers and associates their errors', () => {
+    const view = render(<SubmissionFields values={valid} onChange={vi.fn()} />);
+    expect(screen.queryByLabelText('Portfolio URL (optional)')).not.toBeInTheDocument();
+    view.rerender(<SubmissionFields values={{ ...valid, portfolioUrl: 'bad', sampleResume: '' }} onChange={vi.fn()} includeMaterials errors={{ portfolioUrl: 'Unsafe URL' }} idPrefix="materials" />);
+    expect(screen.getByLabelText('Portfolio URL (optional)')).toHaveAccessibleDescription('Unsafe URL');
+    expect(screen.getByLabelText('Portfolio URL (optional)')).toHaveAttribute('id', 'materials-portfolioUrl');
+    expect(screen.getByLabelText('Sample Resume (optional)')).toHaveAccessibleDescription('Bundled mock resume text only; no upload or remote PDF request.');
   });
 });

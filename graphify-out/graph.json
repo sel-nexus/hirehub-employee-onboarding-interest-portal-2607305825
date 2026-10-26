@@ -89,6 +89,46 @@
       "_origin": "ast"
     },
     {
+      "id": "e2e_candidate_spec",
+      "label": "candidate.spec.js",
+      "file_type": "code",
+      "source_file": "frontend/e2e/candidate.spec.js",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "e2e_candidate_spec_browsererrors",
+      "label": "browserErrors",
+      "file_type": "code",
+      "source_file": "frontend/e2e/candidate.spec.js",
+      "source_location": "L4",
+      "_origin": "ast"
+    },
+    {
+      "id": "e2e_candidate_spec_observeerrors",
+      "label": "observeErrors()",
+      "file_type": "code",
+      "source_file": "frontend/e2e/candidate.spec.js",
+      "source_location": "L6",
+      "_origin": "ast"
+    },
+    {
+      "id": "e2e_candidate_spec_signin",
+      "label": "signIn()",
+      "file_type": "code",
+      "source_file": "frontend/e2e/candidate.spec.js",
+      "source_location": "L22",
+      "_origin": "ast"
+    },
+    {
+      "id": "e2e_candidate_spec_updateownstatus",
+      "label": "updateOwnStatus()",
+      "file_type": "code",
+      "source_file": "frontend/e2e/candidate.spec.js",
+      "source_location": "L32",
+      "_origin": "ast"
+    },
+    {
       "id": "e2e_demo_spec",
       "label": "demo.spec.js",
       "file_type": "code",
@@ -393,7 +433,7 @@
       "label": "App()",
       "file_type": "code",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L21",
+      "source_location": "L22",
       "_origin": "ast"
     },
     {
@@ -1053,6 +1093,198 @@
       "_origin": "ast"
     },
     {
+      "id": "candidate_candidate",
+      "label": "Candidate.jsx",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/Candidate.jsx",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_candidate_fields",
+      "label": "FIELDS",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/Candidate.jsx",
+      "source_location": "L8",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_candidate_readabledate",
+      "label": "readableDate()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/Candidate.jsx",
+      "source_location": "L19",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_candidate_candidate",
+      "label": "Candidate()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/Candidate.jsx",
+      "source_location": "L33",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_candidate_test",
+      "label": "Candidate.test.jsx",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_candidate_test_mount",
+      "label": "mount()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L12",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_candidate_test_stored",
+      "label": "stored()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L23",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_stagestepper",
+      "label": "StageStepper.jsx",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/StageStepper.jsx",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_stagestepper_stage_labels",
+      "label": "STAGE_LABELS",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/StageStepper.jsx",
+      "source_location": "L4",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_stagestepper_stages",
+      "label": "STAGES",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/StageStepper.jsx",
+      "source_location": "L7",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_stagestepper_unknown",
+      "label": "UNKNOWN",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/StageStepper.jsx",
+      "source_location": "L14",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_stagestepper_getstage",
+      "label": "getStage()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/StageStepper.jsx",
+      "source_location": "L25",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_stagestepper_stagestepper",
+      "label": "StageStepper()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/StageStepper.jsx",
+      "source_location": "L34",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_stagestepper_test",
+      "label": "StageStepper.test.jsx",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/StageStepper.test.jsx",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_profile",
+      "label": "profile.js",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_profile_readrecords",
+      "label": "readRecords()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L18",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_profile_readcandidate",
+      "label": "readCandidate()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L42",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_profile_validateprofile",
+      "label": "validateProfile()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L71",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_profile_saveprofile",
+      "label": "saveProfile()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L95",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_profile_test",
+      "label": "profile.test.js",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/profile.test.js",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_profile_test_contact",
+      "label": "contact",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/profile.test.js",
+      "source_location": "L8",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_profile_test_keys",
+      "label": "keys",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/profile.test.js",
+      "source_location": "L9",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_profile_test_snapshot",
+      "label": "snapshot()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/profile.test.js",
+      "source_location": "L11",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_profile_test_stored",
+      "label": "stored()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/profile.test.js",
+      "source_location": "L13",
+      "_origin": "ast"
+    },
+    {
       "id": "demo_demobar",
       "label": "DemoBar.jsx",
       "file_type": "code",
@@ -1129,7 +1361,7 @@
       "label": "validDepartments()",
       "file_type": "code",
       "source_file": "frontend/src/features/demo/mockData.js",
-      "source_location": "L106",
+      "source_location": "L109",
       "_origin": "ast"
     },
     {
@@ -1137,7 +1369,7 @@
       "label": "STORES",
       "file_type": "code",
       "source_file": "frontend/src/features/demo/mockData.js",
-      "source_location": "L112",
+      "source_location": "L115",
       "_origin": "ast"
     },
     {
@@ -1145,7 +1377,7 @@
       "label": "seedDemoData()",
       "file_type": "code",
       "source_file": "frontend/src/features/demo/mockData.js",
-      "source_location": "L127",
+      "source_location": "L130",
       "_origin": "ast"
     },
     {
@@ -1153,7 +1385,7 @@
       "label": "resetToDefaults()",
       "file_type": "code",
       "source_file": "frontend/src/features/demo/mockData.js",
-      "source_location": "L164",
+      "source_location": "L167",
       "_origin": "ast"
     },
     {
@@ -1407,6 +1639,52 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/auth.spec.js",
       "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_candidate_spec",
+      "target": "e2e_candidate_spec_browsererrors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/candidate.spec.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_candidate_spec",
+      "target": "e2e_candidate_spec_observeerrors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/candidate.spec.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_candidate_spec",
+      "target": "e2e_candidate_spec_signin",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/candidate.spec.js",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_candidate_spec",
+      "target": "e2e_candidate_spec_updateownstatus",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/candidate.spec.js",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_candidate_spec_updateownstatus",
+      "target": "e2e_candidate_spec_observeerrors",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/candidate.spec.js",
+      "source_location": "L34",
       "weight": 1.0
     },
     {
@@ -1692,7 +1970,7 @@
     },
     {
       "source": "src_app",
-      "target": "components_header",
+      "target": "candidate_candidate",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -1702,17 +1980,7 @@
     },
     {
       "source": "src_app",
-      "target": "components_header_header",
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/src/App.jsx",
-      "source_location": "L5",
-      "weight": 1.0
-    },
-    {
-      "source": "src_app",
-      "target": "home_home",
+      "target": "components_header",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -1722,7 +1990,17 @@
     },
     {
       "source": "src_app",
-      "target": "apply_apply",
+      "target": "components_header_header",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "home_home",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -1732,7 +2010,7 @@
     },
     {
       "source": "src_app",
-      "target": "admin_login",
+      "target": "apply_apply",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -1742,7 +2020,7 @@
     },
     {
       "source": "src_app",
-      "target": "admin_dashboard",
+      "target": "admin_login",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -1752,12 +2030,22 @@
     },
     {
       "source": "src_app",
-      "target": "admin_auth",
+      "target": "admin_dashboard",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
       "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L11",
       "weight": 1.0
     },
     {
@@ -1767,7 +2055,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0
     },
     {
@@ -1777,7 +2065,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0
     },
     {
@@ -1787,7 +2075,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0
     },
     {
@@ -1797,7 +2085,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0
     },
     {
@@ -1807,7 +2095,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L12",
+      "source_location": "L13",
       "weight": 1.0
     },
     {
@@ -1817,7 +2105,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L12",
+      "source_location": "L13",
       "weight": 1.0
     },
     {
@@ -1826,7 +2114,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L21",
+      "source_location": "L22",
       "weight": 1.0
     },
     {
@@ -1999,7 +2287,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L68",
+      "source_location": "L77",
       "weight": 1.0
     },
     {
@@ -3487,6 +3775,568 @@
       "weight": 1.0
     },
     {
+      "source": "candidate_candidate",
+      "target": "candidate_profile",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.jsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate",
+      "target": "candidate_profile_readcandidate",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.jsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate",
+      "target": "candidate_profile_saveprofile",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.jsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate",
+      "target": "candidate_stagestepper",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate",
+      "target": "candidate_stagestepper_stagestepper",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate",
+      "target": "candidate_candidate_fields",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate",
+      "target": "candidate_candidate_readabledate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.jsx",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate",
+      "target": "candidate_candidate_candidate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.jsx",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate_test",
+      "target": "candidate_candidate",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate_test",
+      "target": "demo_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate_test",
+      "target": "demo_mockdata_default_users",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate_test",
+      "target": "demo_mockdata_default_submissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate_test",
+      "target": "apply_submissions",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate_test",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate_test",
+      "target": "admin_auth_login",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate_test",
+      "target": "admin_auth_readsession",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate_test",
+      "target": "candidate_candidate_test_mount",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate_test",
+      "target": "candidate_candidate_test_stored",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_stagestepper",
+      "target": "candidate_stagestepper_stage_labels",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/StageStepper.jsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_stagestepper",
+      "target": "candidate_stagestepper_stages",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/StageStepper.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_stagestepper",
+      "target": "candidate_stagestepper_unknown",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/StageStepper.jsx",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_stagestepper",
+      "target": "candidate_stagestepper_getstage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/StageStepper.jsx",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_stagestepper",
+      "target": "candidate_stagestepper_stagestepper",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/StageStepper.jsx",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_stagestepper_stagestepper",
+      "target": "candidate_stagestepper_getstage",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/StageStepper.jsx",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_stagestepper_test",
+      "target": "candidate_stagestepper",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/StageStepper.test.jsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_stagestepper_test",
+      "target": "candidate_stagestepper_getstage",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/StageStepper.test.jsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_stagestepper_test",
+      "target": "candidate_stagestepper_stagestepper",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/StageStepper.test.jsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_stagestepper_test",
+      "target": "candidate_stagestepper_stage_labels",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/StageStepper.test.jsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile",
+      "target": "admin_auth_readsession",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile",
+      "target": "admin_auth_readusers",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile",
+      "target": "demo_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile",
+      "target": "apply_submissions",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile",
+      "target": "apply_validation",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile",
+      "target": "apply_validation_validatesubmission",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile",
+      "target": "candidate_profile_readrecords",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile",
+      "target": "candidate_profile_readcandidate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile",
+      "target": "candidate_profile_validateprofile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile",
+      "target": "candidate_profile_saveprofile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L95",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_readcandidate",
+      "target": "candidate_profile_readrecords",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_saveprofile",
+      "target": "candidate_profile_validateprofile",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L96",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_saveprofile",
+      "target": "candidate_profile_readrecords",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L109",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_test",
+      "target": "demo_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_test",
+      "target": "demo_mockdata_default_users",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_test",
+      "target": "demo_mockdata_default_submissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_test",
+      "target": "apply_submissions",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_test",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.test.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_test",
+      "target": "admin_auth_login",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.test.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_test",
+      "target": "admin_auth_logout",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.test.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_test",
+      "target": "admin_auth_readsession",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.test.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_test",
+      "target": "candidate_profile",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_test",
+      "target": "candidate_profile_readcandidate",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_test",
+      "target": "candidate_profile_validateprofile",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_test",
+      "target": "candidate_profile_saveprofile",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_test",
+      "target": "candidate_profile_test_contact",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.test.js",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_test",
+      "target": "candidate_profile_test_keys",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.test.js",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_test",
+      "target": "candidate_profile_test_snapshot",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.test.js",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_test",
+      "target": "candidate_profile_test_stored",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.test.js",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
       "source": "demo_demobar",
       "target": "demo_mockdata",
       "relation": "imports_from",
@@ -3676,7 +4526,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/demo/mockData.js",
-      "source_location": "L106",
+      "source_location": "L109",
       "weight": 1.0
     },
     {
@@ -3685,7 +4535,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/demo/mockData.js",
-      "source_location": "L112",
+      "source_location": "L115",
       "weight": 1.0
     },
     {
@@ -3694,7 +4544,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/demo/mockData.js",
-      "source_location": "L127",
+      "source_location": "L130",
       "weight": 1.0
     },
     {
@@ -3703,7 +4553,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/demo/mockData.js",
-      "source_location": "L164",
+      "source_location": "L167",
       "weight": 1.0
     },
     {
@@ -4008,17 +4858,17 @@
     },
     {
       "source": "src_app",
-      "target": "home_home_home",
+      "target": "candidate_candidate_candidate",
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L6",
+      "source_location": "L5",
       "weight": 1.0
     },
     {
       "source": "src_app",
-      "target": "apply_apply_apply",
+      "target": "home_home_home",
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -4028,7 +4878,7 @@
     },
     {
       "source": "src_app",
-      "target": "admin_login_login",
+      "target": "apply_apply_apply",
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -4038,12 +4888,22 @@
     },
     {
       "source": "src_app",
-      "target": "admin_dashboard_dashboard",
+      "target": "admin_login_login",
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
       "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "admin_dashboard_dashboard",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L10",
       "weight": 1.0
     },
     {
@@ -4117,6 +4977,16 @@
       "weight": 1.0
     },
     {
+      "source": "candidate_candidate_test",
+      "target": "candidate_candidate_candidate",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
       "source": "home_home_test",
       "target": "home_home_home",
       "relation": "imports",
@@ -4176,13 +5046,68 @@
       "source_file": "frontend/src/features/admin/auth.js",
       "source_location": "L22",
       "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_readcandidate",
+      "target": "admin_auth_readsession",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_readcandidate",
+      "target": "admin_auth_readusers",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_validateprofile",
+      "target": "apply_validation_validatesubmission",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L73",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_saveprofile",
+      "target": "admin_auth_readsession",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L103",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_saveprofile",
+      "target": "admin_auth_readusers",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L108",
+      "weight": 1.0
     }
   ],
   "metadata": {
-    "built_at": "2026-10-26T17:22:08.294676+00:00",
+    "built_at": "2026-10-26T17:35:07.486665+00:00",
     "version": "graph_update-v1",
     "codebase_root": "/data/artifacts-v2/T011RNFvLqRR0008726102616342188/developer",
     "force": true,
-    "files_scanned": 39
+    "files_scanned": 46
   }
 }

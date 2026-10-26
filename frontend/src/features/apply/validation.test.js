@@ -70,9 +70,9 @@ describe('validateSubmission', () => {
       expect(validateSubmission({ ...valid, mobile }).errors).toEqual({ mobile: FIELD_ERRORS.mobile });
     });
 
-  it('exposes exactly the eight specified departments', () => {
+  it('exposes all eight legacy departments plus Product', () => {
     expect(DEPARTMENTS).toEqual([
-      'Engineering', 'Design', 'Marketing', 'Human Resources', 'Finance', 'Operations', 'Sales', 'Data Science',
+      'Engineering', 'Design', 'Product', 'Marketing', 'Human Resources', 'Finance', 'Operations', 'Sales', 'Data Science',
     ]);
     expect(Object.isFrozen(DEPARTMENTS)).toBe(true);
   });

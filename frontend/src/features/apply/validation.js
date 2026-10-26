@@ -2,6 +2,7 @@
 export const DEPARTMENTS = Object.freeze([
   'Engineering',
   'Design',
+  'Product',
   'Marketing',
   'Human Resources',
   'Finance',

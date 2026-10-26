@@ -237,3 +237,110 @@ describe('EditSubmission', () => {
     expect(readSubmissions()).toEqual([submission]);
   });
 });
+
+/** Verify recruiter metadata is editable while immutable identity and current status survive. */
+describe('recruiter notes and materials editor', () => {
+  const extended = {
+    ...submission, userId: 'u-alice', status: 'interview', notes: 'Original private note',
+    portfolioUrl: 'https://example.com/original', sampleResume: 'UI/UX Case Study',
+    interviewSchedule: 'Tuesday at 10 AM Pacific',
+  };
+
+  it('prefills and persists notes, materials and human-readable schedule, preserving all immutable fields', async () => {
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([extended]));
+    const user = userEvent.setup();
+    const onSaved = vi.fn();
+    render(<EditSubmission submission={extended} onSaved={onSaved} onCancel={vi.fn()} />);
+    expect(screen.getByLabelText('Recruiter Notes (private)')).toHaveValue(extended.notes);
+    expect(screen.getByLabelText('Portfolio URL (optional)')).toHaveValue(extended.portfolioUrl);
+    expect(screen.getByLabelText('Sample Resume (optional)')).toHaveValue(extended.sampleResume);
+    expect(screen.getByLabelText('Interview Schedule (optional)')).toHaveValue(extended.interviewSchedule);
+    fireEvent.change(screen.getByLabelText('Email Address'), { target: { value: 'spoof@example.com' } });
+    await user.clear(screen.getByLabelText('Recruiter Notes (private)'));
+    await user.type(screen.getByLabelText('Recruiter Notes (private)'), 'Private interview evaluation');
+    await user.clear(screen.getByLabelText('Portfolio URL (optional)'));
+    await user.type(screen.getByLabelText('Portfolio URL (optional)'), 'http://example.com/new');
+    await user.selectOptions(screen.getByLabelText('Sample Resume (optional)'), 'Full-Stack Developer Resume (Sample)');
+    await user.clear(screen.getByLabelText('Interview Schedule (optional)'));
+    await user.type(screen.getByLabelText('Interview Schedule (optional)'), 'Friday at 11 AM Pacific');
+    // A quick update after the editor opens must not be overwritten by its cached record.
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([{ ...extended, status: 'offer' }]));
+    await user.click(screen.getByRole('button', { name: 'Save Changes' }));
+    expect(onSaved).toHaveBeenCalledOnce();
+    expect(readSubmissions()).toEqual([{
+      ...extended, status: 'offer', notes: 'Private interview evaluation', portfolioUrl: 'http://example.com/new',
+      sampleResume: 'Full-Stack Developer Resume (Sample)', interviewSchedule: 'Friday at 11 AM Pacific',
+    }]);
+  });
+
+  it.each([
+    ['Portfolio URL (optional)', 'javascript:alert(1)'],
+    ['Portfolio URL (optional)', 'data:text/html,bad'],
+    ['Portfolio URL (optional)', '/relative'],
+    ['Portfolio URL (optional)', 'https://'],
+    ['Portfolio URL (optional)', 'https://example.com/' + 'x'.repeat(2048)],
+    ['Recruiter Notes (private)', 'x'.repeat(5001)],
+    ['Interview Schedule (optional)', 'x'.repeat(501)],
+  ])('rejects invalid %s material/metadata while preserving edits and storage', async (label, value) => {
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([extended]));
+    const user = userEvent.setup();
+    const onSaved = vi.fn();
+    render(<EditSubmission submission={extended} onSaved={onSaved} onCancel={vi.fn()} />);
+    const control = screen.getByLabelText(label);
+    fireEvent.change(control, { target: { value } });
+    await user.click(screen.getByRole('button', { name: 'Save Changes' }));
+    expect(control).toHaveValue(value);
+    expect(control).toHaveAttribute('aria-invalid', 'true');
+    expect(screen.getByRole('alert')).toBeVisible();
+    expect(control).toHaveAccessibleDescription(new RegExp(screen.getByRole('alert').textContent.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+    expect(onSaved).not.toHaveBeenCalled();
+    expect(readSubmissions()).toEqual([extended]);
+  });
+
+  it('clears optional metadata explicitly without changing immutable fields', async () => {
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([extended]));
+    const user = userEvent.setup();
+    render(<EditSubmission submission={extended} onSaved={vi.fn()} onCancel={vi.fn()} />);
+    for (const label of ['Recruiter Notes (private)', 'Portfolio URL (optional)', 'Interview Schedule (optional)']) {
+      await user.clear(screen.getByLabelText(label));
+    }
+    await user.selectOptions(screen.getByLabelText('Sample Resume (optional)'), '');
+    await user.click(screen.getByRole('button', { name: 'Save Changes' }));
+    expect(readSubmissions()).toEqual([{ ...extended, notes: '', portfolioUrl: '', sampleResume: '', interviewSchedule: '' }]);
+  });
+
+  it('preserves private note edits after quota failure, then persists them on retry', async () => {
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([extended]));
+    const user = userEvent.setup();
+    const onSaved = vi.fn();
+    render(<EditSubmission submission={extended} onSaved={onSaved} onCancel={vi.fn()} />);
+    const notes = screen.getByLabelText('Recruiter Notes (private)');
+    await user.clear(notes);
+    await user.type(notes, 'Private new evaluation');
+    const spy = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('quota'); });
+    await user.click(screen.getByRole('button', { name: 'Save Changes' }));
+    expect(screen.getByRole('alert')).toHaveTextContent('Unable to save submissions.');
+    expect(notes).toHaveValue('Private new evaluation');
+    expect(onSaved).not.toHaveBeenCalled();
+    expect(readSubmissions()).toEqual([extended]);
+    spy.mockRestore();
+    await user.click(screen.getByRole('button', { name: 'Save Changes' }));
+    expect(readSubmissions()).toEqual([{ ...extended, notes: 'Private new evaluation' }]);
+    expect(onSaved).toHaveBeenCalledOnce();
+  });
+
+  it('refuses a stale notes save without resurrecting a deleted application', async () => {
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([extended]));
+    const user = userEvent.setup();
+    const onSaved = vi.fn();
+    render(<EditSubmission submission={extended} onSaved={onSaved} onCancel={vi.fn()} />);
+    await user.clear(screen.getByLabelText('Recruiter Notes (private)'));
+    await user.type(screen.getByLabelText('Recruiter Notes (private)'), 'Unsaved note');
+    localStorage.setItem(SUBMISSIONS_KEY, '[]');
+    await user.click(screen.getByRole('button', { name: 'Save Changes' }));
+    expect(screen.getByRole('alert')).toHaveTextContent('Submission not found.');
+    expect(screen.getByLabelText('Recruiter Notes (private)')).toHaveValue('Unsaved note');
+    expect(onSaved).not.toHaveBeenCalled();
+    expect(readSubmissions()).toEqual([]);
+  });
+});

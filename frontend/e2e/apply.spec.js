@@ -16,6 +16,8 @@ test.beforeEach(async ({ page }) => {
   await page.goto('/');
   await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Apply', exact: true }).click();
   await expect(page).toHaveURL(/\/apply$/);
+  page.applyBaseline = await page.evaluate(() => JSON.parse(localStorage.getItem('hirehub_submissions')));
+  expect(page.applyBaseline).toHaveLength(8);
 });
 
 /** Fail every test on any console error or uncaught browser exception. */
@@ -88,7 +90,7 @@ test('invalid application shows errors below all fields and preserves invalid in
   await expect(page.getByLabel('Full Name')).toHaveValue('Alice1');
   await expect(page.getByLabel('Email Address')).toHaveValue('not-an-email');
   await expect(page.getByLabel('Mobile Number')).toHaveValue('123456789');
-  expect(await page.evaluate(() => localStorage.getItem('hirehub_submissions'))).toBeNull();
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('hirehub_submissions')))).toEqual(page.applyBaseline);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await captureInvalidForm(page, testInfo, 'malformed-invalid-form');
 });
@@ -103,14 +105,15 @@ test('valid submit clears fields, dismisses success, persists on reload, and rej
     await expect(page.getByLabel(label)).toHaveValue('');
   }
   const records = await page.evaluate(() => JSON.parse(localStorage.getItem('hirehub_submissions')));
-  expect(records).toEqual([{
+  expect(records).toEqual([...page.applyBaseline, {
     id: expect.any(String), fullName: 'Alice Smith', email: 'alice@example.com', mobile: '0123456789',
     department: 'Engineering', submittedAt: expect.any(String),
   }]);
-  expect(records[0].id).toMatch(/^[\da-f]{8}-[\da-f]{4}-4[\da-f]{3}-[89ab][\da-f]{3}-[\da-f]{12}$/i);
-  expect(new Date(records[0].submittedAt).toISOString()).toBe(records[0].submittedAt);
-  expect(Date.parse(records[0].submittedAt)).toBeGreaterThanOrEqual(before);
-  expect(Date.parse(records[0].submittedAt)).toBeLessThanOrEqual(Date.now());
+  const created = records.at(-1);
+  expect(created.id).toMatch(/^[\da-f]{8}-[\da-f]{4}-4[\da-f]{3}-[89ab][\da-f]{3}-[\da-f]{12}$/i);
+  expect(new Date(created.submittedAt).toISOString()).toBe(created.submittedAt);
+  expect(Date.parse(created.submittedAt)).toBeGreaterThanOrEqual(before);
+  expect(Date.parse(created.submittedAt)).toBeLessThanOrEqual(Date.now());
   await expect(page.getByRole('status')).toHaveCount(0, { timeout: 6000 });
   await page.reload();
   await expect(page.getByRole('heading', { name: 'Join Our Team' })).toBeVisible();
@@ -126,4 +129,73 @@ test('valid submit clears fields, dismisses success, persists on reload, and rej
   await page.getByRole('link', { name: '← Back to Home' }).click();
   await expect(page).toHaveURL(/\/$/);
   await expect(page.getByRole('heading', { name: 'Build Your Future With Us' })).toBeVisible();
+});
+
+/** Register through the UI, validate materials, persist two applications and read them as the candidate. */
+test('new candidate saves bundled materials with honest identity and multiple application persistence', async ({ page }) => {
+  const baseline = page.applyBaseline;
+  await page.goto('/register');
+  await page.getByLabel('Full Name').fill('New Candidate');
+  await page.getByLabel('Email Address').fill('newcandidate@example.com');
+  await page.getByLabel('Mobile Number').fill('0123456789');
+  await page.getByLabel('Password', { exact: true }).fill('password123');
+  await page.getByRole('button', { name: 'Create account', exact: true }).click();
+  await expect(page).toHaveURL(/\/candidate$/);
+  await expect(page.getByRole('heading', { name: 'No applications yet' })).toBeVisible();
+  const session = await page.evaluate(() => JSON.parse(localStorage.getItem('hirehub_session')));
+  expect(session).toMatchObject({ role: 'candidate', displayName: 'New Candidate', userId: expect.any(String) });
+  const navigation = page.getByRole('navigation', { name: 'Main navigation' });
+  await navigation.getByRole('link', { name: 'Apply', exact: true }).click();
+  const email = page.getByLabel('Email Address');
+  await expect(email).toHaveValue('newcandidate@example.com');
+  await expect(email).toHaveAttribute('readonly', '');
+  await email.click();
+  await page.keyboard.type('spoof@example.com');
+  await expect(email).toHaveValue('newcandidate@example.com');
+  await page.getByLabel('Full Name').fill('New Candidate');
+  await page.getByLabel('Mobile Number').fill('0123456789');
+  await page.getByLabel('Department of Interest').selectOption('Product');
+  const portfolio = page.getByLabel('Portfolio URL (optional)');
+  const sample = page.getByLabel('Sample Resume (optional)');
+  await expect(sample.locator('option')).toHaveText([
+    'No sample resume', 'Frontend Software Engineer (5 YOE)', 'Full-Stack Developer Resume (Sample)', 'UI/UX Case Study',
+  ]);
+  await portfolio.fill('javascript:alert(1)');
+  await sample.selectOption('Full-Stack Developer Resume (Sample)');
+  await page.getByRole('button', { name: 'Submit Application' }).click();
+  await expect(portfolio).toHaveAttribute('aria-invalid', 'true');
+  await expect(page.getByRole('alert')).toHaveText('Use an http or https portfolio URL.');
+  await expect(portfolio).toHaveValue('javascript:alert(1)');
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('hirehub_submissions')))).toEqual(baseline);
+  await portfolio.fill('https://example.com/newcandidate');
+  await page.getByRole('button', { name: 'Submit Application' }).click();
+  await expect(page.getByRole('status')).toHaveText(SUCCESS_MESSAGE);
+  await expect(portfolio).toHaveValue('');
+  await expect(sample).toHaveValue('');
+  await expect(email).toHaveValue('newcandidate@example.com');
+  const first = await page.evaluate(() => JSON.parse(localStorage.getItem('hirehub_submissions')));
+  expect(first).toEqual([...baseline, {
+    id: expect.any(String), userId: session.userId, fullName: 'New Candidate', email: 'newcandidate@example.com',
+    mobile: '0123456789', department: 'Product', status: 'applied', submittedAt: expect.any(String),
+    portfolioUrl: 'https://example.com/newcandidate', sampleResume: 'Full-Stack Developer Resume (Sample)',
+  }]);
+  await page.getByLabel('Full Name').fill('New Candidate');
+  await page.getByLabel('Mobile Number').fill('0123456789');
+  await page.getByLabel('Department of Interest').selectOption('Engineering');
+  await sample.selectOption('UI/UX Case Study');
+  await page.getByRole('button', { name: 'Submit Application' }).click();
+  await expect(page.getByRole('status')).toHaveText(SUCCESS_MESSAGE);
+  const records = await page.evaluate(() => JSON.parse(localStorage.getItem('hirehub_submissions')));
+  expect(records).toEqual([...first, {
+    id: expect.any(String), userId: session.userId, fullName: 'New Candidate', email: 'newcandidate@example.com',
+    mobile: '0123456789', department: 'Engineering', status: 'applied', submittedAt: expect.any(String), sampleResume: 'UI/UX Case Study',
+  }]);
+  expect(records.at(-1).id).not.toBe(first.at(-1).id);
+  await page.reload();
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('hirehub_submissions')))).toEqual(records);
+  await navigation.getByRole('link', { name: 'Candidate portal', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Product application', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Engineering application', exact: true })).toBeVisible();
+  await expect(page.getByText('Current status: Application Received', { exact: true })).toHaveCount(2);
+  await expect(page.getByText('alex@example.com', { exact: true })).toHaveCount(0);
 });

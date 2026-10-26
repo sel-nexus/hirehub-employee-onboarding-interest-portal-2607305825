@@ -1,9 +1,36 @@
 /** Verify dashboard review and CRUD outcomes against the actual browser-storage helpers. */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, render, screen, within } from '@testing-library/react';
+import { cleanup, render as rtlRender, screen, within, fireEvent } from '@testing-library/react';
+import { MemoryRouter, useLocation, useNavigate } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import Dashboard from './Dashboard';
 import { readSubmissions, SUBMISSIONS_KEY } from '../apply/submissions';
+
+/** Mount Dashboard with its production router contract while preserving existing CRUD tests. */
+function render(ui, initialEntry = '/admin') {
+  return rtlRender(
+    <MemoryRouter initialEntries={[initialEntry]} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      {ui}
+      <HistoryProbe />
+    </MemoryRouter>,
+  );
+}
+
+/** Expose actual router history to verify URL state and Back navigation. */
+function HistoryProbe() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  return (
+    <>
+      <output aria-label="Current URL">
+        {location.pathname}{location.search}
+      </output>
+      <button type="button" onClick={() => navigate(-1)}>
+        History back
+      </button>
+    </>
+  );
+}
 
 const alice = {
   id: 'alice', fullName: 'Alice Smith', email: 'alice@example.com', mobile: '0123456789',
@@ -46,7 +73,7 @@ describe('Dashboard', () => {
     expectStat('Latest Submission', 'Mar 4, 2026');
     const columns = screen.getAllByRole('columnheader');
     expect(columns.map((cell) => cell.textContent.trim())).toEqual([
-      '#', 'Full Name', 'Email', 'Mobile', 'Department', 'Submitted On', 'Actions',
+      '#', 'Full Name', 'Email', 'Mobile', 'Department', 'Submitted On', 'Status', 'Actions',
     ]);
     columns.forEach((cell) => expect(cell).toHaveAttribute('scope', 'col'));
     expect(screen.getByRole('region', { name: 'Submissions table, scroll horizontally' })).toHaveAttribute('tabindex', '0');
@@ -253,5 +280,152 @@ describe('Dashboard', () => {
     await user.click(screen.getByRole('button', { name: 'Logout', exact: true }));
     expect(onLogout).toHaveBeenCalledOnce();
     expect(readSubmissions()).toEqual([alice]);
+  });
+});
+
+/** Verify live URL-backed filtering, materials and status mutations against real storage. */
+describe('recruiter pipeline review', () => {
+  const product = { ...bob, id: 'product', fullName: 'Alice Product', email: 'product@example.com', department: 'Product', status: 'offer' };
+
+  it.each([
+    [' ALICE ', '', ['alice@example.com', 'product@example.com']],
+    ['BOB@EXAMPLE.COM', '', ['bob@example.com']],
+    ['alice', 'Engineering', ['alice@example.com']],
+    ['alice', 'Product', ['product@example.com']],
+    ['alice', 'Design', []],
+    ['not found', '', []],
+    ['', 'Design', ['bob@example.com']],
+  ])('combines name/email search %s with exact department %s', async (term, department, expectedEmails) => {
+    seed([alice, bob, product]);
+    const before = localStorage.getItem(SUBMISSIONS_KEY);
+    const user = userEvent.setup();
+    render(<Dashboard onLogout={vi.fn()} />);
+    if (term) await user.type(screen.getByLabelText('Search by name or email'), term);
+    await user.click(within(screen.getByRole('group', { name: 'Department filters' })).getByRole('button', { name: department || 'All departments', exact: true }));
+    expectStat('Total Submissions', '3');
+    expectStat('Departments', '3');
+    const table = screen.queryByRole('table');
+    if (expectedEmails.length) {
+      const rows = within(table).getAllByRole('row').slice(1);
+      expect(rows.map((row) => within(row).getAllByRole('cell')[2].textContent)).toEqual(expectedEmails);
+    } else {
+      expect(table).not.toBeInTheDocument();
+      expect(screen.getByText('No submissions match your search and department filter.')).toBeVisible();
+    }
+    expect(screen.getByText(`${expectedEmails.length} of 3 submissions shown.`)).toBeVisible();
+    expect(localStorage.getItem(SUBMISSIONS_KEY)).toBe(before);
+  });
+
+  it.each(['Engineering', 'Design', 'Product', 'Marketing', 'Operations'])('filters exact %s department rather than matching fragments', async (department) => {
+    const matching = { ...alice, id: 'matching', department, email: 'matching@example.com' };
+    seed([matching, { ...bob, department: 'Human Resources' }]);
+    const user = userEvent.setup();
+    render(<Dashboard onLogout={vi.fn()} />);
+    const group = within(screen.getByRole('group', { name: 'Department filters' }));
+    expect(group.getAllByRole('button').map((button) => button.textContent.trim())).toEqual(['All departments', 'Engineering', 'Design', 'Product', 'Marketing', 'Operations']);
+    await user.click(group.getByRole('button', { name: department, exact: true }));
+    expect(group.getByRole('button', { name: department, exact: true })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByRole('cell', { name: 'matching@example.com' })).toBeVisible();
+    expect(screen.queryByRole('cell', { name: bob.email })).not.toBeInTheDocument();
+    await user.click(group.getByRole('button', { name: 'All departments' }));
+    expect(screen.getByRole('cell', { name: bob.email })).toBeVisible();
+  });
+
+  it('restores search/filter from URL on remount and Back without dropping unrelated parameters', async () => {
+    seed([alice, bob, product]);
+    const user = userEvent.setup();
+    const view = render(<Dashboard onLogout={vi.fn()} />, '/admin?q=alice&department=Product&keep=1');
+    expect(screen.getByLabelText('Search by name or email')).toHaveValue('alice');
+    expect(screen.getAllByRole('row')).toHaveLength(2);
+    expect(screen.getByRole('cell', { name: product.email })).toBeVisible();
+    await user.click(screen.getByRole('button', { name: 'Engineering', exact: true }));
+    expect(screen.getByRole('cell', { name: alice.email })).toBeVisible();
+    expect(screen.getByLabelText('Current URL')).toHaveTextContent('/admin?q=alice&department=Engineering&keep=1');
+    await user.click(screen.getByRole('button', { name: 'History back' }));
+    expect(screen.getByRole('cell', { name: product.email })).toBeVisible();
+    const url = screen.getByLabelText('Current URL').textContent;
+    view.unmount();
+    render(<Dashboard onLogout={vi.fn()} />, url);
+    expect(screen.getByLabelText('Search by name or email')).toHaveValue('alice');
+    expect(screen.getByRole('button', { name: 'Product', exact: true })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByRole('cell', { name: product.email })).toBeVisible();
+  });
+
+  it('ignores a noncanonical URL department and allows clearing a search to recover results', async () => {
+    seed([alice, bob]);
+    const user = userEvent.setup();
+    render(<Dashboard onLogout={vi.fn()} />, '/admin?q=missing&department=engineering');
+    expect(screen.getByRole('button', { name: 'All departments' })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.queryByRole('table')).not.toBeInTheDocument();
+    await user.clear(screen.getByLabelText('Search by name or email'));
+    expect(screen.getAllByRole('row')).toHaveLength(3);
+  });
+
+  it('shows real pipeline distribution and persists all quick status choices preserving external notes', async () => {
+    seed([alice, bob, product]);
+    const user = userEvent.setup();
+    render(<Dashboard onLogout={vi.fn()} />);
+    const select = screen.getByRole('combobox', { name: `Status for ${alice.fullName}, ${alice.email}` });
+    expect(Array.from(select.options).map((option) => [option.value, option.textContent.trim()])).toEqual([
+      ['applied', 'Application Received'], ['review', 'Under Review'], ['interview', 'Interview Scheduled'],
+      ['offer', 'Offer Extended'], ['archived', 'Archived / Not Selected'],
+    ]);
+    expect(within(screen.getByRole('region', { name: 'Pipeline distribution' })).getByText('Application Received').nextElementSibling).toHaveTextContent('2');
+    const current = { ...alice, notes: 'Latest external notes', userId: 'u-alice' };
+    seed([current, bob, product]);
+    for (const status of ['review', 'interview', 'offer', 'archived', 'applied']) {
+      await user.selectOptions(select, status);
+      expect(select).toHaveValue(status);
+      expect(readSubmissions()).toEqual([{ ...current, status }, bob, product]);
+    }
+    fireEvent.change(select, { target: { value: 'unknown' } });
+    expect(screen.getByRole('alert')).toHaveTextContent('Select a valid hiring status.');
+    expect(readSubmissions()[0]).toEqual({ ...current, status: 'applied' });
+  });
+
+  it('keeps quick status and records unchanged on quota failure and recovers on retry', async () => {
+    seed([alice]);
+    const user = userEvent.setup();
+    render(<Dashboard onLogout={vi.fn()} />);
+    const select = screen.getByRole('combobox', { name: /Status for Alice/ });
+    const spy = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('quota'); });
+    await user.selectOptions(select, 'offer');
+    expect(select).toHaveValue('applied');
+    expect(screen.getByRole('alert')).toHaveTextContent('Unable to save submissions.');
+    expect(readSubmissions()).toEqual([alice]);
+    spy.mockRestore();
+    await user.selectOptions(select, 'offer');
+    expect(select).toHaveValue('offer');
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    expect(readSubmissions()).toEqual([{ ...alice, status: 'offer' }]);
+  });
+
+  it('reports stale quick status records and reconciles the table with Retry', async () => {
+    seed([alice]);
+    const user = userEvent.setup();
+    render(<Dashboard onLogout={vi.fn()} />);
+    seed([]);
+    await user.selectOptions(screen.getByRole('combobox', { name: /Status for Alice/ }), 'offer');
+    expect(screen.getByRole('alert')).toHaveTextContent('Submission not found.');
+    expect(readSubmissions()).toEqual([]);
+    await user.click(screen.getByRole('button', { name: 'Retry loading submissions' }));
+    expect(screen.getByText('No submissions yet.')).toBeVisible();
+  });
+
+  it('opens bundled preview and restores its trigger without changing any records', async () => {
+    const record = { ...alice, sampleResume: 'UI/UX Case Study', portfolioUrl: 'https://example.com/alice' };
+    seed([record]);
+    const before = localStorage.getItem(SUBMISSIONS_KEY);
+    const user = userEvent.setup();
+    render(<Dashboard onLogout={vi.fn()} />);
+    const trigger = screen.getByRole('button', { name: /Preview resume and portfolio for Alice/ });
+    await user.click(trigger);
+    const dialog = within(screen.getByRole('dialog', { name: /Resume and portfolio for Alice/ }));
+    expect(dialog.getByText('Research-led redesign of a candidate application journey.')).toBeVisible();
+    expect(dialog.getByRole('link')).toHaveAttribute('target', '_blank');
+    await user.keyboard('{Escape}');
+    expect(trigger).toHaveFocus();
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(localStorage.getItem(SUBMISSIONS_KEY)).toBe(before);
   });
 });
