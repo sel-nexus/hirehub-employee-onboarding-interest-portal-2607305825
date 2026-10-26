@@ -1,18 +1,32 @@
-/* Keep the supplied HireHub visual system light-only and responsive. */
+/* Preserve HireHub's layout and system typography with semantic light/dark tokens. */
 :root {
   color-scheme: light;
-  --color-primary: #2563eb;
-  --color-primary-hover: #1d4ed8;
-  --color-primary-light: rgba(37, 99, 235, 0.1);
-  --color-bg: #f1f5f9;
+  --color-primary: #4f46e5;
+  --color-accent: #6366f1;
+  --color-primary-hover: #4338ca;
+  --color-primary-light: #eef2ff;
+  --color-link: #4338ca;
+  --color-on-primary: #ffffff;
+  --color-ring: #4f46e5;
+  --color-bg: #f8fafc;
   --color-card: #ffffff;
   --color-text: #1e293b;
-  --color-text-muted: #64748b;
-  --color-success: #16a34a;
-  --color-danger: #dc2626;
-  --color-warning: #f59e0b;
+  --color-text-muted: #475569;
   --color-border: #e2e8f0;
   --color-row-alt: #f8fafc;
+  --color-success: #047857;
+  --color-success-bg: #ecfdf5;
+  --color-danger: #be123c;
+  --color-danger-bg: #fff1f2;
+  --color-warning: #92400e;
+  --color-warning-bg: #fffbeb;
+  --color-info: #0369a1;
+  --color-info-bg: #f0f9ff;
+  --color-applied: #475569;
+  --color-applied-bg: #f1f5f9;
+  --color-danger-solid: #be123c;
+  --color-overlay: rgba(15, 23, 42, 0.65);
+  --shadow-overlay: 0 8px 32px rgba(0, 0, 0, 0.2);
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -74,7 +88,7 @@ button:focus-visible {
 .site-header a:focus-visible,
 .site-header button:focus-visible,
 .hero a:focus-visible {
-  outline-color: var(--color-card);
+  outline-color: var(--color-on-primary);
 }
 
 .skip-link {
@@ -97,7 +111,7 @@ button:focus-visible {
   top: 0;
   z-index: 10;
   height: 60px;
-  color: var(--color-card);
+  color: var(--color-on-primary);
   background: var(--color-primary);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -139,7 +153,7 @@ button:focus-visible {
 
 .nav-link[aria-current='page'],
 .nav-link:hover {
-  border-bottom-color: var(--color-card);
+  border-bottom-color: var(--color-on-primary);
 }
 
 .session-control {
@@ -155,7 +169,7 @@ button:focus-visible {
 }
 
 .login-link {
-  border: 1px solid var(--color-card);
+  border: 1px solid var(--color-on-primary);
 }
 
 .login-link:hover {
@@ -163,9 +177,9 @@ button:focus-visible {
 }
 
 .logout-button {
-  border: 1px solid var(--color-danger);
-  color: var(--color-card);
-  background: var(--color-danger);
+  border: 1px solid var(--color-danger-solid);
+  color: var(--color-on-primary);
+  background: var(--color-danger-solid);
 }
 
 .hero {
@@ -173,7 +187,7 @@ button:focus-visible {
   place-items: center;
   min-height: 400px;
   padding: var(--space-15) var(--space-6);
-  color: var(--color-card);
+  color: var(--color-on-primary);
   background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
   text-align: center;
 }
@@ -202,9 +216,9 @@ button:focus-visible {
   min-width: 220px;
   height: 50px;
   padding: 0 var(--space-6);
-  border: 1px solid var(--color-card);
+  border: 1px solid var(--color-on-primary);
   border-radius: 8px;
-  color: var(--color-card);
+  color: var(--color-on-primary);
   background: var(--color-primary);
   font-size: 16px;
   font-weight: 500;
@@ -444,7 +458,7 @@ button:focus-visible {
   height: 48px;
   border: 0;
   border-radius: 8px;
-  color: var(--color-card);
+  color: var(--color-on-primary);
   background: var(--color-primary);
   font-size: 16px;
   font-weight: 500;
@@ -545,7 +559,7 @@ button:focus-visible {
 }
 
 .table-scroll:focus-visible {
-  outline: 3px solid var(--color-primary);
+  outline: 3px solid var(--color-ring);
   outline-offset: -3px;
 }
 
@@ -564,7 +578,7 @@ button:focus-visible {
 }
 
 .submissions-table th {
-  color: var(--color-card);
+  color: var(--color-on-primary);
   background: var(--color-primary);
   font-weight: 700;
   white-space: nowrap;
@@ -586,7 +600,7 @@ button:focus-visible {
   display: inline-block;
   padding: 2px 10px;
   border-radius: 12px;
-  color: var(--color-card);
+  color: var(--color-on-primary);
   background: var(--color-primary);
   font-size: 12px;
   font-weight: 500;
@@ -619,13 +633,13 @@ button:focus-visible {
 }
 
 .row-edit:hover {
-  color: var(--color-card);
+  color: var(--color-on-primary);
   background: var(--color-primary);
 }
 
 .row-delete:hover {
-  color: var(--color-card);
-  background: var(--color-danger);
+  color: var(--color-on-primary);
+  background: var(--color-danger-solid);
 }
 
 .dashboard-empty {
@@ -695,3 +709,256 @@ button:focus-visible {
       max(var(--space-3), env(safe-area-inset-bottom));
   }
 }
+
+/* The brand stays indigo; readable foreground roles change independently of filled controls. */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-bg: #0f172a;
+  --color-card: #1e293b;
+  --color-border: #334155;
+  --color-row-alt: #162033;
+  --color-text: #f1f5f9;
+  --color-text-muted: #cbd5e1;
+  --color-primary-light: #312e81;
+  --color-link: #a5b4fc;
+  --color-ring: #a5b4fc;
+  --color-success: #6ee7b7;
+  --color-success-bg: #064e3b;
+  --color-danger: #fda4af;
+  --color-danger-bg: #4c0519;
+  --color-warning: #fcd34d;
+  --color-warning-bg: #451a03;
+  --color-info: #7dd3fc;
+  --color-info-bg: #0c4a6e;
+  --color-applied: #cbd5e1;
+  --color-applied-bg: #334155;
+}
+
+.site-header, .hero, .cta-link, .submission-button,
+.submissions-table th, .department-badge, .row-edit:hover,
+.row-delete:hover, .logout-button {
+  color: var(--color-on-primary);
+}
+.site-header a:focus-visible, .site-header button:focus-visible,
+.hero a:focus-visible { outline-color: var(--color-on-primary); }
+.login-link, .cta-link { border-color: var(--color-on-primary); }
+.nav-link[aria-current='page'], .nav-link:hover { border-bottom-color: var(--color-on-primary); }
+.logout-button, .row-delete:hover {
+  background: var(--color-danger-solid);
+  border-color: var(--color-danger-solid);
+}
+.back-home-link, .row-edit { color: var(--color-link); }
+.row-edit { border-color: var(--color-link); }
+.submissions-table tbody tr:hover { background: var(--color-primary-light); }
+.submission-success { color: var(--color-success); background: var(--color-success-bg); }
+.submission-storage-error { background: var(--color-danger-bg); }
+
+/* Navigation wraps rather than clipping as links and the theme control grow. */
+.site-header { height: auto; min-height: 60px; }
+.header-inner { min-height: 60px; flex-wrap: wrap; gap: var(--space-3); padding-block: var(--space-2); }
+.main-nav { flex-wrap: wrap; height: auto; gap: var(--space-3); min-width: 0; }
+.nav-link, .session-control { min-height: 44px; }
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 44px;
+  width: 44px;
+  min-height: 44px;
+  padding: var(--space-2);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--color-on-primary);
+  background: transparent;
+  transition: background-color 150ms ease-out, border-color 150ms ease-out;
+}
+.theme-toggle:hover { background: var(--color-primary-hover); border-color: var(--color-on-primary); }
+.theme-warning {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--space-2) var(--space-6);
+  font-size: 14px;
+  color: var(--color-warning);
+  background: var(--color-warning-bg);
+  overflow-wrap: anywhere;
+}
+
+/* All native fields, including notes and contact inputs, share readable theme roles. */
+input, select, textarea {
+  max-width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  background: var(--color-card);
+  font: inherit;
+  font-size: 16px;
+}
+input::placeholder, textarea::placeholder { color: var(--color-text-muted); opacity: 1; }
+option { color: var(--color-text); background: var(--color-card); }
+textarea { width: 100%; min-height: 132px; resize: vertical; }
+.submission-field textarea, .form-group input, .form-group select { width: 100%; }
+.form-group { margin-bottom: var(--space-5); }
+.form-group label { display: block; margin-bottom: var(--space-2); font-weight: 500; font-size: 14px; }
+input:focus, select:focus, textarea:focus,
+.submission-field input:focus, .submission-field select:focus {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
+  border-color: var(--color-ring);
+  box-shadow: none;
+}
+a:focus-visible, button:focus-visible { outline-color: var(--color-ring); }
+[aria-invalid='true'] { border-color: var(--color-danger); }
+button:disabled { cursor: not-allowed; opacity: 0.65; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 150ms ease-out, border-color 150ms ease-out;
+}
+.btn-primary { background: var(--color-primary); color: var(--color-on-primary); border-color: var(--color-primary); }
+.btn-primary:hover { background: var(--color-primary-hover); }
+.btn-secondary { background: var(--color-card); color: var(--color-text); }
+.btn-secondary:hover { background: var(--color-row-alt); }
+.cancel-button, .row-actions button, .session-control { transition: background-color 150ms ease-out, color 150ms ease-out; }
+.row-actions button { min-height: 44px; height: auto; }
+
+/* Auth tabs and registration reuse the existing focused card layout. */
+.auth-card [role='tablist'] { display: flex; gap: var(--space-2); margin-top: var(--space-6); border-bottom: 1px solid var(--color-border); }
+.auth-card [role='tab'] {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: var(--space-2);
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+.auth-card [role='tab'][aria-selected='true'] { color: var(--color-link); border-bottom-color: var(--color-accent); }
+.auth-card [role='tab']:hover { background: var(--color-row-alt); }
+.auth-card [role='tabpanel'] > a, .auth-card form + a,
+.auth-card > a:last-child { display: inline-block; margin-top: var(--space-5); color: var(--color-link); }
+.auth-card #password-hint { margin: 0 0 var(--space-5); text-align: left; color: var(--color-text-muted); font-size: 14px; }
+
+/* Candidate contact and application hierarchy, without changing the page shell. */
+.candidate-layout { display: grid; grid-template-columns: minmax(260px, 1fr) minmax(0, 2fr); gap: var(--space-6); max-width: 1100px; margin: 0 auto; align-items: start; }
+.candidate-layout > *, .candidate-applications > * { min-width: 0; }
+.candidate-profile, .candidate-application, .candidate-empty {
+  width: 100%;
+  max-width: none;
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-card);
+  overflow-wrap: anywhere;
+}
+.candidate-profile h1 { text-align: left; }
+.candidate-profile h2 { font-size: 20px; margin-top: var(--space-6); }
+.candidate-profile > p { margin-top: var(--space-3); }
+.candidate-profile a { color: var(--color-link); }
+.candidate-profile-form { margin-top: var(--space-5); }
+.candidate-profile-form .btn { margin: var(--space-1) var(--space-1) var(--space-1) 0; }
+.candidate-profile dl, .candidate-application dl { margin-block: var(--space-5); }
+.candidate-profile dt, .candidate-application dt { color: var(--color-text-muted); font-size: 14px; }
+.candidate-profile dd, .candidate-application dd { margin: 0 0 var(--space-3); }
+.candidate-application dl { display: grid; grid-template-columns: minmax(100px, 1fr) minmax(0, 2fr); gap: var(--space-2) var(--space-4); }
+.candidate-application dd { margin: 0; }
+.candidate-applications > h2 { margin-bottom: var(--space-5); }
+.candidate-application + .candidate-application { margin-top: var(--space-6); }
+.candidate-application h3, .candidate-empty h3 { font-size: 20px; }
+.candidate-empty p { margin-block: var(--space-3); }
+.candidate-empty a { color: var(--color-link); }
+.candidate-interview { margin-top: var(--space-5); padding-top: var(--space-4); border-top: 1px solid var(--color-border); }
+.candidate-interview h4 { margin: 0 0 var(--space-2); }
+.candidate-progress { margin-top: var(--space-6); }
+.candidate-status { display: inline-block; padding: var(--space-1) var(--space-3); border-radius: 6px; font-size: 14px; font-weight: 500; }
+.stage-stepper { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-2); padding: 0; margin: var(--space-5) 0; list-style: none; }
+.stage-step { position: relative; padding-top: var(--space-4); border-top: 3px solid var(--color-border); color: var(--color-text-muted); font-size: 14px; }
+.stage-step.is-current { color: var(--color-link); border-top-color: var(--color-accent); font-weight: 600; }
+.stage-step.is-complete { color: var(--color-text); border-top-color: var(--color-applied); }
+.stage-step.is-current::before { content: ''; position: absolute; top: -3px; left: 0; width: 100%; height: 3px; background: var(--color-accent); transform-origin: left; animation: stage-progress 180ms ease-out; }
+@keyframes stage-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.stage-state { display: block; font-size: 12px; font-weight: 400; margin-top: var(--space-2); }
+.candidate-next-steps { line-height: 1.6; }
+
+/* Existing accessible section names are stable styling hooks; no dashboard markup edits. */
+.dashboard-page section[aria-label='Pipeline distribution'] { margin-bottom: var(--space-6); }
+.dashboard-page section[aria-label='Pipeline distribution'] h2 { font-size: 20px; }
+.dashboard-page section[aria-label='Pipeline distribution'] dl { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--space-3); margin-block: var(--space-4); }
+.dashboard-page section[aria-label='Pipeline distribution'] dl > div { padding: var(--space-3); border: 1px solid var(--color-border); border-radius: 8px; background: var(--color-card); }
+.dashboard-page section[aria-label='Pipeline distribution'] dt { font-size: 14px; }
+.dashboard-page section[aria-label='Pipeline distribution'] dd { margin: var(--space-2) 0 0; font-variant-numeric: tabular-nums; font-size: 24px; font-weight: 600; }
+.dashboard-page section[aria-label='Filter submissions'] { margin-bottom: var(--space-6); }
+.dashboard-page section[aria-label='Filter submissions'] > label { display: block; margin-bottom: var(--space-2); font-size: 14px; font-weight: 500; }
+#submission-search { width: 100%; }
+.dashboard-page [aria-label='Department filters'] { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-block: var(--space-4); }
+.department-filter[aria-pressed='true'] { color: var(--color-link); background: var(--color-primary-light); border-color: var(--color-ring); }
+.dashboard-page section[aria-label='Filter submissions'] > p { color: var(--color-text-muted); font-size: 14px; }
+.submissions-table select { min-width: 148px; font-size: 14px; }
+
+/* Text plus quiet status colors communicates outcomes in both modes. */
+.status-applied, .status-unknown,
+.submissions-table select:has(option[value='applied']:checked),
+.dashboard-page section[aria-label='Pipeline distribution'] dl > div:nth-child(1) { color: var(--color-applied); background: var(--color-applied-bg); }
+.status-review, .submissions-table select:has(option[value='review']:checked),
+.dashboard-page section[aria-label='Pipeline distribution'] dl > div:nth-child(2) { color: var(--color-warning); background: var(--color-warning-bg); }
+.status-interview, .submissions-table select:has(option[value='interview']:checked),
+.dashboard-page section[aria-label='Pipeline distribution'] dl > div:nth-child(3) { color: var(--color-info); background: var(--color-info-bg); }
+.status-offer, .submissions-table select:has(option[value='offer']:checked),
+.dashboard-page section[aria-label='Pipeline distribution'] dl > div:nth-child(4) { color: var(--color-success); background: var(--color-success-bg); }
+.status-archived, .submissions-table select:has(option[value='archived']:checked),
+.dashboard-page section[aria-label='Pipeline distribution'] dl > div:nth-child(5) { color: var(--color-danger); background: var(--color-danger-bg); }
+
+/* Drawers and editors retain their focus-managed behavior and scroll within the viewport. */
+.edit-overlay { background: var(--color-overlay); overflow-y: auto; }
+.edit-dialog { max-height: calc(100dvh - 40px); background: var(--color-card); color: var(--color-text); border: 1px solid var(--color-border); border-radius: 12px; box-shadow: var(--shadow-overlay); overflow-wrap: anywhere; }
+.resume-overlay { justify-content: flex-end; }
+.resume-drawer { max-width: 560px; padding: var(--space-6); }
+.resume-drawer h2 { font-size: 24px; }
+.resume-drawer > p { margin-block: var(--space-5); color: var(--color-text-muted); }
+.resume-drawer section { margin-block: var(--space-5); padding-block: var(--space-4); border-block: 1px solid var(--color-border); }
+.resume-drawer section h3 { margin-bottom: var(--space-3); font-size: 18px; }
+.resume-drawer section p + p { margin-top: var(--space-3); }
+.resume-drawer a { color: var(--color-link); }
+.edit-actions { flex-wrap: wrap; }
+.edit-actions .submission-button { width: auto; flex: 1; padding-inline: var(--space-4); }
+
+/* The reset utility remains a discreet footer rather than another primary action. */
+footer[aria-label='Demo utilities'] { border-top: 1px solid var(--color-border); color: var(--color-text-muted); font-size: 14px; margin-top: var(--space-8); }
+footer[aria-label='Demo utilities'] .container { max-width: 1100px; margin: 0 auto; padding: var(--space-5); display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+footer[aria-label='Demo utilities'] button { min-height: 44px; padding: var(--space-2) var(--space-3); border: 1px solid var(--color-border); border-radius: 8px; color: var(--color-text); background: var(--color-card); transition: background-color 150ms ease-out; }
+footer[aria-label='Demo utilities'] button:hover { background: var(--color-row-alt); }
+footer[aria-label='Demo utilities'] [role='status']:empty { display: none; }
+footer[aria-label='Demo utilities'] .auth-storage-error { width: 100%; margin: 0; }
+.feature-card { transition: transform 150ms ease-out, box-shadow 150ms ease-out; }
+.feature-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12); }
+
+@media (max-width: 767px) {
+  .header-inner { gap: var(--space-2); }
+  .main-nav { order: 3; flex-basis: 100%; justify-content: flex-start; gap: var(--space-2) var(--space-3); }
+  .header-inner > .session-control { margin-left: auto; }
+  .nav-link { font-size: 14px; }
+  .theme-warning { padding-inline: var(--space-3); }
+  .candidate-layout { grid-template-columns: minmax(0, 1fr); }
+  .candidate-profile, .candidate-application, .candidate-empty { padding: var(--space-5); }
+  .stage-stepper { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+  .dashboard-heading { flex-wrap: wrap; }
+  .dashboard-page section[aria-label='Pipeline distribution'] dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .edit-dialog { max-height: calc(100dvh - max(12px, env(safe-area-inset-top)) - max(12px, env(safe-area-inset-bottom))); }
+  .resume-drawer { padding: var(--space-5); }
+}
+@media (max-width: 380px) {
+  .candidate-application dl { grid-template-columns: minmax(0, 1fr); }
+  .candidate-application dd { margin-bottom: var(--space-2); }
+}
+
