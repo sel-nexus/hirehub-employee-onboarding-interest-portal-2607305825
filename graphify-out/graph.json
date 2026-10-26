@@ -1,6 +1,62 @@
 {
   "nodes": [
     {
+      "id": "changelog",
+      "label": "CHANGELOG.md",
+      "file_type": "document",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "changelog_changelog",
+      "label": "Changelog",
+      "file_type": "document",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "changelog_hirehub_2_0_2026_10_26",
+      "label": "HireHub 2.0 \u2014 2026-10-26",
+      "file_type": "document",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L3",
+      "_origin": "ast"
+    },
+    {
+      "id": "changelog_added",
+      "label": "Added",
+      "file_type": "document",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L7",
+      "_origin": "ast"
+    },
+    {
+      "id": "changelog_changed_modules",
+      "label": "Changed modules",
+      "file_type": "document",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L16",
+      "_origin": "ast"
+    },
+    {
+      "id": "changelog_compatibility_and_migration",
+      "label": "Compatibility and migration",
+      "file_type": "document",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L25",
+      "_origin": "ast"
+    },
+    {
+      "id": "changelog_verification_and_known_risk",
+      "label": "Verification and known risk",
+      "file_type": "document",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L34",
+      "_origin": "ast"
+    },
+    {
       "id": "e2e_admin_spec",
       "label": "admin.spec.js",
       "file_type": "code",
@@ -21,7 +77,7 @@
       "label": "expectSummary()",
       "file_type": "code",
       "source_file": "frontend/e2e/admin.spec.js",
-      "source_location": "L24",
+      "source_location": "L25",
       "_origin": "ast"
     },
     {
@@ -29,7 +85,7 @@
       "label": "recruiterLogin()",
       "file_type": "code",
       "source_file": "frontend/e2e/admin.spec.js",
-      "source_location": "L34",
+      "source_location": "L35",
       "_origin": "ast"
     },
     {
@@ -37,7 +93,7 @@
       "label": "captureState()",
       "file_type": "code",
       "source_file": "frontend/e2e/admin.spec.js",
-      "source_location": "L52",
+      "source_location": "L53",
       "_origin": "ast"
     },
     {
@@ -157,7 +213,7 @@
       "label": "captureErrors()",
       "file_type": "code",
       "source_file": "frontend/e2e/demo.spec.js",
-      "source_location": "L6",
+      "source_location": "L7",
       "_origin": "ast"
     },
     {
@@ -165,7 +221,7 @@
       "label": "loginAdmin()",
       "file_type": "code",
       "source_file": "frontend/e2e/demo.spec.js",
-      "source_location": "L16",
+      "source_location": "L17",
       "_origin": "ast"
     },
     {
@@ -173,7 +229,23 @@
       "label": "readStore()",
       "file_type": "code",
       "source_file": "frontend/e2e/demo.spec.js",
-      "source_location": "L26",
+      "source_location": "L27",
+      "_origin": "ast"
+    },
+    {
+      "id": "e2e_demo_spec_readstorage",
+      "label": "readStorage()",
+      "file_type": "code",
+      "source_file": "frontend/e2e/demo.spec.js",
+      "source_location": "L38",
+      "_origin": "ast"
+    },
+    {
+      "id": "e2e_demo_spec_resetmockdata",
+      "label": "resetMockData()",
+      "file_type": "code",
+      "source_file": "frontend/e2e/demo.spec.js",
+      "source_location": "L46",
       "_origin": "ast"
     },
     {
@@ -238,22 +310,6 @@
       "file_type": "code",
       "source_file": "frontend/e2e/theme.spec.js",
       "source_location": "L110",
-      "_origin": "ast"
-    },
-    {
-      "id": "e2e_theme_spec_storage_setitem",
-      "label": ".setItem()",
-      "file_type": "code",
-      "source_file": "frontend/e2e/theme.spec.js",
-      "source_location": "L254",
-      "_origin": "ast"
-    },
-    {
-      "id": "e2e_theme_spec_storage_getitem",
-      "label": ".getItem()",
-      "file_type": "code",
-      "source_file": "frontend/e2e/theme.spec.js",
-      "source_location": "L275",
       "_origin": "ast"
     },
     {
@@ -913,7 +969,7 @@
       "label": "readUsers()",
       "file_type": "code",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L19",
+      "source_location": "L20",
       "_origin": "ast"
     },
     {
@@ -921,7 +977,7 @@
       "label": "readSession()",
       "file_type": "code",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L32",
+      "source_location": "L33",
       "_origin": "ast"
     },
     {
@@ -929,7 +985,7 @@
       "label": "isAuthenticated()",
       "file_type": "code",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L58",
+      "source_location": "L59",
       "_origin": "ast"
     },
     {
@@ -937,7 +993,7 @@
       "label": "writeSession()",
       "file_type": "code",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L63",
+      "source_location": "L64",
       "_origin": "ast"
     },
     {
@@ -945,7 +1001,7 @@
       "label": "login()",
       "file_type": "code",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L83",
+      "source_location": "L84",
       "_origin": "ast"
     },
     {
@@ -953,7 +1009,7 @@
       "label": "registerCandidate()",
       "file_type": "code",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L111",
+      "source_location": "L112",
       "_origin": "ast"
     },
     {
@@ -961,7 +1017,7 @@
       "label": "logout()",
       "file_type": "code",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L156",
+      "source_location": "L162",
       "_origin": "ast"
     },
     {
@@ -977,7 +1033,7 @@
       "label": "signup",
       "file_type": "code",
       "source_file": "frontend/src/features/admin/auth.test.js",
-      "source_location": "L9",
+      "source_location": "L10",
       "_origin": "ast"
     },
     {
@@ -1441,7 +1497,7 @@
       "label": "readCandidate()",
       "file_type": "code",
       "source_file": "frontend/src/features/candidate/profile.js",
-      "source_location": "L42",
+      "source_location": "L33",
       "_origin": "ast"
     },
     {
@@ -1449,7 +1505,7 @@
       "label": "validateProfile()",
       "file_type": "code",
       "source_file": "frontend/src/features/candidate/profile.js",
-      "source_location": "L71",
+      "source_location": "L62",
       "_origin": "ast"
     },
     {
@@ -1457,7 +1513,7 @@
       "label": "saveProfile()",
       "file_type": "code",
       "source_file": "frontend/src/features/candidate/profile.js",
-      "source_location": "L95",
+      "source_location": "L86",
       "_origin": "ast"
     },
     {
@@ -1876,6 +1932,60 @@
   ],
   "links": [
     {
+      "source": "changelog",
+      "target": "changelog_changelog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "changelog_changelog",
+      "target": "changelog_hirehub_2_0_2026_10_26",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "changelog_hirehub_2_0_2026_10_26",
+      "target": "changelog_added",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "changelog_hirehub_2_0_2026_10_26",
+      "target": "changelog_changed_modules",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "changelog_hirehub_2_0_2026_10_26",
+      "target": "changelog_compatibility_and_migration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "changelog_hirehub_2_0_2026_10_26",
+      "target": "changelog_verification_and_known_risk",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
       "source": "e2e_admin_spec",
       "target": "e2e_admin_spec_storedrecords",
       "relation": "contains",
@@ -1890,7 +2000,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/admin.spec.js",
-      "source_location": "L24",
+      "source_location": "L25",
       "weight": 1.0
     },
     {
@@ -1899,7 +2009,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/admin.spec.js",
-      "source_location": "L34",
+      "source_location": "L35",
       "weight": 1.0
     },
     {
@@ -1908,7 +2018,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/admin.spec.js",
-      "source_location": "L52",
+      "source_location": "L53",
       "weight": 1.0
     },
     {
@@ -1942,6 +2052,16 @@
     {
       "source": "e2e_auth_spec",
       "target": "demo_mockdata_default_users",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/auth.spec.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_auth_spec",
+      "target": "demo_mockdata_default_submissions",
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -2053,11 +2173,51 @@
     },
     {
       "source": "e2e_demo_spec",
+      "target": "demo_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/demo.spec.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_demo_spec",
+      "target": "demo_mockdata_default_submissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/demo.spec.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_demo_spec",
+      "target": "demo_mockdata_default_users",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/demo.spec.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_demo_spec",
+      "target": "demo_mockdata_default_departments",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/demo.spec.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_demo_spec",
       "target": "e2e_demo_spec_captureerrors",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/demo.spec.js",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0
     },
     {
@@ -2066,7 +2226,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/demo.spec.js",
-      "source_location": "L16",
+      "source_location": "L17",
       "weight": 1.0
     },
     {
@@ -2075,7 +2235,25 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/demo.spec.js",
-      "source_location": "L26",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_demo_spec",
+      "target": "e2e_demo_spec_readstorage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/demo.spec.js",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_demo_spec",
+      "target": "e2e_demo_spec_resetmockdata",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/demo.spec.js",
+      "source_location": "L46",
       "weight": 1.0
     },
     {
@@ -3564,11 +3742,31 @@
     },
     {
       "source": "admin_auth",
+      "target": "apply_validation",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth",
+      "target": "apply_validation_validatesubmission",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth",
       "target": "admin_auth_readusers",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L19",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
@@ -3577,7 +3775,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L32",
+      "source_location": "L33",
       "weight": 1.0
     },
     {
@@ -3586,7 +3784,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L58",
+      "source_location": "L59",
       "weight": 1.0
     },
     {
@@ -3595,7 +3793,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L63",
+      "source_location": "L64",
       "weight": 1.0
     },
     {
@@ -3604,7 +3802,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L83",
+      "source_location": "L84",
       "weight": 1.0
     },
     {
@@ -3613,7 +3811,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L111",
+      "source_location": "L112",
       "weight": 1.0
     },
     {
@@ -3622,7 +3820,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L156",
+      "source_location": "L162",
       "weight": 1.0
     },
     {
@@ -3632,7 +3830,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L41",
+      "source_location": "L42",
       "weight": 1.0
     },
     {
@@ -3642,7 +3840,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L59",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
@@ -3652,7 +3850,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L89",
+      "source_location": "L90",
       "weight": 1.0
     },
     {
@@ -3662,7 +3860,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L92",
+      "source_location": "L93",
       "weight": 1.0
     },
     {
@@ -3672,7 +3870,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L127",
+      "source_location": "L133",
       "weight": 1.0
     },
     {
@@ -3682,7 +3880,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L135",
+      "source_location": "L141",
       "weight": 1.0
     },
     {
@@ -3717,7 +3915,7 @@
     },
     {
       "source": "admin_auth_test",
-      "target": "admin_auth",
+      "target": "candidate_profile",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -3727,12 +3925,52 @@
     },
     {
       "source": "admin_auth_test",
-      "target": "admin_auth_readusers",
+      "target": "candidate_profile_readcandidate",
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.test.js",
       "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth_test",
+      "target": "candidate_profile_validateprofile",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth_test",
+      "target": "candidate_profile_saveprofile",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth_test",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.test.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth_test",
+      "target": "admin_auth_readusers",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.test.js",
+      "source_location": "L5",
       "weight": 1.0
     },
     {
@@ -3742,7 +3980,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.test.js",
-      "source_location": "L4",
+      "source_location": "L5",
       "weight": 1.0
     },
     {
@@ -3752,7 +3990,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.test.js",
-      "source_location": "L4",
+      "source_location": "L5",
       "weight": 1.0
     },
     {
@@ -3762,7 +4000,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.test.js",
-      "source_location": "L4",
+      "source_location": "L5",
       "weight": 1.0
     },
     {
@@ -3772,7 +4010,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.test.js",
-      "source_location": "L4",
+      "source_location": "L5",
       "weight": 1.0
     },
     {
@@ -3782,7 +4020,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.test.js",
-      "source_location": "L4",
+      "source_location": "L5",
       "weight": 1.0
     },
     {
@@ -3791,7 +4029,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.test.js",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0
     },
     {
@@ -5081,6 +5319,16 @@
     },
     {
       "source": "candidate_profile",
+      "target": "apply_submissions_validdataset",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile",
       "target": "apply_validation",
       "relation": "imports_from",
       "context": "import",
@@ -5114,7 +5362,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/candidate/profile.js",
-      "source_location": "L42",
+      "source_location": "L33",
       "weight": 1.0
     },
     {
@@ -5123,7 +5371,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/candidate/profile.js",
-      "source_location": "L71",
+      "source_location": "L62",
       "weight": 1.0
     },
     {
@@ -5132,7 +5380,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/candidate/profile.js",
-      "source_location": "L95",
+      "source_location": "L86",
       "weight": 1.0
     },
     {
@@ -5142,7 +5390,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/candidate/profile.js",
-      "source_location": "L47",
+      "source_location": "L38",
       "weight": 1.0
     },
     {
@@ -5152,7 +5400,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/candidate/profile.js",
-      "source_location": "L96",
+      "source_location": "L87",
       "weight": 1.0
     },
     {
@@ -5162,7 +5410,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/candidate/profile.js",
-      "source_location": "L109",
+      "source_location": "L100",
       "weight": 1.0
     },
     {
@@ -5199,6 +5447,26 @@
       "source": "candidate_profile_test",
       "target": "apply_submissions",
       "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_test",
+      "target": "apply_submissions_readsubmissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profile_test",
+      "target": "apply_submissions_validdataset",
+      "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/candidate/profile.test.js",
@@ -6319,6 +6587,16 @@
       "weight": 1.0
     },
     {
+      "source": "candidate_profile_readrecords",
+      "target": "apply_submissions_validdataset",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/profile.js",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
       "source": "src_app_test_renderapp",
       "target": "admin_dashboard_test_render",
       "relation": "calls",
@@ -6370,7 +6648,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L22",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth_registercandidate",
+      "target": "apply_validation_validatesubmission",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L120",
       "weight": 1.0
     },
     {
@@ -6403,7 +6692,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/features/candidate/profile.js",
-      "source_location": "L44",
+      "source_location": "L35",
       "weight": 1.0
     },
     {
@@ -6414,7 +6703,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/features/candidate/profile.js",
-      "source_location": "L46",
+      "source_location": "L37",
       "weight": 1.0
     },
     {
@@ -6425,7 +6714,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/features/candidate/profile.js",
-      "source_location": "L73",
+      "source_location": "L64",
       "weight": 1.0
     },
     {
@@ -6436,7 +6725,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/features/candidate/profile.js",
-      "source_location": "L103",
+      "source_location": "L94",
       "weight": 1.0
     },
     {
@@ -6447,7 +6736,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/features/candidate/profile.js",
-      "source_location": "L108",
+      "source_location": "L99",
       "weight": 1.0
     },
     {
@@ -6463,10 +6752,10 @@
     }
   ],
   "metadata": {
-    "built_at": "2026-10-26T18:04:48.889013+00:00",
+    "built_at": "2026-10-26T18:44:32.953365+00:00",
     "version": "graph_update-v1",
     "codebase_root": "/data/artifacts-v2/T011RNFvLqRR0008726102616342188/developer",
     "force": true,
-    "files_scanned": 52
+    "files_scanned": 53
   }
 }
