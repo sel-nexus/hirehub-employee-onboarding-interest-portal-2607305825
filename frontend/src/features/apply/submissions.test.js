@@ -211,3 +211,116 @@ describe('storage failures', () => {
     expect(readSubmissions()).toEqual([stored]);
   });
 });
+
+/** Preserve legacy integrity while accepting only validated optional demo fields. */
+describe('optional demo submission schema', () => {
+  const extended = {
+    ...stored, userId: 'u-201', status: 'interview', notes: 'Recruiter notes',
+    portfolioUrl: 'https://example.com/portfolio', sampleResume: 'Frontend Software Engineer (5 YOE)',
+    interviewSchedule: 'October 28, 2026 at 10:00 AM Pacific',
+  };
+
+  it('round-trips extended records and keeps metadata unchanged during existing contact edits', () => {
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([extended]));
+    expect(readSubmissions()).toEqual([extended]);
+    const changed = updateSubmission(extended.id, {
+      ...valid, fullName: 'Updated Name', userId: 'hijack', status: 'archived', notes: 'overwrite',
+      portfolioUrl: 'javascript:alert(1)', sampleResume: 'overwrite', interviewSchedule: 'overwrite',
+      id: 'changed', submittedAt: 'invalid', email: 'changed@example.com',
+    });
+    expect(changed).toEqual({ ...extended, fullName: 'Updated Name' });
+    expect(persisted()).toEqual([changed]);
+    expect(readSubmissions()).toEqual([changed]);
+    expect(deleteSubmission(changed.id)).toEqual(changed);
+    expect(persisted()).toEqual([]);
+  });
+
+  it('creates optional fields but still generates immutable identity and time', () => {
+    const created = createSubmission({ ...extended, id: 'attempted', submittedAt: 'invalid' });
+    expect(created).toEqual({ ...extended, id: expect.any(String), submittedAt: expect.any(String) });
+    expect(created.id).not.toBe('attempted');
+    expect(new Date(created.submittedAt).toISOString()).toBe(created.submittedAt);
+    expect(persisted()).toEqual([created]);
+    expect(readSubmissions()).toEqual([created]);
+  });
+
+  it.each(['applied', 'review', 'interview', 'offer', 'archived'])('accepts the canonical %s status', (status) => {
+    const created = createSubmission({ ...valid, status });
+    expect(readSubmissions()).toEqual([created]);
+    expect(created.status).toBe(status);
+  });
+
+  it.each(['', 'https://example.com/path?x=1', 'http://example.com'])('accepts optional safe portfolio %s and empty text fields', (portfolioUrl) => {
+    const created = createSubmission({ ...valid, portfolioUrl, notes: '', sampleResume: '', interviewSchedule: '' });
+    expect(readSubmissions()).toEqual([created]);
+    expect(created.portfolioUrl).toBe(portfolioUrl);
+  });
+
+  const invalidOptionals = [
+    ...['userId', 'status', 'notes', 'portfolioUrl', 'sampleResume', 'interviewSchedule'].flatMap((key) => [
+      [key, null], [key, 42], [key, {}], [key, []], [key, undefined],
+    ]),
+    ['userId', ''], ['userId', ' '], ['userId', ' padded '],
+    ['status', ''], ['status', 'unknown'], ['status', 'Interview'],
+    ['portfolioUrl', 'javascript:alert(1)'], ['portfolioUrl', 'data:text/html,bad'],
+    ['portfolioUrl', '/relative'], ['portfolioUrl', 'https://'], ['portfolioUrl', ' https://example.com '],
+    ['portfolioUrl', 'ftp://example.com'],
+  ];
+  it.each(invalidOptionals)('rejects invalid optional %s=%j on creation without changing existing data', (key, value) => {
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([stored]));
+    let error;
+    try {
+      createSubmission({ ...valid, email: 'second@example.com', [key]: value });
+    } catch (caught) {
+      error = caught;
+    }
+    expect(error?.message).toBe('Please correct the application fields.');
+    expect(error?.fieldErrors[key]).toEqual(expect.any(String));
+    expect(readSubmissions()).toEqual([stored]);
+    expect(persisted()).toEqual([stored]);
+  });
+
+  it.each(invalidOptionals.filter(([, value]) => value !== undefined))('resets invalid optional %s=%j in stored records', (key, value) => {
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([{ ...extended, [key]: value }]));
+    expect(readSubmissions()).toEqual([]);
+    expect(persisted()).toEqual([]);
+  });
+
+  it.each(Object.keys(stored))('still rejects a missing required %s even when demo fields are present', (key) => {
+    const record = { ...extended };
+    delete record[key];
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([record]));
+    expect(readSubmissions()).toEqual([]);
+    expect(persisted()).toEqual([]);
+  });
+
+  it('accepts the PRD Product department for create, read and existing contact updates', () => {
+    const created = createSubmission({ ...valid, department: ' Product ' });
+    expect(created.department).toBe('Product');
+    expect(readSubmissions()).toEqual([created]);
+    const updated = updateSubmission(created.id, { ...valid, department: 'Product', fullName: 'Product Candidate' });
+    expect(persisted()).toEqual([updated]);
+    expect(readSubmissions()).toEqual([updated]);
+    expect(updated).toMatchObject({ id: created.id, email: created.email, submittedAt: created.submittedAt });
+  });
+
+  it.each([undefined, null, 42, '', ' ', 'product', 'Legal'])('rejects missing or noncanonical department %j without weakening required fields', (department) => {
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([stored]));
+    expect(() => createSubmission({ ...valid, email: 'new@example.com', department })).toThrow('Please correct the application fields.');
+    expect(() => updateSubmission(stored.id, { ...valid, department })).toThrow('Please correct the application fields.');
+    expect(persisted()).toEqual([stored]);
+  });
+
+  it.each(['fullName', 'email', 'mobile'])('rejects invalid %s even with the new Product department', (key) => {
+    expect(() => createSubmission({ ...valid, department: 'Product', [key]: '' })).toThrow('Please correct the application fields.');
+    expect(localStorage.getItem(SUBMISSIONS_KEY)).toBeNull();
+  });
+
+  it('accepts mixed valid legacy and extended records without normalizing or adding fields', () => {
+    const records = [stored, { ...extended, id: 'second', email: 'second@example.com' }];
+    const raw = JSON.stringify(records, null, 2);
+    localStorage.setItem(SUBMISSIONS_KEY, raw);
+    expect(readSubmissions()).toEqual(records);
+    expect(localStorage.getItem(SUBMISSIONS_KEY)).toBe(raw);
+  });
+});

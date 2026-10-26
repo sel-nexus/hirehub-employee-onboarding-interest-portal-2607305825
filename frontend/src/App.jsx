@@ -7,6 +7,8 @@ import Apply from './features/apply/Apply';
 import Login from './features/admin/Login';
 import Dashboard from './features/admin/Dashboard';
 import { isAuthenticated, logout } from './features/admin/auth';
+import { seedDemoData } from './features/demo/mockData';
+import { DemoBar } from './features/demo/DemoBar';
 
 /**
  * Share the persisted demo session across navigation and the admin route.
@@ -20,6 +22,23 @@ export default function App() {
   const { pathname } = useLocation();
   const [authenticated, setAuthenticated] = useState(isAuthenticated);
   const [storageError, setStorageError] = useState('');
+  const [demoReady, setDemoReady] = useState(false);
+  const [demoError, setDemoError] = useState('');
+
+  /** Seed after commit so no storage mutation occurs during a React render. */
+  useEffect(() => {
+    const result = seedDemoData();
+    setDemoError(result.error);
+    setDemoReady(true);
+  }, []);
+
+  /** Refresh the cleared session and return home after a confirmed successful reset. */
+  function onReset() {
+    setDemoError('');
+    setStorageError('');
+    setAuthenticated(isAuthenticated());
+    navigate('/');
+  }
 
   /** Requery storage when navigation or browser session activity changes. */
   useEffect(() => {
@@ -65,19 +84,28 @@ export default function App() {
           {storageError}
         </p>
       )}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/apply" element={<Apply />} />
-        <Route
-          path="/admin"
-          element={authenticated ? (
-            <Dashboard onLogout={onLogout} />
-          ) : (
-            <Login onLogin={onLogin} />
-          )}
-        />
-        <Route path="*" element={<Home />} />
-      </Routes>
+      {demoReady ? (
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/apply" element={<Apply />} />
+          <Route
+            path="/admin"
+            element={authenticated ? (
+              <Dashboard onLogout={onLogout} />
+            ) : (
+              <Login onLogin={onLogin} />
+            )}
+          />
+          <Route path="*" element={<Home />} />
+        </Routes>
+      ) : (
+        <main id="main-content" aria-busy="true">
+          <p role="status">
+            Preparing local demo data…
+          </p>
+        </main>
+      )}
+      <DemoBar initializationError={demoError} onReset={onReset} />
     </>
   );
 }

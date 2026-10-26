@@ -4,6 +4,59 @@ import { validateSubmission } from './validation';
 export const SUBMISSIONS_KEY = 'hirehub_submissions';
 export const DUPLICATE_EMAIL_ERROR = 'This email has already been submitted.';
 const RECORD_KEYS = ['id', 'fullName', 'email', 'mobile', 'department', 'submittedAt'];
+export const SUBMISSION_STATUSES = ['applied', 'review', 'interview', 'offer', 'archived'];
+const OPTIONAL_KEYS = ['userId', 'status', 'notes', 'portfolioUrl', 'sampleResume', 'interviewSchedule'];
+
+/**
+ * Extend the legacy department allowlist with the required Product department.
+ * Args:
+ *   input: Untrusted candidate contact fields.
+ * Returns:
+ *   The original normalized fields and errors, accepting only one additional label.
+ * Notes:
+ *   Name, email and mobile checks remain delegated to the existing validator.
+ * @param {*} input
+ * @returns {{values: object, errors: object}}
+ */
+function validateDetails(input) {
+  const result = validateSubmission(input);
+  if (result.values.department === 'Product') delete result.errors.department;
+  return result;
+}
+
+/**
+ * Validate supplied demo metadata without changing contact validation.
+ * Args:
+ *   input: A record or candidate details containing optional metadata.
+ * Returns:
+ *   A map of errors for present optional fields only.
+ * @param {object} input
+ * @returns {object}
+ */
+function optionalErrors(input) {
+  const errors = {};
+  for (const key of OPTIONAL_KEYS) {
+    if (!Object.hasOwn(input, key)) continue;
+    const value = input[key];
+    if (typeof value !== 'string') {
+      errors[key] = 'Enter text for this field.';
+    } else if (key === 'userId' && (!value.trim() || value !== value.trim())) {
+      errors[key] = 'Provide a nonempty user identity without surrounding spaces.';
+    } else if (key === 'status' && !SUBMISSION_STATUSES.includes(value)) {
+      errors[key] = 'Select a valid hiring status.';
+    } else if (key === 'portfolioUrl' && value !== '') {
+      try {
+        const url = new URL(value);
+        if (!['http:', 'https:'].includes(url.protocol) || value !== value.trim()) {
+          errors[key] = 'Use an http or https portfolio URL.';
+        }
+      } catch {
+        errors[key] = 'Use an http or https portfolio URL.';
+      }
+    }
+  }
+  return errors;
+}
 
 /**
  * Write a complete dataset or surface the browser storage failure.
@@ -30,16 +83,18 @@ function writeSubmissions(records) {
  * @param {*} records
  * @returns {boolean}
  */
-function validDataset(records) {
+export function validDataset(records) {
   if (!Array.isArray(records)) return false;
   const ids = new Set();
   const emails = new Set();
   return records.every((record) => {
     if (!record || typeof record !== 'object' || Array.isArray(record)) return false;
-    if (Object.keys(record).length !== RECORD_KEYS.length || !RECORD_KEYS.every((key) => typeof record[key] === 'string')) {
+    if (!RECORD_KEYS.every((key) => typeof record[key] === 'string')
+      || Object.keys(record).some((key) => !RECORD_KEYS.includes(key) && !OPTIONAL_KEYS.includes(key))
+      || Object.keys(optionalErrors(record)).length) {
       return false;
     }
-    const { values, errors } = validateSubmission(record);
+    const { values, errors } = validateDetails(record);
     if (Object.keys(errors).length || Object.keys(values).some((key) => values[key] !== record[key])) return false;
     if (!record.id.trim() || record.id !== record.id.trim()) return false;
     const date = new Date(record.submittedAt);
@@ -94,13 +149,18 @@ export function readSubmissions() {
  * @returns {object}
  */
 function requireValid(input) {
-  const { values, errors } = validateSubmission(input);
+  const { values, errors: contactErrors } = validateDetails(input);
+  const source = input && typeof input === 'object' && !Array.isArray(input) ? input : {};
+  const errors = { ...contactErrors, ...optionalErrors(source) };
   if (Object.keys(errors).length) {
     const error = new Error('Please correct the application fields.');
     error.fieldErrors = errors;
     throw error;
   }
-  return values;
+  return {
+    ...values,
+    ...Object.fromEntries(OPTIONAL_KEYS.filter((key) => Object.hasOwn(source, key)).map((key) => [key, source[key]])),
+  };
 }
 
 /**

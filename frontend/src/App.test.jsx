@@ -4,6 +4,9 @@ import { act, cleanup, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, useLocation } from 'react-router-dom';
 import App from './App';
+import { StrictMode } from 'react';
+import { renderToString } from 'react-dom/server';
+import { DEFAULT_SUBMISSIONS, DEFAULT_USERS, DEFAULT_DEPARTMENTS, USERS_KEY, DEPARTMENTS_KEY, SESSION_KEY } from './features/demo/mockData';
 import { AUTH_KEY, INVALID_CREDENTIALS, LOGOUT_STORAGE_ERROR } from './features/admin/auth';
 
 beforeEach(() => {
@@ -21,7 +24,11 @@ afterEach(() => {
 /** Observe the router's full URL without replacing any application behavior. */
 function CurrentRoute() {
   const { pathname, search, hash } = useLocation();
-  return <output aria-label="Current route">{pathname}{search}{hash}</output>;
+  return (
+    <output aria-label="Current route">
+      {pathname}{search}{hash}
+    </output>
+  );
 }
 
 /** Mount the actual application and its pages within an isolated router. */
@@ -50,7 +57,9 @@ function expectLoginGate() {
 /** Check the actual dashboard and shared authenticated header together. */
 function expectDashboard() {
   expect(screen.getByRole('heading', { name: 'Submissions Dashboard' })).toBeVisible();
-  expect(screen.getByText('No submissions yet.', { exact: true })).toBeVisible();
+  expect(screen.getByText('Alex Rivera', { exact: true })).toBeVisible();
+  expect(screen.getAllByRole('row')).toHaveLength(9);
+  expect(screen.queryByText('No submissions yet.', { exact: true })).not.toBeInTheDocument();
   expect(screen.queryByRole('heading', { name: 'Admin Login' })).not.toBeInTheDocument();
   expect(header().getByRole('button', { name: 'Logout', exact: true })).toBeVisible();
   expect(header().queryByRole('link', { name: 'Login', exact: true })).not.toBeInTheDocument();
@@ -214,5 +223,122 @@ describe('App session routing', () => {
     }
     expect(screen.queryByRole('banner')).not.toBeInTheDocument();
     expect(screen.queryByRole('main')).not.toBeInTheDocument();
+  });
+});
+
+/** Exercise effect-only seeding and reset wiring without replacing app dependencies. */
+describe('App demo initialization and reset', () => {
+  const legacy = {
+    id: 'legacy', fullName: 'Legacy Candidate', email: 'legacy@example.com', mobile: '0123456789',
+    department: 'Engineering', submittedAt: '2026-03-04T12:00:00.000Z',
+  };
+
+  it('does not seed during server render, leaving a preparing state before effects run', () => {
+    // MemoryRouter emits the documented server useLayoutEffect warning, not an app failure.
+    const warning = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const html = renderToString(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>,
+    );
+    expect(html).toContain('Preparing local demo data');
+    expect(localStorage.getItem('hirehub_submissions')).toBeNull();
+    expect(localStorage.getItem(USERS_KEY)).toBeNull();
+    expect(localStorage.getItem(DEPARTMENTS_KEY)).toBeNull();
+    for (const [message] of warning.mock.calls) expect(message).toContain('useLayoutEffect does nothing on the server');
+  });
+
+  it('seeds idempotently in StrictMode before the authenticated dashboard reads records', () => {
+    sessionStorage.setItem(AUTH_KEY, 'true');
+    render(
+      <StrictMode>
+        <MemoryRouter initialEntries={['/admin']}>
+          <App />
+        </MemoryRouter>
+      </StrictMode>,
+    );
+    expectDashboard();
+    expect(JSON.parse(localStorage.getItem('hirehub_submissions'))).toEqual(DEFAULT_SUBMISSIONS);
+    expect(JSON.parse(localStorage.getItem(USERS_KEY))).toEqual(DEFAULT_USERS);
+    expect(JSON.parse(localStorage.getItem(DEPARTMENTS_KEY))).toEqual(DEFAULT_DEPARTMENTS);
+    expect(screen.getByRole('contentinfo', { name: 'Demo utilities' })).toBeVisible();
+  });
+
+  it.each(['{bad', '[]', 'null'])('repairs corrupt or empty submissions %s before dashboard mounting', (raw) => {
+    sessionStorage.setItem(AUTH_KEY, 'true');
+    localStorage.setItem('hirehub_submissions', raw);
+    renderApp('/admin');
+    expectDashboard();
+    expect(JSON.parse(localStorage.getItem('hirehub_submissions'))).toEqual(DEFAULT_SUBMISSIONS);
+  });
+
+  it('preserves a nonempty six-field legacy dataset on launch and navigation', async () => {
+    const user = userEvent.setup();
+    sessionStorage.setItem(AUTH_KEY, 'true');
+    const raw = JSON.stringify([legacy], null, 2);
+    localStorage.setItem('hirehub_submissions', raw);
+    renderApp('/admin');
+    expect(screen.getByText('Legacy Candidate', { exact: true })).toBeVisible();
+    expect(screen.getAllByRole('row')).toHaveLength(2);
+    expect(localStorage.getItem('hirehub_submissions')).toBe(raw);
+    await user.click(header().getByRole('link', { name: 'Apply', exact: true }));
+    await user.click(header().getByRole('link', { name: 'Admin', exact: true }));
+    expect(screen.getByText('Legacy Candidate', { exact: true })).toBeVisible();
+    expect(localStorage.getItem('hirehub_submissions')).toBe(raw);
+  });
+
+  it.each(['read', 'quota'])('surfaces initial %s errors in the accessible footer and recovers on reset', async (failure) => {
+    const user = userEvent.setup();
+    vi.spyOn(window, 'confirm').mockReturnValue(true);
+    const storage = vi.spyOn(Storage.prototype, failure === 'read' ? 'getItem' : 'setItem').mockImplementation(() => {
+      throw new Error('storage unavailable');
+    });
+    renderApp('/');
+    expect(screen.getByRole('heading', { name: 'Build Your Future With Us' })).toBeVisible();
+    const footer = within(screen.getByRole('contentinfo', { name: 'Demo utilities' }));
+    expect(footer.getByRole('alert')).toHaveTextContent(failure === 'read' ? 'Unable to read' : 'Unable to save');
+    expect(footer.getByRole('alert')).toHaveTextContent('try Reset Mock Data again');
+    storage.mockRestore();
+    await user.click(footer.getByRole('button', { name: 'Reset Mock Data' }));
+    expect(footer.queryByRole('alert')).not.toBeInTheDocument();
+    expect(JSON.parse(localStorage.getItem('hirehub_submissions'))).toEqual(DEFAULT_SUBMISSIONS);
+    expect(footer.getByRole('status')).toHaveTextContent('Mock data restored.');
+  });
+
+  it('resets an authenticated dashboard, clears both sessions, preserves theme and returns home', async () => {
+    const user = userEvent.setup();
+    vi.spyOn(window, 'confirm').mockReturnValue(true);
+    sessionStorage.setItem(AUTH_KEY, 'true');
+    localStorage.setItem(SESSION_KEY, 'stale');
+    localStorage.setItem('hirehub_theme', 'dark');
+    localStorage.setItem('hirehub_submissions', JSON.stringify([legacy]));
+    renderApp('/admin');
+    await user.click(screen.getByRole('button', { name: 'Reset Mock Data' }));
+    expect(screen.getByLabelText('Current route')).toHaveTextContent(/^\/$/);
+    expect(screen.getByRole('heading', { name: 'Build Your Future With Us' })).toBeVisible();
+    expect(header().getByRole('link', { name: 'Login', exact: true })).toBeVisible();
+    expect(sessionStorage.getItem(AUTH_KEY)).toBeNull();
+    expect(localStorage.getItem(SESSION_KEY)).toBeNull();
+    expect(localStorage.getItem('hirehub_theme')).toBe('dark');
+    expect(JSON.parse(localStorage.getItem('hirehub_submissions'))).toEqual(DEFAULT_SUBMISSIONS);
+    await user.click(header().getByRole('link', { name: 'Admin', exact: true }));
+    expectLoginGate();
+  });
+
+  it('retains the current route and session after a failed reset, then retries successfully', async () => {
+    const user = userEvent.setup();
+    vi.spyOn(window, 'confirm').mockReturnValue(true);
+    sessionStorage.setItem(AUTH_KEY, 'true');
+    renderApp('/admin?review=latest#records');
+    const set = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('quota'); });
+    await user.click(screen.getByRole('button', { name: 'Reset Mock Data' }));
+    expectDashboard();
+    expect(screen.getByLabelText('Current route')).toHaveTextContent(/^\/admin\?review=latest#records$/);
+    expect(sessionStorage.getItem(AUTH_KEY)).toBe('true');
+    expect(within(screen.getByRole('contentinfo', { name: 'Demo utilities' })).getByRole('alert')).toHaveTextContent('Unable to reset mock data.');
+    set.mockRestore();
+    await user.click(screen.getByRole('button', { name: 'Reset Mock Data' }));
+    expect(sessionStorage.getItem(AUTH_KEY)).toBeNull();
+    expect(screen.getByLabelText('Current route')).toHaveTextContent(/^\/$/);
   });
 });
