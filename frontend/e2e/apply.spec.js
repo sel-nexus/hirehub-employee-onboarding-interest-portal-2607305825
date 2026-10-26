@@ -134,7 +134,7 @@ test('valid submit clears fields, dismisses success, persists on reload, and rej
 /** Register through the UI, validate materials, persist two applications and read them as the candidate. */
 test('new candidate saves bundled materials with honest identity and multiple application persistence', async ({ page }) => {
   const baseline = page.applyBaseline;
-  await page.goto('/register');
+  await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Register', exact: true }).click();
   await page.getByLabel('Full Name').fill('New Candidate');
   await page.getByLabel('Email Address').fill('newcandidate@example.com');
   await page.getByLabel('Mobile Number').fill('0123456789');

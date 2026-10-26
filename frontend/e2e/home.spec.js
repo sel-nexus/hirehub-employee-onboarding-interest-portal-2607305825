@@ -44,9 +44,27 @@ test('home presents exact culture copy and responsive cards', async ({ page }, t
   }
   await expect(page.getByRole('heading', { name: 'Ready to take the next step?' })).toBeVisible();
   const nav = page.getByRole('navigation', { name: 'Main navigation' });
-  for (const name of ['Home', 'Apply', 'Admin']) {
-    await expect(nav.getByRole('link', { name, exact: true })).toBeVisible();
+  // Five guest links supersede the original three-link landing navigation.
+  await expect(nav.getByRole('link')).toHaveCount(5);
+  for (const name of ['Home', 'Apply', 'Candidate portal', 'Admin', 'Register']) {
+    const link = nav.getByRole('link', { name, exact: true });
+    await expect(link).toBeVisible();
+    await link.click({ trial: true });
   }
+  const banner = page.getByRole('banner');
+  for (const name of ['HireHub', 'Login']) {
+    const link = banner.getByRole('link', { name, exact: true });
+    await expect(link).toBeVisible();
+    await link.click({ trial: true });
+  }
+  const theme = nav.getByRole('button', { name: /Switch to (light|dark) theme/ });
+  await expect(theme).toBeVisible();
+  await expect(theme).toBeEnabled();
+  const wasDark = await theme.getAttribute('aria-pressed');
+  await theme.click();
+  await expect(theme).toHaveAttribute('aria-pressed', wasDark === 'true' ? 'false' : 'true');
+  await theme.click();
+  await expect(theme).toHaveAttribute('aria-pressed', wasDark);
   await expect(nav.getByRole('link', { name: 'Home', exact: true })).toHaveAttribute('aria-current', 'page');
 
   const layout = await page.evaluate(() => {
@@ -55,19 +73,37 @@ test('home presents exact culture copy and responsive cards', async ({ page }, t
       return { x, y };
     });
     const links = [...document.querySelectorAll('.main-nav a')].map((link) => link.getBoundingClientRect().y);
+    const header = document.querySelector('.site-header').getBoundingClientRect();
+    const controls = [...document.querySelectorAll('.site-header a, .site-header button')].map((control) => {
+      const { left, right, top, bottom, width, height } = control.getBoundingClientRect();
+      return { left, right, top, bottom, width, height };
+    });
     return {
       mobile: window.innerWidth < 768,
+      viewportWidth: window.innerWidth,
+      headerBottom: header.bottom,
       cards,
       links,
+      controls,
       noOverflow: document.documentElement.scrollWidth <= window.innerWidth,
     };
   });
   expect(layout.noOverflow).toBe(true);
-  expect(new Set(layout.links).size).toBe(1);
+  expect(layout.controls).toHaveLength(8); // Five nav links, brand, Login, and theme.
+  for (const control of layout.controls) {
+    expect(control.width).toBeGreaterThan(0);
+    expect(control.height).toBeGreaterThan(0);
+    expect(control.left).toBeGreaterThanOrEqual(0);
+    expect(control.right).toBeLessThanOrEqual(layout.viewportWidth);
+    expect(control.top).toBeGreaterThanOrEqual(0);
+    expect(control.bottom).toBeLessThanOrEqual(layout.headerBottom);
+  }
   if (layout.mobile) {
+    // Responsive CSS permits multiple nav rows; visibility/actionability remain required.
     expect(new Set(layout.cards.map((card) => card.x)).size).toBe(1);
     expect(layout.cards[1].y).toBeGreaterThan(layout.cards[0].y);
   } else {
+    expect(new Set(layout.links).size).toBe(1);
     expect(layout.cards[0].y).toBe(layout.cards[1].y);
     expect(layout.cards[2].y).toBe(layout.cards[3].y);
     expect(layout.cards[2].y).toBeGreaterThan(layout.cards[0].y);
@@ -117,16 +153,36 @@ for (const name of ['Express Your Interest', 'Apply Now']) {
 /** Follow all header routes without replacing navigation with direct goto calls. */
 test('header links update the URL and active destination', async ({ page }) => {
   const nav = page.getByRole('navigation', { name: 'Main navigation' });
-  for (const [name, pathname] of [['Apply', '/apply'], ['Admin', '/admin'], ['Home', '/']]) {
+  const destinations = [['Apply', '/apply'], ['Candidate portal', '/candidate'], ['Admin', '/admin'], ['Register', '/register'], ['Home', '/']];
+  for (const [name, pathname] of destinations) {
     await nav.getByRole('link', { name, exact: true }).click();
+    await expect(page).toHaveURL(new RegExp(`${pathname}$`));
     expect(new URL(page.url()).pathname).toBe(pathname);
     await expect(nav.getByRole('link', { name, exact: true })).toHaveAttribute('aria-current', 'page');
-    for (const other of ['Home', 'Apply', 'Admin'].filter((item) => item !== name)) {
+    for (const [other] of destinations.filter(([item]) => item !== name)) {
       await expect(nav.getByRole('link', { name: other, exact: true })).not.toHaveAttribute('aria-current', 'page');
     }
   }
-  await page.getByRole('link', { name: 'Login', exact: true }).click();
-  await expect(page).toHaveURL(/\/admin$/);
+  // PRD42 supersedes Login's former /admin destination with the shared role chooser.
+  const login = page.getByRole('banner').getByRole('link', { name: 'Login', exact: true });
+  await expect(login).toHaveAttribute('href', '/login');
+  await login.click();
+  await expect(page).toHaveURL(/\/login$/);
+  const candidateTab = page.getByRole('tab', { name: 'Candidate', exact: true });
+  const adminTab = page.getByRole('tab', { name: 'Administrator / Recruiter' });
+  await expect(candidateTab).toBeVisible();
+  await expect(candidateTab).toHaveAttribute('aria-selected', 'true');
+  await expect(adminTab).toBeVisible();
+  await expect(adminTab).toHaveAttribute('aria-selected', 'false');
+  await adminTab.click();
+  await expect(adminTab).toHaveAttribute('aria-selected', 'true');
+  await expect(candidateTab).toHaveAttribute('aria-selected', 'false');
+  await candidateTab.click();
+  await expect(candidateTab).toHaveAttribute('aria-selected', 'true');
+  await expect(adminTab).toHaveAttribute('aria-selected', 'false');
+  for (const [name] of destinations) {
+    await expect(nav.getByRole('link', { name, exact: true })).not.toHaveAttribute('aria-current', 'page');
+  }
   await page.getByRole('link', { name: 'HireHub', exact: true }).click();
   expect(new URL(page.url()).pathname).toBe('/');
   await expect(page.getByRole('heading', { level: 1, name: 'Build Your Future With Us' })).toBeVisible();

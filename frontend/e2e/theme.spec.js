@@ -248,42 +248,86 @@ for (const theme of ['light', 'dark']) {
 
 test.describe('storage recovery and cross-tab state', () => {
   test.use({ colorScheme: 'light' });
-  test('quota failure switches immediately and announces that the choice was not saved', async ({ page }, testInfo) => {
-    await page.addInitScript(() => {
-      const original = Storage.prototype.setItem;
-      Storage.prototype.setItem = function setItem(key, value) {
-        if (key === 'hirehub_theme') throw new DOMException('Quota exceeded', 'QuotaExceededError');
-        return original.call(this, key, value);
-      };
-    });
+  test('real quota exhaustion switches immediately, warns, and saves again after space is freed', async ({ page }, testInfo) => {
     await page.goto('/');
-    await page.getByRole('button', { name: 'Switch to dark theme' }).click();
-    await expectTheme(page, 'dark');
-    await expect(page.locator('#theme-warning')).toContainText('could not be saved');
+    // The home route renders only after demo data seeding has completed.
+    await expect(page.locator('.hero')).toBeVisible();
+    await expectTheme(page, 'light');
     expect(await page.evaluate(() => localStorage.getItem('hirehub_theme'))).toBeNull();
-    await expectNoOverflow(page);
-    await captureState(page, testInfo, 'quota-warning');
+    const fillerKey = 'hirehub_e2e_theme_quota_filler';
+    try {
+      const quota = await page.evaluate((key) => {
+        // Search to single-character precision; failed real writes retain the last successful fill.
+        const limit = 10 * 1024 * 1024;
+        let low = 0;
+        let high = limit;
+        let largestFill = 0;
+        let quotaFailures = 0;
+        while (low <= high) {
+          const size = Math.floor((low + high) / 2);
+          try {
+            localStorage.setItem(key, 'x'.repeat(size));
+            largestFill = size;
+            low = size + 1;
+          } catch (error) {
+            if (error.name !== 'QuotaExceededError') throw error;
+            quotaFailures += 1;
+            high = size - 1;
+          }
+        }
+        return { largestFill, quotaFailures, retainedFill: localStorage.getItem(key)?.length };
+      }, fillerKey);
+      expect(quota.quotaFailures, 'The bounded fill must exhaust the actual browser quota').toBeGreaterThan(0);
+      expect(quota.largestFill).toBeGreaterThan(0);
+      expect(quota.retainedFill).toBe(quota.largestFill);
+      await page.getByRole('button', { name: 'Switch to dark theme' }).click();
+      await expectTheme(page, 'dark');
+      await expect(page.locator('#theme-warning')).toBeVisible();
+      await expect(page.locator('#theme-warning')).toContainText('could not be saved');
+      expect(await page.evaluate(() => localStorage.getItem('hirehub_theme'))).toBeNull();
+      await expectNoOverflow(page);
+      await captureState(page, testInfo, 'quota-warning');
+    } finally {
+      await page.evaluate((key) => localStorage.removeItem(key), fillerKey);
+    }
     await page.getByRole('button', { name: 'Switch to light theme' }).click();
     await expectTheme(page, 'light');
+    await expect(page.locator('#theme-warning')).toHaveCount(0);
+    expect(await page.evaluate(() => localStorage.getItem('hirehub_theme'))).toBe('light');
+    await page.getByRole('button', { name: 'Switch to dark theme' }).click();
+    await expectTheme(page, 'dark');
+    expect(await page.evaluate(() => localStorage.getItem('hirehub_theme'))).toBe('dark');
     await page.reload();
-    await expectTheme(page, 'light');
+    await expectTheme(page, 'dark');
+    expect(await page.evaluate(() => window.themeAtFirstRender)).toBe('dark');
   });
 
-  test('unavailable theme reads warn visibly while a user can still switch and save', async ({ page }) => {
-    await page.addInitScript(() => {
-      const original = Storage.prototype.getItem;
-      Storage.prototype.getItem = function getItem(key) {
-        if (key === 'hirehub_theme') throw new DOMException('Storage blocked', 'SecurityError');
-        return original.call(this, key);
-      };
-    });
+  // Unavailable-read exceptions and their warning remain covered by Header/theme unit tests.
+  test('a real malformed saved theme falls back to the OS and leaves navigation and saving usable', async ({ page }) => {
     await page.goto('/');
+    await expect(page.locator('.hero')).toBeVisible();
+    await page.getByRole('button', { name: 'Switch to dark theme' }).click();
+    await expectTheme(page, 'dark');
+    await page.evaluate(() => localStorage.setItem('hirehub_theme', 'not-a-valid-theme'));
+    await page.reload();
     await expectTheme(page, 'light');
-    await expect(page.locator('#theme-warning')).toContainText('could not be read');
+    expect(await page.evaluate(() => window.themeAtFirstRender)).toBe('light');
+    expect(await page.evaluate(() => localStorage.getItem('hirehub_theme'))).toBe('not-a-valid-theme');
+    await expect(page.locator('#theme-warning')).toHaveCount(0);
+    await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Apply', exact: true }).click();
+    await expect(page).toHaveURL(/\/apply$/);
+    await expect(page.getByLabel('Full Name', { exact: true })).toBeVisible();
+    await page.getByLabel('Full Name', { exact: true }).fill('Theme Recovery');
+    await expect(page.getByLabel('Full Name', { exact: true })).toHaveValue('Theme Recovery');
     await page.getByRole('button', { name: 'Switch to dark theme' }).click();
     await expectTheme(page, 'dark');
     await expect(page.locator('#theme-warning')).toHaveCount(0);
+    expect(await page.evaluate(() => localStorage.getItem('hirehub_theme'))).toBe('dark');
     await expectNoOverflow(page);
+    await page.reload();
+    await expectTheme(page, 'dark');
+    expect(await page.evaluate(() => localStorage.getItem('hirehub_theme'))).toBe('dark');
+    await expect(page.getByLabel('Full Name', { exact: true })).toBeVisible();
   });
 
   test('a real toggle in another tab synchronizes this tab without synthetic storage events', async ({ page, context }) => {

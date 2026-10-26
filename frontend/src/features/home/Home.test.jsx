@@ -92,18 +92,25 @@ describe('Home', () => {
 });
 
 describe('Header', () => {
+  // The expanded guest navigation supersedes the original three-link Home slice.
+  // PRD42 keeps Login separate and sends it to the shared /login role chooser.
   it.each([
     ['/', 'Home'],
     ['/apply', 'Apply'],
+    ['/candidate', 'Candidate portal'],
     ['/admin', 'Admin'],
+    ['/register', 'Register'],
+    ['/login', null],
   ])('marks only %s as the active navigation destination', (route, activeName) => {
     renderAt(
       <Header authenticated={false} onLogout={vi.fn()} />,
       route,
     );
     const nav = screen.getByRole('navigation', { name: 'Main navigation' });
-    expect(within(nav).getAllByRole('link')).toHaveLength(3);
-    for (const name of ['Home', 'Apply', 'Admin']) {
+    expect(within(nav).getAllByRole('link')).toHaveLength(5);
+    expect(within(nav).queryByRole('link', { name: 'Login', exact: true })).not.toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Login', exact: true })).toHaveAttribute('href', '/login');
+    for (const name of ['Home', 'Apply', 'Candidate portal', 'Admin', 'Register']) {
       const link = within(nav).getByRole('link', { name });
       if (name === activeName) {
         expect(link).toHaveAttribute('aria-current', 'page');
@@ -126,10 +133,12 @@ describe('Header', () => {
 
   it.each([
     ['Apply', '/apply'],
+    ['Candidate portal', '/candidate'],
     ['Admin', '/admin'],
+    ['Register', '/register'],
     ['Home', '/'],
     ['HireHub', '/'],
-    ['Login', '/admin'],
+    ['Login', '/login'],
   ])('follows the %s route without invoking logout', async (name, route) => {
     const user = userEvent.setup();
     const onLogout = vi.fn();
@@ -160,7 +169,7 @@ describe('Header', () => {
     renderAt(
       <Header onLogout={vi.fn()} />,
     );
-    expect(screen.getByRole('link', { name: 'Login' })).toHaveAttribute('href', '/admin');
+    expect(screen.getByRole('link', { name: 'Login' })).toHaveAttribute('href', '/login');
     expect(screen.queryByRole('button', { name: 'Logout' })).not.toBeInTheDocument();
   });
 });

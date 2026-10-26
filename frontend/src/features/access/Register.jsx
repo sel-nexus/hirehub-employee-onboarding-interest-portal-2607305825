@@ -47,12 +47,13 @@ export default function Register({ onRegister }) {
                 autoComplete={autoComplete}
                 aria-required="true"
                 aria-invalid={Boolean(error)}
-                aria-describedby={error ? 'register-error' : name === 'password' ? 'password-hint' : undefined}
+                aria-describedby={error ? 'register-error' : name === 'password' ? 'password-hint' : name === 'mobile' ? 'mobile-hint' : undefined}
                 value={fields[name]}
                 onChange={(event) => setFields({ ...fields, [name]: event.target.value })}
               />
             </div>
           ))}
+          <p id="mobile-hint" className="auth-hint">Use exactly 10 digits, without a country code. Spaces, parentheses and hyphens are removed when saved.</p>
           <p id="password-hint" className="auth-hint">Use at least 8 characters for your password.</p>
           <button type="submit" className="submission-button">Create account</button>
         </form>

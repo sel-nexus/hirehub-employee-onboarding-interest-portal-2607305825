@@ -1,6 +1,7 @@
 /** Verify real local accounts, fail-closed sessions and transactional signup. */
 import { beforeEach, afterEach, describe, it, expect, vi } from 'vitest';
 import { DEFAULT_USERS, USERS_KEY, SESSION_KEY, validUsers } from '../demo/mockData';
+import { readCandidate, validateProfile, saveProfile } from '../candidate/profile';
 import {
   AUTH_KEY, INVALID_CREDENTIALS, LOGIN_STORAGE_ERROR, LOGOUT_STORAGE_ERROR, REGISTER_STORAGE_ERROR,
   readUsers, readSession, isAuthenticated, login, logout, registerCandidate,
@@ -165,14 +166,26 @@ describe('registerCandidate', () => {
     expect(isAuthenticated()).toBe(false); expect(isAuthenticated('candidate')).toBe(true);
     logout(); expect(login(signup.email, signup.password, 'candidate').success).toBe(true);
   });
+  it.each(['fullName', 'email', 'mobile', 'password'])('rejects omitted %s with a meaningful error and unchanged accounts/session', (field) => {
+    expect(login('admin', 'admin').success).toBe(true);
+    const previousUsers = localStorage.getItem(USERS_KEY);
+    const previousSession = localStorage.getItem(SESSION_KEY);
+    const input = { ...signup };
+    delete input[field];
+    const result = registerCandidate(input);
+    expect(result.success).toBe(false);
+    expect(result.error).toBe('Enter a name, email, mobile number and password.');
+    expect(localStorage.getItem(USERS_KEY)).toBe(previousUsers);
+    expect(localStorage.getItem(SESSION_KEY)).toBe(previousSession);
+  });
   it.each([null, undefined, [], {}, { ...signup, fullName: 1 }, { ...signup, email: null }, { ...signup, mobile: {} }, { ...signup, password: [] }])('rejects missing/invalid input types %j', (input) => {
     const before = localStorage.getItem(USERS_KEY);
     expect(registerCandidate(input).success).toBe(false);
     expect(localStorage.getItem(USERS_KEY)).toBe(before); expect(readSession()).toBeNull();
   });
   it.each([
-    ['fullName', ''], ['fullName', '   '], ['fullName', 'a'.repeat(101)],
-    ['email', 'bad'], ['email', 'a@b'], ['email', 'a @b.com'], ['email', 'a'.repeat(255) + '@b.com'],
+    ['fullName', ''], ['fullName', '   '], ['fullName', 'a'.repeat(101)], ['fullName', 'Alex2'], ['fullName', '<script>'],
+    ['email', 'bad'], ['email', 'a@b'], ['email', 'a @b.com'], ['email', '<a>@b.com'], ['email', 'a'.repeat(249) + '@b.com'], ['email', 'a'.repeat(255) + '@b.com'],
     ['mobile', ''], ['mobile', '123456789'], ['mobile', '1234567890123456'], ['mobile', 'abcdefghij'], ['mobile', '123abc4567890'],
     ['password', '1234567'], ['password', '        '],
   ])('rejects invalid %s %j without writes', (field, value) => {
@@ -180,10 +193,29 @@ describe('registerCandidate', () => {
     expect(registerCandidate({ ...signup, [field]: value }).success).toBe(false);
     expect(localStorage.getItem(USERS_KEY)).toBe(before); expect(readSession()).toBeNull();
   });
-  it('accepts validation boundaries and a formatted international mobile', () => {
-    expect(registerCandidate({ ...signup, fullName: 'a'.repeat(100), password: '12345678', mobile: '+1 (415) 555-2671' }).success).toBe(true);
-    expect(JSON.parse(localStorage.getItem(USERS_KEY)).at(-1).mobile).toBe('+1 (415) 555-2671');
+  it.each(['(012) 345-6789', '012 345 6789', '012-345-6789'])('accepts validation boundaries and normalizes formatted ten-digit mobile %s without truncation', (mobile) => {
+    expect(registerCandidate({ ...signup, fullName: 'a'.repeat(100), email: 'a'.repeat(248) + '@b.com', password: '12345678', mobile }).success).toBe(true);
+    expect(JSON.parse(localStorage.getItem(USERS_KEY)).at(-1)).toMatchObject({ mobile: '0123456789', displayName: 'a'.repeat(100), username: 'a'.repeat(248) + '@b.com' });
     expect(readSession()).not.toBeNull();
+  });
+  it('allows a newly registered contact to be read and saved unchanged by profile validation', () => {
+    expect(registerCandidate({ ...signup, mobile: '(012) 345-6789' }).success).toBe(true);
+    const { password: _password, ...contact } = signup;
+    expect(readCandidate()).toMatchObject({ success: true, profile: contact, applications: [] });
+    expect(validateProfile(readCandidate().profile)).toEqual({ values: contact, errors: {} });
+    expect(saveProfile(readSession().userId, readCandidate().profile)).toEqual({ success: true, error: '' });
+    expect(readCandidate().profile).toEqual(contact);
+    expect(readUsers().at(-1)).toMatchObject({ displayName: contact.fullName, username: contact.email, mobile: contact.mobile });
+  });
+  it.each(['12345678901', '123456789012', '1234567890123', '12345678901234', '123456789012345', '+1 (415) 555-2671'])('rejects longer mobile %s with actionable guidance and no account/session mutation', (mobile) => {
+    expect(login('admin', 'admin').success).toBe(true);
+    const before = [localStorage.getItem(USERS_KEY), localStorage.getItem(SESSION_KEY)];
+    const write = vi.spyOn(Storage.prototype, 'setItem');
+    const remove = vi.spyOn(Storage.prototype, 'removeItem');
+    expect(registerCandidate({ ...signup, mobile })).toEqual({ success: false, error: 'Enter exactly 10 digits for your mobile number, without a country code. Spaces, parentheses and hyphens are allowed and removed when saved.' });
+    expect([localStorage.getItem(USERS_KEY), localStorage.getItem(SESSION_KEY)]).toEqual(before);
+    expect(write).not.toHaveBeenCalled();
+    expect(remove).not.toHaveBeenCalled();
   });
   it('rejects duplicate emails case-insensitively without changing identity or accounts', () => {
     login('admin', 'admin'); const before = localStorage.getItem(USERS_KEY); const session = readSession();

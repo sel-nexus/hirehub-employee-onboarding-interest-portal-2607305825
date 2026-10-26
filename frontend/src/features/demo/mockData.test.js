@@ -167,7 +167,7 @@ describe('curated demo seeding', () => {
 });
 
 describe('account and department validation', () => {
-  it.each(['0123456789', '+1 (415) 555-2671', '123456789012345'])('preserves optional validated account mobile %s without reseeding', (mobile) => {
+  it.each(['0123456789', '4155552671', '0000000000'])('preserves optional canonical ten-digit account mobile %s without reseeding', (mobile) => {
     const users = [{ ...DEFAULT_USERS[2], mobile }];
     const raw = JSON.stringify(users, null, 2);
     expect(validUsers(users)).toBe(true);
@@ -176,8 +176,16 @@ describe('account and department validation', () => {
     seedDemoData();
     expect(localStorage.getItem(USERS_KEY)).toBe(raw);
   });
-  it.each([null, undefined, 123, {}, [], '', '123456789', '1234567890123456', '123abc4567890', '++1234567890'])('rejects explicitly invalid optional account mobile %j', (mobile) => {
-    expect(validUsers([{ ...DEFAULT_USERS[2], mobile }])).toBe(false);
+  it.each([null, undefined, 123, {}, [], '', '123456789', '12345678901', '123456789012', '1234567890123', '12345678901234', '123456789012345', '1234567890123456', '+1 (415) 555-2671', '(415) 555-2671', ' 0123456789 ', '123abc4567890', '++1234567890'])('rejects noncanonical optional account mobile %j without mutation', (mobile) => {
+    const users = [{ ...DEFAULT_USERS[2], mobile }];
+    const before = JSON.stringify(users);
+    const write = vi.spyOn(Storage.prototype, 'setItem');
+    const remove = vi.spyOn(Storage.prototype, 'removeItem');
+    expect(validUsers(users)).toBe(false);
+    expect(JSON.stringify(users)).toBe(before);
+    expect(localStorage.length).toBe(0);
+    expect(write).not.toHaveBeenCalled();
+    expect(remove).not.toHaveBeenCalled();
   });
   it.each([null, {}, 42, [null], [[]], [{}], [{ ...DEFAULT_USERS[0], role: 'owner' }],
     ...['id', 'role', 'username', 'password', 'displayName'].flatMap((key) => [

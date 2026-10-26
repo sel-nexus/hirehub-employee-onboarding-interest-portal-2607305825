@@ -1,7 +1,7 @@
 /** Verify private reads, real persistent contact edits and honest multi-key rollback. */
 import { beforeEach, afterEach, describe, it, expect, vi } from 'vitest';
 import { DEFAULT_USERS, DEFAULT_SUBMISSIONS, USERS_KEY, SESSION_KEY } from '../demo/mockData';
-import { SUBMISSIONS_KEY } from '../apply/submissions';
+import { SUBMISSIONS_KEY, readSubmissions, validDataset } from '../apply/submissions';
 import { login, logout, readSession } from '../admin/auth';
 import { readCandidate, validateProfile, saveProfile } from './profile';
 
@@ -28,22 +28,33 @@ describe('readCandidate ownership and privacy', () => {
     const text = JSON.stringify(view);
     for (const secret of ['notes', 'Strong background', 'Jordan', 'jordan@example.com', 'password', 'password123']) expect(text).not.toContain(secret);
   });
-  it('never treats matching email as ownership of unlinked or differently linked records', () => {
+  it.each([undefined, 'u-202'])('never treats matching email as ownership for linkage %s', (userId) => {
     localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([
-      { ...DEFAULT_SUBMISSIONS[0], userId: 'u-202' },
-      { ...DEFAULT_SUBMISSIONS[0], id: 'unlinked', userId: undefined },
+      { ...DEFAULT_SUBMISSIONS[0], userId },
     ]));
     expect(readCandidate().applications).toEqual([]);
     expect(readCandidate().profile.mobile).toBe('');
   });
-  it('supports multiple own records even when they share email after editing', () => {
-    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([
-      DEFAULT_SUBMISSIONS[0], { ...DEFAULT_SUBMISSIONS[0], id: 'second', email: 'other-alex@example.com' }, DEFAULT_SUBMISSIONS[1],
-    ]));
+  it.each(['alex@example.com', 'other-alex@example.com'])('preserves same-user multi-applications with email %s across shared readers, profile save and reread', (email) => {
+    const records = [
+      DEFAULT_SUBMISSIONS[0], { ...DEFAULT_SUBMISSIONS[0], id: 'second', email, department: 'Design', status: 'review' }, DEFAULT_SUBMISSIONS[1],
+    ];
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify(records, null, 2));
+    const before = snapshot();
+    expect(validDataset(records)).toBe(true);
+    expect(readSubmissions()).toEqual(records);
     expect(readCandidate().applications).toHaveLength(2);
-    expect(saveProfile('u-201', contact).success).toBe(true);
+    expect(snapshot()).toEqual(before);
+    expect(saveProfile('u-201', contact)).toEqual({ success: true, error: '' });
+    const expected = records.map((record) => record.userId === 'u-201' ? { ...record, ...contact } : record);
+    const after = snapshot();
+    expect(stored(SUBMISSIONS_KEY)).toEqual(expected);
+    expect(validDataset(stored(SUBMISSIONS_KEY))).toBe(true);
+    expect(readSubmissions()).toEqual(expected);
     expect(readCandidate().applications.map((record) => record.email)).toEqual([contact.email, contact.email]);
-    expect(stored(SUBMISSIONS_KEY).at(-1)).toEqual(DEFAULT_SUBMISSIONS[1]);
+    expect(readCandidate().applications.map((record) => record.id)).toEqual(['c-101', 'second']);
+    expect(readCandidate().profile).toEqual(contact);
+    expect(snapshot()).toEqual(after);
   });
   it('uses account contact for an empty account and does not claim an application exists', () => {
     localStorage.removeItem(SUBMISSIONS_KEY);
@@ -66,13 +77,46 @@ describe('readCandidate ownership and privacy', () => {
   it.each(['{bad', '{}', 'null', '[null]', '[{}]', JSON.stringify([DEFAULT_SUBMISSIONS[0], DEFAULT_SUBMISSIONS[0]]),
     JSON.stringify([{ ...DEFAULT_SUBMISSIONS[0], userId: 42 }])])('rejects corrupt submissions %s without modifying storage', (raw) => {
     localStorage.setItem(SUBMISSIONS_KEY, raw);
+    const before = snapshot();
+    const write = vi.spyOn(Storage.prototype, 'setItem');
+    const remove = vi.spyOn(Storage.prototype, 'removeItem');
     expect(readCandidate()).toEqual({ success: false, error: expect.stringContaining('Unable to read') });
+    expect(saveProfile('u-201', contact).success).toBe(false);
+    expect(snapshot()).toEqual(before);
     expect(localStorage.getItem(SUBMISSIONS_KEY)).toBe(raw);
+    expect(write).not.toHaveBeenCalled();
+    expect(remove).not.toHaveBeenCalled();
   });
-  it('projects unknown status and invalid optional types safely without exposing metadata', () => {
-    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([{ ...DEFAULT_SUBMISSIONS[0], status: 'future', interviewSchedule: {}, sampleResume: [], notes: 'PRIVATE' }]));
-    expect(readCandidate().applications[0]).toMatchObject({ status: 'future', interviewSchedule: '', sampleResume: '' });
-    expect(JSON.stringify(readCandidate())).not.toContain('PRIVATE');
+  it.each([
+    ...['id', 'fullName', 'email', 'mobile', 'department', 'submittedAt'].flatMap((field) => [
+      [field, undefined], [field, null], [field, 42],
+    ]),
+    ['id', ' padded '], ['fullName', 'Alex2'], ['fullName', ' Alex Rivera '], ['fullName', 'A'.repeat(101)],
+    ['email', 'bad'], ['email', '<a>@b.com'], ['mobile', '12345678901'], ['mobile', '(415) 555-2671'],
+    ['department', 'Unknown'], ['submittedAt', 'bad date'], ['submittedAt', '2026-02-30T00:00:00.000Z'], ['submittedAt', '2026-10-20'],
+    ['status', 'future'], ['status', null], ['userId', ''], ['userId', ' u-201 '],
+    ['notes', {}], ['notes', 'x'.repeat(5001)], ['portfolioUrl', 'javascript:alert(1)'], ['portfolioUrl', []],
+    ['sampleResume', 'Unknown resume'], ['sampleResume', []], ['interviewSchedule', {}], ['interviewSchedule', 'x'.repeat(501)],
+    ['internalMetadata', { reviewer: 'PRIVATE' }], ['unknown', 'PRIVATE'],
+  ])('rejects malformed stored %s %j on read and save without any storage mutation', (field, value) => {
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([{ ...DEFAULT_SUBMISSIONS[0], [field]: value }]));
+    const before = snapshot();
+    const write = vi.spyOn(Storage.prototype, 'setItem');
+    const remove = vi.spyOn(Storage.prototype, 'removeItem');
+    expect(readCandidate()).toEqual({ success: false, error: expect.stringContaining('Unable to read candidate data') });
+    expect(saveProfile('u-201', contact)).toMatchObject({ success: false, error: expect.stringContaining('Previous data was retained') });
+    expect(snapshot()).toEqual(before);
+    expect(write).not.toHaveBeenCalled();
+    expect(remove).not.toHaveBeenCalled();
+  });
+  it.each([undefined, 'u-202'])('rejects repeated email without the same linked owner (%s) without mutation', (userId) => {
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([
+      DEFAULT_SUBMISSIONS[0], { ...DEFAULT_SUBMISSIONS[0], id: 'conflict', userId },
+    ]));
+    const before = snapshot();
+    expect(readCandidate().success).toBe(false);
+    expect(saveProfile('u-201', contact).success).toBe(false);
+    expect(snapshot()).toEqual(before);
   });
   it.each(['getter', USERS_KEY, SUBMISSIONS_KEY, SESSION_KEY])('fails closed when %s cannot be read', (blocked) => {
     if (blocked === 'getter') vi.spyOn(window, 'localStorage', 'get').mockImplementation(() => { throw new Error('blocked'); });
@@ -125,7 +169,8 @@ describe('saveProfile persistence, identity and failure recovery', () => {
     const users = stored(USERS_KEY);
     users[2].internal = { retain: true };
     const records = stored(SUBMISSIONS_KEY);
-    records[0].internalMetadata = { reviewer: 'private' };
+    records[0].notes = 'PRIVATE reviewer notes retained exactly';
+    records[0].portfolioUrl = 'https://example.com/private-portfolio';
     localStorage.setItem(USERS_KEY, JSON.stringify(users));
     localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify(records));
     localStorage.setItem('hirehub_theme', 'dark');
@@ -228,6 +273,28 @@ describe('saveProfile persistence, identity and failure recovery', () => {
     expect(result.error).toContain('changes may be partial');
     expect(stored(USERS_KEY).find((user) => user.id === 'u-201').username).toBe(contact.email);
     expect(stored(SUBMISSIONS_KEY)).toEqual(DEFAULT_SUBMISSIONS);
+    expect(readSession()).toBeNull();
+    expect(readCandidate()).toEqual({ success: false, error: expect.any(String) });
+  });
+  it('warns exactly when a later session write fails and USERS rollback is silently ineffective', () => {
+    const before = snapshot();
+    const users = stored(USERS_KEY);
+    const set = Storage.prototype.setItem;
+    const write = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(function (key, raw) {
+      if (key === SESSION_KEY) throw new Error('session quota');
+      if (key === USERS_KEY && raw === before[0]) return;
+      return set.call(this, key, raw);
+    });
+    expect(saveProfile('u-201', contact)).toEqual({
+      success: false,
+      error: 'Unable to save your profile. Check browser storage permissions or available space and try again. Rollback also failed; changes may be partial. Check your account or try Reset Mock Data before retrying.',
+    });
+    expect(write).toHaveBeenCalledWith(USERS_KEY, before[0]);
+    expect(stored(USERS_KEY)).toEqual(users.map((user) => user.id === 'u-201'
+      ? { ...user, displayName: contact.fullName, username: contact.email, mobile: contact.mobile } : user));
+    expect(localStorage.getItem(USERS_KEY)).not.toBe(before[0]);
+    expect(localStorage.getItem(SUBMISSIONS_KEY)).toBe(before[1]);
+    expect(localStorage.getItem(SESSION_KEY)).toBe(before[2]);
     expect(readSession()).toBeNull();
     expect(readCandidate()).toEqual({ success: false, error: expect.any(String) });
   });

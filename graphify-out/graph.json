@@ -185,6 +185,78 @@
       "_origin": "ast"
     },
     {
+      "id": "e2e_theme_spec",
+      "label": "theme.spec.js",
+      "file_type": "code",
+      "source_file": "frontend/e2e/theme.spec.js",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "e2e_theme_spec_browsererrors",
+      "label": "browserErrors",
+      "file_type": "code",
+      "source_file": "frontend/e2e/theme.spec.js",
+      "source_location": "L4",
+      "_origin": "ast"
+    },
+    {
+      "id": "e2e_theme_spec_observe",
+      "label": "observe()",
+      "file_type": "code",
+      "source_file": "frontend/e2e/theme.spec.js",
+      "source_location": "L12",
+      "_origin": "ast"
+    },
+    {
+      "id": "e2e_theme_spec_capturestate",
+      "label": "captureState()",
+      "file_type": "code",
+      "source_file": "frontend/e2e/theme.spec.js",
+      "source_location": "L45",
+      "_origin": "ast"
+    },
+    {
+      "id": "e2e_theme_spec_expecttheme",
+      "label": "expectTheme()",
+      "file_type": "code",
+      "source_file": "frontend/e2e/theme.spec.js",
+      "source_location": "L73",
+      "_origin": "ast"
+    },
+    {
+      "id": "e2e_theme_spec_expectnooverflow",
+      "label": "expectNoOverflow()",
+      "file_type": "code",
+      "source_file": "frontend/e2e/theme.spec.js",
+      "source_location": "L86",
+      "_origin": "ast"
+    },
+    {
+      "id": "e2e_theme_spec_expectdialog",
+      "label": "expectDialog()",
+      "file_type": "code",
+      "source_file": "frontend/e2e/theme.spec.js",
+      "source_location": "L110",
+      "_origin": "ast"
+    },
+    {
+      "id": "e2e_theme_spec_storage_setitem",
+      "label": ".setItem()",
+      "file_type": "code",
+      "source_file": "frontend/e2e/theme.spec.js",
+      "source_location": "L254",
+      "_origin": "ast"
+    },
+    {
+      "id": "e2e_theme_spec_storage_getitem",
+      "label": ".getItem()",
+      "file_type": "code",
+      "source_file": "frontend/e2e/theme.spec.js",
+      "source_location": "L275",
+      "_origin": "ast"
+    },
+    {
       "id": "frontend_package",
       "label": "package.json",
       "file_type": "code",
@@ -529,7 +601,23 @@
       "label": "Header()",
       "file_type": "code",
       "source_file": "frontend/src/components/Header.jsx",
-      "source_location": "L14",
+      "source_location": "L16",
+      "_origin": "ast"
+    },
+    {
+      "id": "components_header_test",
+      "label": "Header.test.jsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/Header.test.jsx",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "components_header_test_renderheader",
+      "label": "renderHeader()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/Header.test.jsx",
+      "source_location": "L23",
       "_origin": "ast"
     },
     {
@@ -1605,6 +1693,126 @@
       "_origin": "ast"
     },
     {
+      "id": "theme_theme",
+      "label": "theme.js",
+      "file_type": "code",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "theme_theme_istheme",
+      "label": "isTheme()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L9",
+      "_origin": "ast"
+    },
+    {
+      "id": "theme_theme_systemtheme",
+      "label": "systemTheme()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L14",
+      "_origin": "ast"
+    },
+    {
+      "id": "theme_theme_applytheme",
+      "label": "applyTheme()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L23",
+      "_origin": "ast"
+    },
+    {
+      "id": "theme_theme_initializetheme",
+      "label": "initializeTheme()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L38",
+      "_origin": "ast"
+    },
+    {
+      "id": "theme_theme_gettheme",
+      "label": "getTheme()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L50",
+      "_origin": "ast"
+    },
+    {
+      "id": "theme_theme_getthemewarning",
+      "label": "getThemeWarning()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L56",
+      "_origin": "ast"
+    },
+    {
+      "id": "theme_theme_settheme",
+      "label": "setTheme()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L69",
+      "_origin": "ast"
+    },
+    {
+      "id": "theme_theme_subscribetheme",
+      "label": "subscribeTheme()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L93",
+      "_origin": "ast"
+    },
+    {
+      "id": "theme_theme_test",
+      "label": "theme.test.js",
+      "file_type": "code",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "theme_theme_test_luminance",
+      "label": "luminance()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L164",
+      "_origin": "ast"
+    },
+    {
+      "id": "theme_theme_test_tokens",
+      "label": "tokens()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L172",
+      "_origin": "ast"
+    },
+    {
+      "id": "theme_theme_test_css",
+      "label": "css",
+      "file_type": "code",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L176",
+      "_origin": "ast"
+    },
+    {
+      "id": "theme_theme_test_light",
+      "label": "light",
+      "file_type": "code",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L177",
+      "_origin": "ast"
+    },
+    {
+      "id": "theme_theme_test_dark",
+      "label": "dark",
+      "file_type": "code",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L178",
+      "_origin": "ast"
+    },
+    {
       "id": "src_main",
       "label": "main.jsx",
       "file_type": "code",
@@ -1868,6 +2076,60 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/demo.spec.js",
       "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_theme_spec",
+      "target": "e2e_theme_spec_browsererrors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/theme.spec.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_theme_spec",
+      "target": "e2e_theme_spec_observe",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/theme.spec.js",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_theme_spec",
+      "target": "e2e_theme_spec_capturestate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/theme.spec.js",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_theme_spec",
+      "target": "e2e_theme_spec_expecttheme",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/theme.spec.js",
+      "source_location": "L73",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_theme_spec",
+      "target": "e2e_theme_spec_expectnooverflow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/theme.spec.js",
+      "source_location": "L86",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_theme_spec",
+      "target": "e2e_theme_spec_expectdialog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/theme.spec.js",
+      "source_location": "L110",
       "weight": 1.0
     },
     {
@@ -2438,11 +2700,110 @@
     },
     {
       "source": "components_header",
+      "target": "theme_theme",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/Header.jsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "components_header",
+      "target": "theme_theme_gettheme",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/Header.jsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "components_header",
+      "target": "theme_theme_getthemewarning",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/Header.jsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "components_header",
+      "target": "theme_theme_settheme",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/Header.jsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "components_header",
+      "target": "theme_theme_subscribetheme",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/Header.jsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "components_header",
       "target": "components_header_header",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/Header.jsx",
-      "source_location": "L14",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "components_header_test",
+      "target": "components_header",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/Header.test.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "components_header_test",
+      "target": "components_header_header",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/Header.test.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "components_header_test",
+      "target": "theme_theme",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/Header.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "components_header_test",
+      "target": "theme_theme_initializetheme",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/Header.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "components_header_test",
+      "target": "components_header_test_renderheader",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/Header.test.jsx",
+      "source_location": "L23",
       "weight": 1.0
     },
     {
@@ -5443,6 +5804,263 @@
       "weight": 1.0
     },
     {
+      "source": "theme_theme",
+      "target": "theme_theme_istheme",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme",
+      "target": "theme_theme_systemtheme",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme",
+      "target": "theme_theme_applytheme",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme",
+      "target": "theme_theme_initializetheme",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme",
+      "target": "theme_theme_gettheme",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme",
+      "target": "theme_theme_getthemewarning",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme",
+      "target": "theme_theme_settheme",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme",
+      "target": "theme_theme_subscribetheme",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L93",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_initializetheme",
+      "target": "theme_theme_applytheme",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_initializetheme",
+      "target": "theme_theme_istheme",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_initializetheme",
+      "target": "theme_theme_systemtheme",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_gettheme",
+      "target": "theme_theme_istheme",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_gettheme",
+      "target": "theme_theme_initializetheme",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_settheme",
+      "target": "theme_theme_istheme",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_settheme",
+      "target": "theme_theme_gettheme",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_settheme",
+      "target": "theme_theme_applytheme",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L79",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_test",
+      "target": "theme_theme",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_test",
+      "target": "theme_theme_initializetheme",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_test",
+      "target": "theme_theme_gettheme",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_test",
+      "target": "theme_theme_getthemewarning",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_test",
+      "target": "theme_theme_settheme",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_test",
+      "target": "theme_theme_subscribetheme",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_test",
+      "target": "theme_theme_test_luminance",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L164",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_test",
+      "target": "theme_theme_test_tokens",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L172",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_test",
+      "target": "theme_theme_test_css",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L176",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_test",
+      "target": "theme_theme_test_light",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L177",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_test",
+      "target": "theme_theme_test_dark",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L178",
+      "weight": 1.0
+    },
+    {
       "source": "src_main",
       "target": "src_app",
       "relation": "imports_from",
@@ -5450,6 +6068,26 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/main.jsx",
       "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "src_main",
+      "target": "theme_theme",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/main.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "src_main",
+      "target": "theme_theme_initializetheme",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/main.jsx",
+      "source_location": "L7",
       "weight": 1.0
     },
     {
@@ -5692,6 +6330,17 @@
       "weight": 1.0
     },
     {
+      "source": "components_header_test_renderheader",
+      "target": "admin_dashboard_test_render",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "frontend/src/components/Header.test.jsx",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
       "source": "access_register_test_mount",
       "target": "admin_dashboard_test_render",
       "relation": "calls",
@@ -5814,10 +6463,10 @@
     }
   ],
   "metadata": {
-    "built_at": "2026-10-26T17:53:00.559570+00:00",
+    "built_at": "2026-10-26T18:04:48.889013+00:00",
     "version": "graph_update-v1",
     "codebase_root": "/data/artifacts-v2/T011RNFvLqRR0008726102616342188/developer",
     "force": true,
-    "files_scanned": 48
+    "files_scanned": 52
   }
 }

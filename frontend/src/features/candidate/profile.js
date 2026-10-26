@@ -1,14 +1,14 @@
 /** Read private candidate projections and persist contact edits in browser demo storage. */
 import { readSession, readUsers } from '../admin/auth';
 import { USERS_KEY, SESSION_KEY } from '../demo/mockData';
-import { SUBMISSIONS_KEY } from '../apply/submissions';
+import { SUBMISSIONS_KEY, validDataset } from '../apply/submissions';
 import { validateSubmission } from '../apply/validation';
 
 const STORAGE_ERROR = 'Unable to read candidate data. Check browser storage permissions or try Reset Mock Data.';
 const SAVE_ERROR = 'Unable to save your profile. Check browser storage permissions or available space and try again.';
 
 /**
- * Read records without mutation or the legacy global email-uniqueness constraint.
+ * Read records using the shared nonmutating schema, including same-user applications.
  * Returns:
  *   Raw records for identity-based matching, including multiple applications.
  * Raises:
@@ -18,16 +18,7 @@ const SAVE_ERROR = 'Unable to save your profile. Check browser storage permissio
 function readRecords() {
   const raw = window.localStorage.getItem(SUBMISSIONS_KEY);
   const records = raw === null ? [] : JSON.parse(raw);
-  const ids = new Set();
-  if (!Array.isArray(records) || !records.every((record) => {
-    if (!record || typeof record !== 'object' || Array.isArray(record)
-      || !['id', 'fullName', 'email', 'mobile', 'department', 'submittedAt']
-        .every((key) => typeof record[key] === 'string')
-      || !record.id.trim() || ids.has(record.id)
-      || (Object.hasOwn(record, 'userId') && typeof record.userId !== 'string')) return false;
-    ids.add(record.id);
-    return true;
-  })) throw new Error(STORAGE_ERROR);
+  if (!validDataset(records)) throw new Error(STORAGE_ERROR);
   return records;
 }
 

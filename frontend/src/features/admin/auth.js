@@ -1,5 +1,6 @@
 /** Manage persistent local demo identities, never production authentication. */
 import { USERS_KEY, SESSION_KEY, validUsers } from '../demo/mockData';
+import { validateSubmission } from '../apply/validation';
 
 // Retain the legacy key for the demo reset utility, not authentication.
 export const AUTH_KEY = 'hirehub_admin_auth';
@@ -113,11 +114,16 @@ export function registerCandidate(input) {
     || !['fullName', 'email', 'mobile', 'password'].every((key) => typeof input[key] === 'string')) {
     return { success: false, error: 'Enter a name, email, mobile number and password.' };
   }
-  const { fullName, email, mobile, password } = input;
-  if (!fullName.trim() || fullName.trim().length > 100) return { success: false, error: 'Enter a name of 1 to 100 characters.' };
-  if (email.trim().length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) return { success: false, error: 'Enter a valid email address.' };
-  if (!/^\+?[\d ()-]+$/.test(mobile.trim()) || !/^\d{10,15}$/.test(mobile.replace(/\D/g, ''))) {
-    return { success: false, error: 'Enter a mobile number with 10 to 15 digits.' };
+  const { mobile, password } = input;
+  // Signup accepts formatting, but never truncates country codes or extra digits.
+  // Persist the application's ten-digit contact contract for future profile edits.
+  const { values, errors } = validateSubmission({
+    ...input, mobile: mobile.replace(/\D/g, ''), department: 'Engineering',
+  });
+  if (errors.fullName) return { success: false, error: errors.fullName };
+  if (errors.email || values.email.length > 254) return { success: false, error: 'Enter a valid email address (maximum 254 characters).' };
+  if (!/^\+?[\d ()-]+$/.test(mobile.trim()) || errors.mobile) {
+    return { success: false, error: 'Enter exactly 10 digits for your mobile number, without a country code. Spaces, parentheses and hyphens are allowed and removed when saved.' };
   }
   if (password.length < 8 || !password.trim()) return { success: false, error: 'Use a password with at least 8 characters.' };
   let previous;
@@ -125,11 +131,11 @@ export function registerCandidate(input) {
   try {
     previous = window.localStorage.getItem(USERS_KEY);
     const users = readUsers();
-    const username = email.trim().toLowerCase();
+    const username = values.email.toLowerCase();
     if (users.some((user) => user.username.toLowerCase() === username)) {
       return { success: false, error: 'An account with this email already exists. Please log in.' };
     }
-    const user = { id: `u-${crypto.randomUUID()}`, role: 'candidate', username, password, displayName: fullName.trim(), mobile: mobile.trim() };
+    const user = { id: `u-${crypto.randomUUID()}`, role: 'candidate', username, password, displayName: values.fullName, mobile: values.mobile };
     window.localStorage.setItem(USERS_KEY, JSON.stringify([...users, user]));
     accountWritten = true;
     writeSession(user);

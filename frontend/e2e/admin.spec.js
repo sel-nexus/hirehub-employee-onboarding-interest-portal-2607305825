@@ -17,6 +17,7 @@ test.afterEach(async ({ page }) => {
 
 /** Requery the actual application dataset rather than mocking application services. */
 async function storedRecords(page) {
+  await expect.poll(() => page.evaluate(() => localStorage.getItem('hirehub_submissions') !== null)).toBe(true);
   return page.evaluate(() => JSON.parse(localStorage.getItem('hirehub_submissions')));
 }
 
@@ -293,11 +294,34 @@ test('recruiter review and status persist into candidate portal while notes stay
   const editor = page.getByRole('dialog', { name: 'Edit Submission' });
   await editor.getByLabel('Recruiter Notes (private)').fill('Private recruiter evaluation: recommend offer.');
   await editor.getByLabel('Interview Schedule (optional)').fill('Friday at 11 AM Pacific — Engineering follow-up.');
+  const localPortfolio = new URL('/?portfolio=alex-demo', page.url()).href;
+  await editor.locator('input[name="portfolioUrl"]').fill(localPortfolio);
   await editor.getByRole('button', { name: 'Save Changes' }).click();
   await expect(editor).toHaveCount(0);
+  await preview.click();
+  const localLink = drawer.getByRole('link', { name: 'Open portfolio in a new tab' });
+  await expect(localLink).toHaveAttribute('href', localPortfolio);
+  const observePopup = (newPage) => {
+    newPage.on('console', (message) => {
+      if (message.type() === 'error') page.adminErrors.push(message.text());
+    });
+    newPage.on('pageerror', (error) => page.adminErrors.push(error.message));
+  };
+  page.context().on('page', observePopup);
+  const popupOpened = page.waitForEvent('popup');
+  await localLink.click();
+  const popup = await popupOpened;
+  page.context().off('page', observePopup);
+  await expect(popup).toHaveURL(localPortfolio);
+  await expect(drawer).toBeVisible();
+  await expect(page).toHaveURL(/\/admin\?/);
+  await popup.close();
+  await drawer.getByRole('button', { name: 'Close preview' }).click();
+  await expect(drawer).toHaveCount(0);
   await row.getByRole('combobox', { name: /Status for Alex/ }).selectOption('offer');
   const expected = baseline.map((record) => record.id === 'c-101' ? {
     ...record, status: 'offer', notes: 'Private recruiter evaluation: recommend offer.',
+    portfolioUrl: localPortfolio,
     interviewSchedule: 'Friday at 11 AM Pacific — Engineering follow-up.',
   } : record);
   expect(await storedRecords(page)).toEqual(expected);
@@ -306,7 +330,7 @@ test('recruiter review and status persist into candidate portal while notes stay
   await editor.getByRole('button', { name: 'Cancel' }).click();
   await page.locator('.dashboard-heading').getByRole('button', { name: 'Logout', exact: true }).click();
   expect(await page.evaluate(() => localStorage.getItem('hirehub_session'))).toBeNull();
-  await page.goto('/login');
+  await page.getByRole('banner').getByRole('link', { name: 'Login', exact: true }).click();
   await page.getByRole('tab', { name: 'Candidate', exact: true }).click();
   await page.getByLabel('Username').fill('alex@example.com');
   await page.getByLabel('Password', { exact: true }).fill('password123');

@@ -34,22 +34,26 @@ it('renders labelled required fields, password hint, disclaimer and login link',
   }
   expect(screen.getByLabelText('Password')).toHaveAttribute('autocomplete', 'new-password');
   expect(screen.getByText(/Use at least 8 characters/)).toBeVisible();
+  expect(screen.getByText(/Use exactly 10 digits, without a country code/)).toBeVisible();
+  expect(screen.getByLabelText('Mobile Number')).toHaveAccessibleDescription(/Spaces, parentheses and hyphens are removed when saved/);
   expect(screen.getByText(/Browser-only demo/)).toBeVisible();
   expect(screen.getByRole('link', { name: /Already have/ })).toHaveAttribute('href', '/login');
 });
 
 it('creates a candidate and notifies success only after an immediate session exists', async () => {
   const user = userEvent.setup(); const onRegister = mount();
-  await fill(user);
+  await fill(user, { 'Mobile Number': '(012) 345-6789' });
   expect(readUsers()).toHaveLength(6);
+  expect(readUsers().at(-1).mobile).toBe('0123456789');
   expect(readSession()).toMatchObject({ userId: readUsers().at(-1).id, role: 'candidate', displayName: 'Sam Candidate' });
   expect(onRegister).toHaveBeenCalledTimes(1);
   expect(screen.queryByRole('alert')).not.toBeInTheDocument();
 });
 
 it.each([
-  ['Full Name', '', /name/], ['Email Address', 'bad', /valid email/],
-  ['Mobile Number', '123', /10 to 15 digits/], ['Password', 'short', /at least 8/],
+  ['Full Name', '', /name/], ['Full Name', 'Sam2', /name/], ['Email Address', 'bad', /valid email/], ['Email Address', '<sam>@example.com', /valid email/],
+  ['Mobile Number', '123', /exactly 10 digits/], ['Password', 'short', /at least 8/],
+  ...['12345678901', '123456789012', '1234567890123', '12345678901234', '123456789012345', '+1 (415) 555-2671'].map((mobile) => ['Mobile Number', mobile, /exactly 10 digits.*without a country code/]),
   ['Email Address', 'ALEX@EXAMPLE.COM', /already exists/],
 ])('rejects invalid %s and retains input without creating an account', async (label, value, error) => {
   const user = userEvent.setup(); const onRegister = mount(); const before = localStorage.getItem(USERS_KEY);

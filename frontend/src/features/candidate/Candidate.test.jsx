@@ -46,7 +46,7 @@ describe('Candidate applications', () => {
     ['interview', 'Interview Scheduled', 'Prepare for your interview'],
     ['offer', 'Offer Extended', 'Congratulations'],
     ['archived', 'Not Selected', 'not selected'],
-    ['future', 'Status unavailable', 'Contact the recruiting team'],
+
   ])('shows %s current status and next steps', (status, label, next) => {
     localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([{ ...DEFAULT_SUBMISSIONS[0], status, interviewSchedule: '' }]));
     mount();
@@ -54,20 +54,32 @@ describe('Candidate applications', () => {
     expect(screen.getByText(/Next steps:/).closest('p')).toHaveTextContent(next);
     expect(screen.queryByRole('region', { name: 'Interview schedule' })).not.toBeInTheDocument();
   });
-  it('renders all own records independently including an ISO interview and unavailable date', () => {
+  it('renders all own records independently including an ISO interview and valid submission date', () => {
     localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([
       DEFAULT_SUBMISSIONS[0],
-      { ...DEFAULT_SUBMISSIONS[0], id: 'second', department: 'Design', status: 'offer', submittedAt: 'bad date', interviewSchedule: '2026-11-01T12:00:00.000Z' },
+      { ...DEFAULT_SUBMISSIONS[0], id: 'second', department: 'Design', status: 'offer', submittedAt: '2026-10-21T12:00:00.000Z', interviewSchedule: '2026-11-01T12:00:00.000Z' },
       DEFAULT_SUBMISSIONS[1],
     ]));
     mount();
     expect(screen.getAllByRole('article')).toHaveLength(2);
     const second = screen.getAllByRole('article')[1];
-    expect(second).toHaveTextContent('Date unavailable');
+    expect(second).toHaveTextContent('October 21, 2026');
     expect(second).toHaveTextContent('November 1, 2026');
     expect(within(second).getByRole('status')).toHaveTextContent('Offer Extended');
     expect(screen.queryByRole('heading', { name: 'Design application', exact: true })).toBeVisible();
     expect(screen.queryByText('Jordan Chen')).not.toBeInTheDocument();
+  });
+  it.each([
+    ['status', 'future'], ['submittedAt', 'bad date'],
+  ])('fails closed for invalid stored %s instead of showing a fallback application', (field, value) => {
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([{ ...DEFAULT_SUBMISSIONS[0], [field]: value }]));
+    const before = [USERS_KEY, SUBMISSIONS_KEY, SESSION_KEY].map((key) => localStorage.getItem(key));
+    mount();
+    expect(screen.getByRole('alert')).toHaveTextContent('Unable to read candidate data');
+    expect(screen.queryByRole('article')).not.toBeInTheDocument();
+    expect(screen.queryByText(/Welcome,|alex@example.com/)).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Edit profile' })).not.toBeInTheDocument();
+    expect([USERS_KEY, SUBMISSIONS_KEY, SESSION_KEY].map((key) => localStorage.getItem(key))).toEqual(before);
   });
   it('gives an empty new account contact editor and an existing apply link without claiming legacy email records', () => {
     localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([{ ...DEFAULT_SUBMISSIONS[0], userId: undefined }]));

@@ -155,13 +155,15 @@ describe('App session routing', () => {
   it('removes session listeners on route changes and unmount while replacements still refresh', async () => {
     const user = userEvent.setup(); const add = vi.spyOn(window, 'addEventListener'); const remove = vi.spyOn(window, 'removeEventListener');
     const { unmount } = renderApp('/'); const initial = add.mock.calls.filter(([type]) => type === 'storage' || type === 'focus');
-    expect(initial.map(([type]) => type).sort()).toEqual(['focus', 'storage']);
+    const sessionListener = initial.find(([type]) => type === 'focus')[1];
+    const sessionInitial = initial.filter(([, listener]) => listener === sessionListener);
+    expect(sessionInitial.map(([type]) => type).sort()).toEqual(['focus', 'storage']);
     await user.click(header().getByRole('link', { name: 'Admin', exact: true })); expectLoginGate();
-    for (const [type, listener] of initial) expect(remove).toHaveBeenCalledWith(type, listener);
+    for (const [type, listener] of sessionInitial) expect(remove).toHaveBeenCalledWith(type, listener);
     const replacements = add.mock.calls.filter(([type]) => type === 'storage' || type === 'focus').slice(initial.length);
     expect(replacements.map(([type]) => type).sort()).toEqual(['focus', 'storage']);
     authenticate(); act(() => window.dispatchEvent(new Event('focus'))); expectDashboard(); unmount();
-    for (const [type, listener] of replacements) expect(remove).toHaveBeenCalledWith(type, listener);
+    for (const [type, listener] of [...initial, ...replacements]) expect(remove).toHaveBeenCalledWith(type, listener);
     expect(screen.queryByRole('banner')).not.toBeInTheDocument(); expect(screen.queryByRole('main')).not.toBeInTheDocument();
   });
   it('shows default candidate login from header and routes candidate login to its entry', async () => {
@@ -173,6 +175,25 @@ describe('App session routing', () => {
     await user.type(screen.getByLabelText('Username'), 'alex@example.com'); await user.type(screen.getByLabelText('Password'), 'password123');
     await user.click(screen.getByRole('button', { name: 'Login', exact: true })); expectCandidate();
     expect(screen.getByLabelText('Current route')).toHaveTextContent(/^\/candidate$/);
+  });
+  it('routes a guest candidate tab login from /admin to only their own candidate records', async () => {
+    const user = userEvent.setup(); renderApp('/admin'); expectLoginGate();
+    expect(localStorage.getItem(SESSION_KEY)).toBeNull();
+    expect(screen.getByLabelText('Current route')).toHaveTextContent(/^\/admin$/);
+    await user.click(screen.getByRole('tab', { name: 'Candidate', exact: true }));
+    expect(screen.getByRole('heading', { name: 'Candidate Login' })).toBeVisible();
+    await user.type(screen.getByLabelText('Username'), 'alex@example.com');
+    await user.type(screen.getByLabelText('Password'), 'password123');
+    await user.click(screen.getByRole('button', { name: 'Login', exact: true }));
+    expectCandidate();
+    expect(screen.getByLabelText('Current route')).toHaveTextContent(/^\/candidate$/);
+    expect(readSession()).toMatchObject({ userId: 'u-201', role: 'candidate', displayName: 'Alex Rivera' });
+    const ownRecords = DEFAULT_SUBMISSIONS.filter((record) => record.userId === 'u-201');
+    const applications = screen.getAllByRole('article');
+    expect(ownRecords.length).toBeGreaterThan(0);
+    expect(applications).toHaveLength(ownRecords.length);
+    ownRecords.forEach((record, index) => expect(applications[index]).toHaveTextContent(record.id));
+    expect(screen.queryByRole('table')).not.toBeInTheDocument();
   });
   it('routes recruiter tab login from /login to /admin', async () => {
     const user = userEvent.setup(); renderApp('/login');

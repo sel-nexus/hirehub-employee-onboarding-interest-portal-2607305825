@@ -1,6 +1,6 @@
 /** Exercise persistent local role access through real desktop/mobile UI navigation. */
 import { test, expect } from '@playwright/test';
-import { DEFAULT_USERS } from '../src/features/demo/mockData';
+import { DEFAULT_USERS, DEFAULT_SUBMISSIONS } from '../src/features/demo/mockData';
 
 /** Capture console errors and uncaught errors before any page navigation. */
 function captureAuthErrors(page) {
@@ -105,7 +105,39 @@ for (const user of DEFAULT_USERS) {
     const session = await expectIdentity(page, user);
     if (user.role === 'candidate') {
       await expect(page.getByText(`Welcome, ${user.displayName}.`)).toBeVisible();
-      await expect(page.getByText(/Application progress and contact profile tools are not available/)).toBeVisible();
+      // The implemented candidate portal supersedes the old unavailable-tools placeholder.
+      const ownApplications = DEFAULT_SUBMISSIONS.filter((application) => application.userId === user.id);
+      const profile = page.getByRole('region', { name: 'Candidate portal', exact: true });
+      await expect(profile.getByRole('heading', { name: 'Contact profile' })).toBeVisible();
+      await expect(profile.getByText(user.username, { exact: true })).toBeVisible();
+      await expect(profile.getByText(ownApplications[0].mobile, { exact: true })).toBeVisible();
+      await expect(profile.getByRole('button', { name: 'Edit profile' })).toBeVisible();
+      const applications = page.getByRole('region', { name: 'Your applications' });
+      await expect(applications.getByRole('article')).toHaveCount(ownApplications.length);
+      const stages = {
+        review: ['Under Review', 'Profile Screening'],
+        interview: ['Interview Scheduled', 'Interview Scheduled'],
+        offer: ['Offer Extended', 'Final Decision'],
+      };
+      for (const application of ownApplications) {
+        const card = applications.getByRole('article', { name: `${application.department} application` });
+        for (const value of [application.id, application.fullName, application.email, application.mobile]) {
+          await expect(card.getByText(value, { exact: true })).toBeVisible();
+        }
+        const [status, stage] = stages[application.status];
+        await expect(card.getByRole('status')).toHaveText(`Current status: ${status}`);
+        const progress = card.getByRole('list', { name: 'Application progress' });
+        await expect(progress.getByRole('listitem')).toHaveCount(4);
+        await expect(progress.locator('[aria-current="step"]')).toHaveCount(1);
+        await expect(progress.locator('[aria-current="step"]')).toContainText(stage);
+        await expect(card.getByText(/Next steps:/)).toBeVisible();
+        if (application.interviewSchedule) {
+          await expect(card.getByRole('region', { name: 'Interview schedule' })).toContainText(application.interviewSchedule);
+        }
+      }
+      for (const application of DEFAULT_SUBMISSIONS.filter((record) => record.userId !== user.id)) {
+        await expect(applications.getByText(application.email, { exact: true })).toHaveCount(0);
+      }
       await expect(banner.getByRole('link', { name: 'Admin', exact: true })).toHaveCount(0);
       await page.getByRole('link', { name: 'Recruiter access' }).click();
       await expect(page.getByRole('heading', { name: 'Recruiter access only' })).toBeVisible();
@@ -149,14 +181,29 @@ test('registration validates input and duplicates then creates and signs in a ca
   await page.getByRole('button', { name: 'Create account' }).click();
   await expect(page.getByRole('alert')).toContainText('already exists'); expect(await identity(page)).toBeNull();
   await page.getByLabel('Email Address').fill('new@example.com');
+  const priorUsers = await page.evaluate(() => localStorage.getItem('hirehub_users'));
+  // Reject short/long numbers and country codes rather than truncating to ten digits.
+  for (const mobile of ['012345678', '01234567890', '+1 (012) 345-6789']) {
+    await page.getByLabel('Mobile Number').fill(mobile);
+    await page.getByRole('button', { name: 'Create account' }).click();
+    await expect(page.getByRole('alert')).toContainText('exactly 10 digits');
+    await expect(page).toHaveURL(/\/register$/);
+    expect(await identity(page)).toBeNull();
+    expect(await page.evaluate(() => localStorage.getItem('hirehub_users'))).toBe(priorUsers);
+  }
+  await page.getByLabel('Mobile Number').fill('(012) 345-6789');
   await page.getByRole('button', { name: 'Create account' }).click();
   await expect(page).toHaveURL(/\/candidate$/);
   await expect(page.getByText('Welcome, New Candidate.')).toBeVisible();
-  await expect(page.getByText(/Your candidate account is ready/)).toBeVisible();
+  const applications = page.getByRole('region', { name: 'Your applications' });
+  await expect(applications.getByRole('heading', { name: 'No applications yet' })).toBeVisible();
+  await expect(applications.getByRole('article')).toHaveCount(0);
+  await expect(applications.getByText('Your account is ready. Use the application form to submit your interest.', { exact: true })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Candidate portal', exact: true }).getByText('0123456789', { exact: true })).toBeVisible();
   const users = await page.evaluate(() => JSON.parse(localStorage.getItem('hirehub_users')));
   expect(users).toHaveLength(6);
   const account = users.find((user) => user.username === 'new@example.com');
-  expect(account).toEqual({ id: expect.any(String), role: 'candidate', username: 'new@example.com', password: 'password123', displayName: 'New Candidate' });
+  expect(account).toEqual({ id: expect.any(String), role: 'candidate', username: 'new@example.com', password: 'password123', displayName: 'New Candidate', mobile: '0123456789' });
   const session = await expectIdentity(page, account);
   await page.reload(); expect(await identity(page)).toEqual(session);
   await expect(page.getByText('Welcome, New Candidate.')).toBeVisible();
