@@ -17,6 +17,7 @@ test.beforeEach(async ({ page }) => {
     page.homeErrors.push(error.message);
   });
   await page.goto('/');
+  await expect(page.getByRole('heading', { name: 'Build Your Future With Us', exact: true })).toBeVisible();
 });
 
 /** Assert that every journey completed without browser-side failures. */
@@ -110,6 +111,8 @@ for (const name of ['Express Your Interest', 'Apply Now']) {
     await expect(cta).toHaveAttribute('href', '/apply');
     await cta.click();
     await expect(page).toHaveURL(/\/apply$/);
+    await expect(page.getByRole('heading', { name: 'Join Our Team', exact: true })).toBeVisible();
+    await expect(page.getByRole('form', { name: 'Application form', exact: true })).toBeVisible();
     await expect(page.getByRole('navigation').getByRole('link', { name: 'Apply', exact: true })).toHaveAttribute('aria-current', 'page');
   });
 }
@@ -120,13 +123,19 @@ test('header links update the URL and active destination', async ({ page }) => {
   for (const [name, pathname] of [['Apply', '/apply'], ['Admin', '/admin'], ['Home', '/']]) {
     await nav.getByRole('link', { name, exact: true }).click();
     expect(new URL(page.url()).pathname).toBe(pathname);
+    if (name === 'Admin') {
+      await expect(page).toHaveURL(/\/admin$/);
+      await expect(page.getByRole('heading', { name: 'Admin Login', exact: true })).toBeVisible();
+    }
     await expect(nav.getByRole('link', { name, exact: true })).toHaveAttribute('aria-current', 'page');
     for (const other of ['Home', 'Apply', 'Admin'].filter((item) => item !== name)) {
       await expect(nav.getByRole('link', { name: other, exact: true })).not.toHaveAttribute('aria-current', 'page');
     }
   }
-  await page.getByRole('link', { name: 'Login', exact: true }).click();
-  await expect(page).toHaveURL(/\/admin$/);
+  await page.getByRole('banner').getByRole('link', { name: 'Login', exact: true }).click();
+  await expect(page).toHaveURL(/\/login$/);
+  await expect(page.getByRole('heading', { name: 'Candidate Login', exact: true })).toBeVisible();
+  await expect(page.getByRole('tab', { name: 'Administrator / Recruiter', exact: true })).toBeVisible();
   await page.getByRole('link', { name: 'HireHub', exact: true }).click();
   expect(new URL(page.url()).pathname).toBe('/');
   await expect(page.getByRole('heading', { level: 1, name: 'Build Your Future With Us' })).toBeVisible();

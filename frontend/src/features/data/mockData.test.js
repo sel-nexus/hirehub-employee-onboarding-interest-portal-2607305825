@@ -152,6 +152,8 @@ describe('schema validation', () => {
     { id: '' }, { id: ' spaced ' }, { fullName: '<script>' }, { email: 'bad' }, { mobile: '123' },
     { department: 'Unknown' }, { submittedAt: 'not-a-date' }, { submittedAt: '2026-10-20' },
     { userId: 1 }, { status: 'owner' }, { notes: {} }, { portfolioUrl: null }, { sampleResume: [] },
+    { portfolioUrl: 'not a url' },
+    { interviewSchedule: { ...DEFAULT_SUBMISSIONS[0].interviewSchedule, dateTime: '2026-11-01' } },
   ])('rejects invalid record fields %j', (fields) => {
     expect(validSubmissions([{ ...DEFAULT_SUBMISSIONS[0], ...fields }])).toBe(false);
   });

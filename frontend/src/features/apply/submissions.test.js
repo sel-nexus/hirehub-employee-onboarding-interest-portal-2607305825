@@ -200,6 +200,8 @@ describe('extended applications', () => {
     { ...DEFAULT_SUBMISSIONS[1], status: 'hired' }, { ...DEFAULT_SUBMISSIONS[1], notes: {} },
     { ...DEFAULT_SUBMISSIONS[1], portfolioUrl: 'javascript:alert(1)' }, { ...DEFAULT_SUBMISSIONS[1], portfolioUrl: ' https://example.com ' },
     { ...DEFAULT_SUBMISSIONS[1], portfolioUrl: 'https://name:pass@example.com' },
+    { ...DEFAULT_SUBMISSIONS[0], portfolioUrl: 'not a url' },
+    { ...DEFAULT_SUBMISSIONS[0], interviewSchedule: { ...DEFAULT_SUBMISSIONS[0].interviewSchedule, dateTime: '2026-11-01' } },
     { ...DEFAULT_SUBMISSIONS[1], sampleResume: 'Unknown' }, { ...DEFAULT_SUBMISSIONS[1], extra: 'unknown' },
     { ...DEFAULT_SUBMISSIONS[1], interviewSchedule: null }, { ...DEFAULT_SUBMISSIONS[1], interviewSchedule: [] },
     { ...DEFAULT_SUBMISSIONS[1], interviewSchedule: { dateTime: 'invalid', format: 'Video', location: 'Demo' } },

@@ -68,6 +68,7 @@ for (const initialTheme of ['light', 'dark']) {
   test(`OS ${initialTheme}, persistent toggles and representative portal/dialog surfaces`, async ({ page }, testInfo) => {
     await page.emulateMedia({ colorScheme: initialTheme });
     await page.goto('/'); // Initial entry only; all app navigation below uses real links.
+    await expect(page.getByRole('heading', { name: 'Build Your Future With Us', exact: true })).toBeVisible();
     await expectTheme(page, initialTheme);
     expect((await datasets(page)).theme).toBeNull();
     const changedTheme = initialTheme === 'dark' ? 'light' : 'dark';
@@ -131,6 +132,7 @@ for (const initialTheme of ['light', 'dark']) {
 test('candidate and recruiter one-click reset restore exact baseline, stale accounts and session while retaining theme', async ({ page }, testInfo) => {
   await page.emulateMedia({ colorScheme: 'light' });
   await page.goto('/');
+  await expect(page.getByRole('heading', { name: 'Build Your Future With Us', exact: true })).toBeVisible();
   const baseline = await datasets(page);
   expect(baseline.submissions).toHaveLength(8);
   expect(baseline.users).toHaveLength(10);
@@ -180,6 +182,7 @@ test('candidate and recruiter one-click reset restore exact baseline, stale acco
   await expect(page.getByRole('heading', { name: 'Build Your Future With Us' })).toBeVisible();
   expect(await datasets(page)).toEqual({ ...baseline, session: null, theme: 'dark' });
   await page.reload();
+  await expect(page.getByRole('heading', { name: 'Build Your Future With Us', exact: true })).toBeVisible();
   await expectTheme(page, 'dark');
   expect(await datasets(page)).toEqual({ ...baseline, session: null, theme: 'dark' });
   await capture(page, testInfo, 'dark-recruiter-reset-reloaded');

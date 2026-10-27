@@ -14,11 +14,38 @@ function captureAuthErrors(page) {
 test.beforeEach(async ({ page }) => {
   captureAuthErrors(page);
   await page.goto('/');
+  await expect(page.getByRole('heading', { name: 'Build Your Future With Us', exact: true })).toBeVisible();
 });
 
 /** Fail every journey with browser errors, including journeys that close the original tab. */
 test.afterEach(async ({ page }) => {
   expect(page.authErrors, 'Browser console and uncaught page errors').toEqual([]);
+});
+
+/** Follow the login/register card links in both directions, not only the public header. */
+test('candidate login card opens signup and the signup card returns to candidate login', async ({ page }) => {
+  await page.getByRole('banner').getByRole('link', { name: 'Login', exact: true }).click();
+  await expect(page).toHaveURL(/\/login$/);
+  const main = page.getByRole('main');
+  await expect(main.getByRole('heading', { name: 'Candidate Login', exact: true })).toBeVisible();
+  await expect(main.getByLabel('Email Address')).toBeVisible();
+  await expect(main.getByLabel('Password', { exact: true })).toBeVisible();
+  await expect(main.getByRole('button', { name: 'Login', exact: true })).toBeVisible();
+  await main.getByRole('link', { name: 'Create a candidate account', exact: true }).click();
+  await expect(page).toHaveURL(/\/register$/);
+  await expect(main.getByRole('heading', { name: 'Create Candidate Account', exact: true })).toBeVisible();
+  for (const label of ['Full Name', 'Email Address', 'Password', 'Confirm Password']) {
+    await expect(main.getByLabel(label, { exact: true })).toBeVisible();
+  }
+  await expect(main.getByRole('button', { name: 'Create Account', exact: true })).toBeVisible();
+  await main.getByRole('link', { name: 'Already have an account? Login', exact: true }).click();
+  await expect(page).toHaveURL(/\/login$/);
+  await expect(main.getByRole('heading', { name: 'Candidate Login', exact: true })).toBeVisible();
+  await expect(main.getByRole('tab', { name: 'Candidate', exact: true })).toHaveAttribute('aria-selected', 'true');
+  await expect(main.getByRole('tab', { name: 'Administrator / Recruiter', exact: true })).toBeVisible();
+  await expect(main.getByLabel('Email Address')).toHaveValue('');
+  await expect(main.getByLabel('Password', { exact: true })).toHaveValue('');
+  await expect(main.getByRole('button', { name: 'Login', exact: true })).toBeVisible();
 });
 
 /** Verify legacy recruiter entry, invalid login, persistent source session and logout. */
@@ -186,6 +213,7 @@ test('signup persists a candidate account and allows later login without leaking
   captureAuthErrors(freshPage);
   try {
     await freshPage.goto('/');
+    await expect(freshPage.getByRole('heading', { name: 'Build Your Future With Us', exact: true })).toBeVisible();
     await freshPage.getByRole('banner').getByRole('link', { name: 'Candidate Portal', exact: true }).click();
     await expect(freshPage.getByText('Welcome, New Candidate.')).toBeVisible();
     await expect(freshPage.getByRole('table')).toHaveCount(0);
@@ -211,7 +239,10 @@ test('deliberately empty legacy submissions remain empty until a public applicat
   await expect(page.getByRole('status')).toHaveText('Thank you! Your interest has been submitted successfully.');
   const raw = await page.evaluate(() => localStorage.getItem('hirehub_submissions'));
   const records = JSON.parse(raw);
-  expect(records).toEqual([{ id: expect.any(String), fullName: 'Alice Smith', email: 'alice@example.com', mobile: '0123456789', department: 'Engineering', submittedAt: expect.any(String) }]);
+  expect(records).toEqual([{
+    id: expect.any(String), userId: '', fullName: 'Alice Smith', email: 'alice@example.com', mobile: '0123456789',
+    department: 'Engineering', status: 'received', submittedAt: expect.any(String), notes: '', portfolioUrl: '', sampleResume: '',
+  }]);
   await nav.getByRole('link', { name: 'Admin', exact: true }).click();
   await page.getByLabel('Username', { exact: true }).fill('admin');
   await page.getByLabel('Password', { exact: true }).fill('admin');

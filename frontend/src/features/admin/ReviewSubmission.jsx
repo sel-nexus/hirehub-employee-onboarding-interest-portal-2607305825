@@ -95,7 +95,10 @@ export default function ReviewSubmission({ submission, onSaved, onCancel }) {
     setError('');
     setNotice('');
     try {
-      const saved = updateRecruiterSubmission(submission.id, notes === savedNotes.current ? {} : { notes });
+      const notesChanged = notes !== savedNotes.current;
+      const saved = updateRecruiterSubmission(submission.id, notesChanged ? { notes } : {});
+      // Keep untouched input aligned with the verified latest notes for subsequent saves.
+      if (!notesChanged) setNotes(saved.notes);
       savedNotes.current = saved.notes;
       onSaved();
       setNotice('Internal notes saved locally.');

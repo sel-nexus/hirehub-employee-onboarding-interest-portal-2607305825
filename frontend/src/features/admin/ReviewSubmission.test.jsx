@@ -123,7 +123,18 @@ describe('ReviewSubmission', () => {
     localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([latest, ...DEFAULT_SUBMISSIONS.slice(1)]));
     await user.click(screen.getByRole('button', { name: 'Save Notes' }));
     expect(readSubmissions()).toEqual([latest, ...DEFAULT_SUBMISSIONS.slice(1)]);
+    const newest = { ...latest, notes: 'Newest external notes' };
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([newest, ...DEFAULT_SUBMISSIONS.slice(1)]));
+    await user.click(screen.getByRole('button', { name: 'Save Notes' }));
+    expect(JSON.parse(localStorage.getItem(SUBMISSIONS_KEY))).toEqual([newest, ...DEFAULT_SUBMISSIONS.slice(1)]);
+    expect(notes).toHaveValue(newest.notes);
     expect(screen.getByRole('status')).toHaveTextContent('Internal notes saved locally.');
+    await user.clear(notes);
+    await user.type(notes, alex.notes);
+    await user.click(screen.getByRole('button', { name: 'Save Notes' }));
+    expect(JSON.parse(localStorage.getItem(SUBMISSIONS_KEY))).toEqual([
+      { ...newest, notes: alex.notes }, ...DEFAULT_SUBMISSIONS.slice(1),
+    ]);
   });
 
   it('rejects oversized synthetic notes with visible associated feedback and no persistence', async () => {

@@ -7,6 +7,7 @@ test.beforeEach(async ({ page }) => {
   page.on('console', (message) => { if (message.type() === 'error') page.candidateErrors.push(message.text()); });
   page.on('pageerror', (error) => page.candidateErrors.push(error.message));
   await page.goto('/');
+  await expect(page.getByRole('heading', { name: 'Build Your Future With Us', exact: true })).toBeVisible();
 });
 test.afterEach(async ({ page }) => {
   expect(page.candidateErrors, 'Candidate browser console and page errors').toEqual([]);
@@ -20,6 +21,27 @@ async function signIn(page, email = 'alex@example.com') {
   await page.getByRole('button', { name: 'Login', exact: true }).click();
   await expect(page).toHaveURL(/\/candidate$/);
 }
+
+/** Exercise the populated portal CTA independently of header and empty-state entry points. */
+test('populated candidate portal opens the application form through Apply for a role', async ({ page }) => {
+  await signIn(page);
+  const main = page.getByRole('main');
+  await expect(main.getByRole('heading', { name: 'Candidate Portal', exact: true })).toBeVisible();
+  await expect(main.getByText('alex@example.com', { exact: true })).toBeVisible();
+  await expect(main.getByRole('list', { name: 'Hiring progress' })).toBeVisible();
+  const baseline = await page.evaluate(() => localStorage.getItem('hirehub_submissions'));
+  expect(JSON.parse(baseline)).toHaveLength(8);
+  await main.getByRole('link', { name: 'Apply for a role', exact: true }).click();
+  await expect(page).toHaveURL(/\/apply$/);
+  await expect(main.getByRole('heading', { name: 'Join Our Team', exact: true })).toBeVisible();
+  const form = main.getByRole('form', { name: 'Application form', exact: true });
+  await expect(form).toBeVisible();
+  for (const label of ['Full Name', 'Email Address', 'Mobile Number', 'Department of Interest']) {
+    await expect(form.getByLabel(label, { exact: true })).toBeVisible();
+  }
+  await expect(form.getByRole('button', { name: 'Submit Application', exact: true })).toBeVisible();
+  expect(await page.evaluate(() => localStorage.getItem('hirehub_submissions'))).toBe(baseline);
+});
 
 test('seeded candidate owns only Alex; edits contacts and can sign in again with the updated email', async ({ page }) => {
   await signIn(page);

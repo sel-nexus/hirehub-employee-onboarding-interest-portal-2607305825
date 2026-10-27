@@ -89,6 +89,46 @@
       "_origin": "ast"
     },
     {
+      "id": "e2e_theme_reset_spec",
+      "label": "theme-reset.spec.js",
+      "file_type": "code",
+      "source_file": "frontend/e2e/theme-reset.spec.js",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "e2e_theme_reset_spec_browsererrors",
+      "label": "browserErrors",
+      "file_type": "code",
+      "source_file": "frontend/e2e/theme-reset.spec.js",
+      "source_location": "L5",
+      "_origin": "ast"
+    },
+    {
+      "id": "e2e_theme_reset_spec_capture",
+      "label": "capture()",
+      "file_type": "code",
+      "source_file": "frontend/e2e/theme-reset.spec.js",
+      "source_location": "L15",
+      "_origin": "ast"
+    },
+    {
+      "id": "e2e_theme_reset_spec_expecttheme",
+      "label": "expectTheme()",
+      "file_type": "code",
+      "source_file": "frontend/e2e/theme-reset.spec.js",
+      "source_location": "L46",
+      "_origin": "ast"
+    },
+    {
+      "id": "e2e_theme_reset_spec_datasets",
+      "label": "datasets()",
+      "file_type": "code",
+      "source_file": "frontend/e2e/theme-reset.spec.js",
+      "source_location": "L58",
+      "_origin": "ast"
+    },
+    {
       "id": "frontend_package",
       "label": "package.json",
       "file_type": "code",
@@ -353,7 +393,7 @@
       "label": "App()",
       "file_type": "code",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L15",
+      "source_location": "L17",
       "_origin": "ast"
     },
     {
@@ -413,6 +453,30 @@
       "_origin": "ast"
     },
     {
+      "id": "components_demoutility",
+      "label": "DemoUtility.jsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/DemoUtility.jsx",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "components_demoutility_demoutility",
+      "label": "DemoUtility()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/DemoUtility.jsx",
+      "source_location": "L11",
+      "_origin": "ast"
+    },
+    {
+      "id": "components_demoutility_test",
+      "label": "DemoUtility.test.jsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/DemoUtility.test.jsx",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
       "id": "components_header",
       "label": "Header.jsx",
       "file_type": "code",
@@ -425,7 +489,15 @@
       "label": "Header()",
       "file_type": "code",
       "source_file": "frontend/src/components/Header.jsx",
-      "source_location": "L13",
+      "source_location": "L15",
+      "_origin": "ast"
+    },
+    {
+      "id": "components_header_test",
+      "label": "Header.test.jsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/Header.test.jsx",
+      "source_location": "L1",
       "_origin": "ast"
     },
     {
@@ -1517,6 +1589,78 @@
       "_origin": "ast"
     },
     {
+      "id": "theme_theme",
+      "label": "theme.js",
+      "file_type": "code",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "theme_theme_systemtheme",
+      "label": "systemTheme()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L8",
+      "_origin": "ast"
+    },
+    {
+      "id": "theme_theme_readtheme",
+      "label": "readTheme()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L17",
+      "_origin": "ast"
+    },
+    {
+      "id": "theme_theme_applytheme",
+      "label": "applyTheme()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L27",
+      "_origin": "ast"
+    },
+    {
+      "id": "theme_theme_savetheme",
+      "label": "saveTheme()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L33",
+      "_origin": "ast"
+    },
+    {
+      "id": "theme_theme_subscribetheme",
+      "label": "subscribeTheme()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L48",
+      "_origin": "ast"
+    },
+    {
+      "id": "theme_theme_usetheme",
+      "label": "useTheme()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L72",
+      "_origin": "ast"
+    },
+    {
+      "id": "theme_theme_test",
+      "label": "theme.test.js",
+      "file_type": "code",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "theme_theme_test_os",
+      "label": "os()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L10",
+      "_origin": "ast"
+    },
+    {
       "id": "src_main",
       "label": "main.jsx",
       "file_type": "code",
@@ -1647,6 +1791,42 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/candidate.spec.js",
       "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_theme_reset_spec",
+      "target": "e2e_theme_reset_spec_browsererrors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/theme-reset.spec.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_theme_reset_spec",
+      "target": "e2e_theme_reset_spec_capture",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/theme-reset.spec.js",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_theme_reset_spec",
+      "target": "e2e_theme_reset_spec_expecttheme",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/theme-reset.spec.js",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_theme_reset_spec",
+      "target": "e2e_theme_reset_spec_datasets",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/theme-reset.spec.js",
+      "source_location": "L58",
       "weight": 1.0
     },
     {
@@ -1905,7 +2085,7 @@
     },
     {
       "source": "src_app",
-      "target": "home_home",
+      "target": "components_demoutility",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -1915,7 +2095,17 @@
     },
     {
       "source": "src_app",
-      "target": "apply_apply",
+      "target": "components_demoutility_demoutility",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "theme_theme",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -1925,7 +2115,17 @@
     },
     {
       "source": "src_app",
-      "target": "admin_login",
+      "target": "theme_theme_usetheme",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "home_home",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -1935,7 +2135,7 @@
     },
     {
       "source": "src_app",
-      "target": "auth_register",
+      "target": "apply_apply",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -1945,7 +2145,7 @@
     },
     {
       "source": "src_app",
-      "target": "admin_dashboard",
+      "target": "admin_login",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -1955,7 +2155,7 @@
     },
     {
       "source": "src_app",
-      "target": "candidate_candidate",
+      "target": "auth_register",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -1965,12 +2165,32 @@
     },
     {
       "source": "src_app",
-      "target": "admin_auth",
+      "target": "admin_dashboard",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
       "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "candidate_candidate",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L13",
       "weight": 1.0
     },
     {
@@ -1980,7 +2200,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L11",
+      "source_location": "L13",
       "weight": 1.0
     },
     {
@@ -1990,7 +2210,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L11",
+      "source_location": "L13",
       "weight": 1.0
     },
     {
@@ -2000,7 +2220,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L12",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -2010,7 +2230,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L12",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -2020,7 +2240,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L12",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -2029,7 +2249,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L15",
+      "source_location": "L17",
       "weight": 1.0
     },
     {
@@ -2187,12 +2407,131 @@
       "weight": 1.0
     },
     {
+      "source": "components_demoutility",
+      "target": "data_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/DemoUtility.jsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "components_demoutility",
+      "target": "data_mockdata_resettodefaults",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/DemoUtility.jsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "components_demoutility",
+      "target": "components_demoutility_demoutility",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/DemoUtility.jsx",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "components_demoutility_test",
+      "target": "components_demoutility",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/DemoUtility.test.jsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "components_demoutility_test",
+      "target": "components_demoutility_demoutility",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/DemoUtility.test.jsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "components_demoutility_test",
+      "target": "data_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/DemoUtility.test.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "components_demoutility_test",
+      "target": "data_mockdata_seedmockdata",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/DemoUtility.test.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "components_demoutility_test",
+      "target": "data_mockdata_default_users",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/DemoUtility.test.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "components_demoutility_test",
+      "target": "data_mockdata_default_submissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/DemoUtility.test.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "components_demoutility_test",
+      "target": "data_mockdata_default_departments",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/DemoUtility.test.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
       "source": "components_header",
       "target": "components_header_header",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/Header.jsx",
-      "source_location": "L13",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "components_header_test",
+      "target": "components_header",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/Header.test.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "components_header_test",
+      "target": "components_header_header",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/Header.test.jsx",
+      "source_location": "L6",
       "weight": 1.0
     },
     {
@@ -5881,6 +6220,139 @@
       "weight": 1.0
     },
     {
+      "source": "theme_theme",
+      "target": "theme_theme_systemtheme",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme",
+      "target": "theme_theme_readtheme",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme",
+      "target": "theme_theme_applytheme",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme",
+      "target": "theme_theme_savetheme",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme",
+      "target": "theme_theme_subscribetheme",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme",
+      "target": "theme_theme_usetheme",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L72",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_readtheme",
+      "target": "theme_theme_systemtheme",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.js",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_test",
+      "target": "theme_theme",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_test",
+      "target": "theme_theme_readtheme",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_test",
+      "target": "theme_theme_savetheme",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_test",
+      "target": "theme_theme_applytheme",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_test",
+      "target": "theme_theme_subscribetheme",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_test",
+      "target": "theme_theme_usetheme",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "theme_theme_test",
+      "target": "theme_theme_test_os",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/theme/theme.test.js",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
       "source": "src_main",
       "target": "src_app",
       "relation": "imports_from",
@@ -5935,7 +6407,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L5",
+      "source_location": "L7",
       "weight": 1.0
     },
     {
@@ -5945,7 +6417,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L6",
+      "source_location": "L8",
       "weight": 1.0
     },
     {
@@ -5955,7 +6427,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L7",
+      "source_location": "L9",
       "weight": 1.0
     },
     {
@@ -5965,7 +6437,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L8",
+      "source_location": "L10",
       "weight": 1.0
     },
     {
@@ -5975,7 +6447,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L9",
+      "source_location": "L11",
       "weight": 1.0
     },
     {
@@ -5985,7 +6457,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L10",
+      "source_location": "L12",
       "weight": 1.0
     },
     {
@@ -6200,13 +6672,24 @@
     },
     {
       "source": "src_app_app",
+      "target": "theme_theme_usetheme",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_app",
       "target": "admin_auth_getsession",
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L23",
+      "source_location": "L26",
       "weight": 1.0
     },
     {
@@ -6442,10 +6925,10 @@
     }
   ],
   "metadata": {
-    "built_at": "2026-10-27T07:52:25.997649+00:00",
+    "built_at": "2026-10-27T08:04:02.022162+00:00",
     "version": "graph_update-v1",
     "codebase_root": "/data/artifacts-v2/T011RNFvLqRR0008727102606471629/developer",
     "force": true,
-    "files_scanned": 47
+    "files_scanned": 53
   }
 }

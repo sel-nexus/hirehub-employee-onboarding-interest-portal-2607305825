@@ -52,6 +52,7 @@ for (const [username, password] of [['admin', 'admin'], ['recruiter@hirehub.demo
     await page.goto('/');
     const navigation = page.getByRole('navigation', { name: 'Main navigation' });
     await expect(navigation).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Build Your Future With Us', exact: true })).toBeVisible();
     const original = await storedRecords(page);
     expect(original).toHaveLength(8);
     const originalAlex = original.find((record) => record.email === 'alex@example.com');
@@ -198,6 +199,8 @@ for (const [username, password] of [['admin', 'admin'], ['recruiter@hirehub.demo
     await search.fill('');
     await expect(page.locator('.stat-total dd')).toHaveText('8');
     await page.reload();
+    await expect(page.getByRole('heading', { name: 'Submissions Dashboard', exact: true })).toBeVisible();
+    await expect(page.locator('.stat-total dd')).toHaveText('8');
     expect(await storedRecords(page)).toEqual(original.map((record) => record.id === expectedAlex.id ? expectedAlex : record));
 
     await page.locator('.dashboard-heading').getByRole('button', { name: 'Logout', exact: true }).click();
