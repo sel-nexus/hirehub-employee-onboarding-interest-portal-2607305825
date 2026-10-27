@@ -65,6 +65,22 @@
       "_origin": "ast"
     },
     {
+      "id": "e2e_candidate_spec",
+      "label": "candidate.spec.js",
+      "file_type": "code",
+      "source_file": "frontend/e2e/candidate.spec.js",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "e2e_candidate_spec_signin",
+      "label": "signIn()",
+      "file_type": "code",
+      "source_file": "frontend/e2e/candidate.spec.js",
+      "source_location": "L16",
+      "_origin": "ast"
+    },
+    {
       "id": "e2e_home_spec",
       "label": "home.spec.js",
       "file_type": "code",
@@ -337,7 +353,7 @@
       "label": "App()",
       "file_type": "code",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L19",
+      "source_location": "L15",
       "_origin": "ast"
     },
     {
@@ -697,7 +713,7 @@
       "label": "EMPTY_VALUES",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/Apply.jsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "_origin": "ast"
     },
     {
@@ -705,7 +721,7 @@
       "label": "Apply()",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/Apply.jsx",
-      "source_location": "L18",
+      "source_location": "L19",
       "_origin": "ast"
     },
     {
@@ -717,11 +733,19 @@
       "_origin": "ast"
     },
     {
+      "id": "apply_apply_test_materialdefaults",
+      "label": "materialDefaults",
+      "file_type": "code",
+      "source_file": "frontend/src/features/apply/Apply.test.jsx",
+      "source_location": "L12",
+      "_origin": "ast"
+    },
+    {
       "id": "apply_apply_test_setuptimeruser",
       "label": "setupTimerUser()",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/Apply.test.jsx",
-      "source_location": "L14",
+      "source_location": "L17",
       "_origin": "ast"
     },
     {
@@ -729,7 +753,7 @@
       "label": "valid",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/Apply.test.jsx",
-      "source_location": "L29",
+      "source_location": "L32",
       "_origin": "ast"
     },
     {
@@ -737,7 +761,7 @@
       "label": "labels",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/Apply.test.jsx",
-      "source_location": "L30",
+      "source_location": "L33",
       "_origin": "ast"
     },
     {
@@ -745,7 +769,7 @@
       "label": "renderApply()",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/Apply.test.jsx",
-      "source_location": "L33",
+      "source_location": "L36",
       "_origin": "ast"
     },
     {
@@ -753,7 +777,7 @@
       "label": "fillForm()",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/Apply.test.jsx",
-      "source_location": "L42",
+      "source_location": "L45",
       "_origin": "ast"
     },
     {
@@ -761,7 +785,7 @@
       "label": "expectCleared()",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/Apply.test.jsx",
-      "source_location": "L50",
+      "source_location": "L53",
       "_origin": "ast"
     },
     {
@@ -773,11 +797,19 @@
       "_origin": "ast"
     },
     {
-      "id": "apply_submissions_record_keys",
-      "label": "RECORD_KEYS",
+      "id": "apply_submissions_sample_resumes",
+      "label": "SAMPLE_RESUMES",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L6",
+      "source_location": "L8",
+      "_origin": "ast"
+    },
+    {
+      "id": "apply_submissions_validatematerials",
+      "label": "validateMaterials()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/apply/submissions.js",
+      "source_location": "L14",
       "_origin": "ast"
     },
     {
@@ -785,7 +817,7 @@
       "label": "writeSubmissions()",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L16",
+      "source_location": "L43",
       "_origin": "ast"
     },
     {
@@ -793,7 +825,7 @@
       "label": "validDataset()",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L33",
+      "source_location": "L60",
       "_origin": "ast"
     },
     {
@@ -801,7 +833,7 @@
       "label": "readSubmissions()",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L63",
+      "source_location": "L72",
       "_origin": "ast"
     },
     {
@@ -809,7 +841,7 @@
       "label": "requireValid()",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L96",
+      "source_location": "L105",
       "_origin": "ast"
     },
     {
@@ -817,7 +849,7 @@
       "label": "createSubmission()",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L117",
+      "source_location": "L126",
       "_origin": "ast"
     },
     {
@@ -825,7 +857,7 @@
       "label": "findIndex()",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L143",
+      "source_location": "L163",
       "_origin": "ast"
     },
     {
@@ -833,7 +865,7 @@
       "label": "updateSubmission()",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L162",
+      "source_location": "L182",
       "_origin": "ast"
     },
     {
@@ -841,7 +873,7 @@
       "label": "deleteSubmission()",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L189",
+      "source_location": "L209",
       "_origin": "ast"
     },
     {
@@ -857,7 +889,7 @@
       "label": "valid",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/submissions.test.js",
-      "source_location": "L7",
+      "source_location": "L10",
       "_origin": "ast"
     },
     {
@@ -865,7 +897,7 @@
       "label": "stored",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/submissions.test.js",
-      "source_location": "L8",
+      "source_location": "L11",
       "_origin": "ast"
     },
     {
@@ -873,7 +905,7 @@
       "label": "persisted()",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/submissions.test.js",
-      "source_location": "L11",
+      "source_location": "L14",
       "_origin": "ast"
     },
     {
@@ -897,7 +929,7 @@
       "label": "FIELD_ERRORS",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/validation.js",
-      "source_location": "L13",
+      "source_location": "L14",
       "_origin": "ast"
     },
     {
@@ -905,7 +937,7 @@
       "label": "normalizeValues()",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/validation.js",
-      "source_location": "L31",
+      "source_location": "L32",
       "_origin": "ast"
     },
     {
@@ -913,7 +945,7 @@
       "label": "validateSubmission()",
       "file_type": "code",
       "source_file": "frontend/src/features/apply/validation.js",
-      "source_location": "L47",
+      "source_location": "L48",
       "_origin": "ast"
     },
     {
@@ -973,6 +1005,198 @@
       "_origin": "ast"
     },
     {
+      "id": "candidate_candidate",
+      "label": "Candidate.jsx",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/Candidate.jsx",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_candidate_candidate",
+      "label": "Candidate()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/Candidate.jsx",
+      "source_location": "L9",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_candidate_test",
+      "label": "Candidate.test.jsx",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_candidate_test_rendercandidate",
+      "label": "renderCandidate()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L12",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_candidate_test_setstage",
+      "label": "setStage()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L24",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_profileedit",
+      "label": "ProfileEdit.jsx",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/ProfileEdit.jsx",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_profileedit_fields",
+      "label": "FIELDS",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/ProfileEdit.jsx",
+      "source_location": "L6",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_profileedit_profileedit",
+      "label": "ProfileEdit()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/ProfileEdit.jsx",
+      "source_location": "L9",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_profileedit_test",
+      "label": "ProfileEdit.test.jsx",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/ProfileEdit.test.jsx",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_profileedit_test_harness",
+      "label": "Harness()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/ProfileEdit.test.jsx",
+      "source_location": "L15",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_profileedit_test_opendialog",
+      "label": "openDialog()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/ProfileEdit.test.jsx",
+      "source_location": "L38",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_candidateservice",
+      "label": "candidateService.js",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_candidateservice_milestones",
+      "label": "MILESTONES",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L6",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_candidateservice_stages",
+      "label": "STAGES",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L7",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_candidateservice_stagefor",
+      "label": "stageFor()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L17",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_candidateservice_currentcandidate",
+      "label": "currentCandidate()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L23",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_candidateservice_readrecords",
+      "label": "readRecords()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L30",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_candidateservice_visiblerecord",
+      "label": "visibleRecord()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L41",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_candidateservice_readcandidateapplications",
+      "label": "readCandidateApplications()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L48",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_candidateservice_validatecontact",
+      "label": "validateContact()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L54",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_candidateservice_updatecandidatecontact",
+      "label": "updateCandidateContact()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L64",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_candidateservice_test",
+      "label": "candidateService.test.js",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/candidateService.test.js",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_candidateservice_test_contact",
+      "label": "contact",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/candidateService.test.js",
+      "source_location": "L7",
+      "_origin": "ast"
+    },
+    {
+      "id": "candidate_candidateservice_test_read",
+      "label": "read()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/candidate/candidateService.test.js",
+      "source_location": "L8",
+      "_origin": "ast"
+    },
+    {
       "id": "data_mockdata",
       "label": "mockData.js",
       "file_type": "code",
@@ -1009,7 +1233,7 @@
       "label": "text()",
       "file_type": "code",
       "source_file": "frontend/src/features/data/mockData.js",
-      "source_location": "L40",
+      "source_location": "L43",
       "_origin": "ast"
     },
     {
@@ -1017,7 +1241,7 @@
       "label": "validUsers()",
       "file_type": "code",
       "source_file": "frontend/src/features/data/mockData.js",
-      "source_location": "L49",
+      "source_location": "L52",
       "_origin": "ast"
     },
     {
@@ -1025,7 +1249,7 @@
       "label": "validSubmissions()",
       "file_type": "code",
       "source_file": "frontend/src/features/data/mockData.js",
-      "source_location": "L69",
+      "source_location": "L72",
       "_origin": "ast"
     },
     {
@@ -1033,7 +1257,7 @@
       "label": "validDepartments()",
       "file_type": "code",
       "source_file": "frontend/src/features/data/mockData.js",
-      "source_location": "L91",
+      "source_location": "L117",
       "_origin": "ast"
     },
     {
@@ -1041,7 +1265,7 @@
       "label": "persistChanges()",
       "file_type": "code",
       "source_file": "frontend/src/features/data/mockData.js",
-      "source_location": "L101",
+      "source_location": "L127",
       "_origin": "ast"
     },
     {
@@ -1049,7 +1273,7 @@
       "label": "readMockData()",
       "file_type": "code",
       "source_file": "frontend/src/features/data/mockData.js",
-      "source_location": "L131",
+      "source_location": "L157",
       "_origin": "ast"
     },
     {
@@ -1057,7 +1281,7 @@
       "label": "seedMockData()",
       "file_type": "code",
       "source_file": "frontend/src/features/data/mockData.js",
-      "source_location": "L152",
+      "source_location": "L178",
       "_origin": "ast"
     },
     {
@@ -1065,7 +1289,7 @@
       "label": "resetToDefaults()",
       "file_type": "code",
       "source_file": "frontend/src/features/data/mockData.js",
-      "source_location": "L189",
+      "source_location": "L215",
       "_origin": "ast"
     },
     {
@@ -1254,6 +1478,15 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/auth.spec.js",
       "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "e2e_candidate_spec",
+      "target": "e2e_candidate_spec_signin",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/candidate.spec.js",
+      "source_location": "L16",
       "weight": 1.0
     },
     {
@@ -1562,12 +1795,22 @@
     },
     {
       "source": "src_app",
-      "target": "admin_auth",
+      "target": "candidate_candidate",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
       "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L11",
       "weight": 1.0
     },
     {
@@ -1577,7 +1820,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0
     },
     {
@@ -1587,7 +1830,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0
     },
     {
@@ -1597,7 +1840,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0
     },
     {
@@ -1607,32 +1850,12 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L11",
-      "weight": 1.0
-    },
-    {
-      "source": "src_app",
-      "target": "data_mockdata_readmockdata",
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/src/App.jsx",
-      "source_location": "L11",
-      "weight": 1.0
-    },
-    {
-      "source": "src_app",
-      "target": "apply_validation",
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/src/App.jsx",
       "source_location": "L12",
       "weight": 1.0
     },
     {
       "source": "src_app",
-      "target": "apply_validation_validatesubmission",
+      "target": "data_mockdata_readmockdata",
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -1646,7 +1869,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L19",
+      "source_location": "L15",
       "weight": 1.0
     },
     {
@@ -2629,11 +2852,51 @@
     },
     {
       "source": "apply_apply",
+      "target": "apply_submissions_sample_resumes",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_apply",
+      "target": "apply_submissions_validatematerials",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_apply",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_apply",
+      "target": "admin_auth_getsession",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_apply",
       "target": "apply_apply_empty_values",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/Apply.jsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0
     },
     {
@@ -2642,7 +2905,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/Apply.jsx",
-      "source_location": "L18",
+      "source_location": "L19",
       "weight": 1.0
     },
     {
@@ -2737,11 +3000,80 @@
     },
     {
       "source": "apply_apply_test",
+      "target": "apply_submissions_sample_resumes",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.test.jsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_apply_test",
+      "target": "data_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.test.jsx",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_apply_test",
+      "target": "data_mockdata_seedmockdata",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.test.jsx",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_apply_test",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.test.jsx",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_apply_test",
+      "target": "admin_auth_getsession",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.test.jsx",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_apply_test",
+      "target": "admin_auth_registercandidate",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.test.jsx",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_apply_test",
+      "target": "apply_apply_test_materialdefaults",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.test.jsx",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_apply_test",
       "target": "apply_apply_test_setuptimeruser",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/Apply.test.jsx",
-      "source_location": "L14",
+      "source_location": "L17",
       "weight": 1.0
     },
     {
@@ -2750,7 +3082,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/Apply.test.jsx",
-      "source_location": "L29",
+      "source_location": "L32",
       "weight": 1.0
     },
     {
@@ -2759,7 +3091,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/Apply.test.jsx",
-      "source_location": "L30",
+      "source_location": "L33",
       "weight": 1.0
     },
     {
@@ -2768,7 +3100,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/Apply.test.jsx",
-      "source_location": "L33",
+      "source_location": "L36",
       "weight": 1.0
     },
     {
@@ -2777,7 +3109,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/Apply.test.jsx",
-      "source_location": "L42",
+      "source_location": "L45",
       "weight": 1.0
     },
     {
@@ -2786,7 +3118,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/Apply.test.jsx",
-      "source_location": "L50",
+      "source_location": "L53",
       "weight": 1.0
     },
     {
@@ -2811,11 +3143,60 @@
     },
     {
       "source": "apply_submissions",
-      "target": "apply_submissions_record_keys",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_submissions",
+      "target": "admin_auth_getsession",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_submissions",
+      "target": "data_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_submissions",
+      "target": "data_mockdata_validsubmissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_submissions",
+      "target": "apply_submissions_sample_resumes",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L6",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_submissions",
+      "target": "apply_submissions_validatematerials",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.js",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -2824,7 +3205,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L16",
+      "source_location": "L43",
       "weight": 1.0
     },
     {
@@ -2833,7 +3214,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L33",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
@@ -2842,7 +3223,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L63",
+      "source_location": "L72",
       "weight": 1.0
     },
     {
@@ -2851,7 +3232,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L96",
+      "source_location": "L105",
       "weight": 1.0
     },
     {
@@ -2860,7 +3241,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L117",
+      "source_location": "L126",
       "weight": 1.0
     },
     {
@@ -2869,7 +3250,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L143",
+      "source_location": "L163",
       "weight": 1.0
     },
     {
@@ -2878,7 +3259,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L162",
+      "source_location": "L182",
       "weight": 1.0
     },
     {
@@ -2887,7 +3268,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L189",
+      "source_location": "L209",
       "weight": 1.0
     },
     {
@@ -2897,7 +3278,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L75",
+      "source_location": "L84",
       "weight": 1.0
     },
     {
@@ -2907,7 +3288,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L78",
+      "source_location": "L87",
       "weight": 1.0
     },
     {
@@ -2917,7 +3298,17 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L118",
+      "source_location": "L127",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_submissions_createsubmission",
+      "target": "apply_submissions_validatematerials",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.js",
+      "source_location": "L128",
       "weight": 1.0
     },
     {
@@ -2927,7 +3318,17 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L119",
+      "source_location": "L134",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_submissions_createsubmission",
+      "target": "apply_submissions_validdataset",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.js",
+      "source_location": "L145",
       "weight": 1.0
     },
     {
@@ -2937,7 +3338,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L126",
+      "source_location": "L146",
       "weight": 1.0
     },
     {
@@ -2947,7 +3348,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L163",
+      "source_location": "L183",
       "weight": 1.0
     },
     {
@@ -2957,7 +3358,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L164",
+      "source_location": "L184",
       "weight": 1.0
     },
     {
@@ -2967,7 +3368,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L166",
+      "source_location": "L186",
       "weight": 1.0
     },
     {
@@ -2977,7 +3378,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L174",
+      "source_location": "L194",
       "weight": 1.0
     },
     {
@@ -2987,7 +3388,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L190",
+      "source_location": "L210",
       "weight": 1.0
     },
     {
@@ -2997,7 +3398,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L191",
+      "source_location": "L211",
       "weight": 1.0
     },
     {
@@ -3007,7 +3408,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L193",
+      "source_location": "L213",
       "weight": 1.0
     },
     {
@@ -3062,11 +3463,111 @@
     },
     {
       "source": "apply_submissions_test",
+      "target": "apply_submissions",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_submissions_test",
+      "target": "apply_submissions_sample_resumes",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_submissions_test",
+      "target": "apply_submissions_validatematerials",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_submissions_test",
+      "target": "data_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.test.js",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_submissions_test",
+      "target": "data_mockdata_seedmockdata",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.test.js",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_submissions_test",
+      "target": "data_mockdata_default_submissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.test.js",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_submissions_test",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.test.js",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_submissions_test",
+      "target": "admin_auth_getsession",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.test.js",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_submissions_test",
+      "target": "admin_auth_login",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.test.js",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_submissions_test",
+      "target": "admin_auth_registercandidate",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.test.js",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_submissions_test",
       "target": "apply_submissions_test_valid",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.test.js",
-      "source_location": "L7",
+      "source_location": "L10",
       "weight": 1.0
     },
     {
@@ -3075,7 +3576,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.test.js",
-      "source_location": "L8",
+      "source_location": "L11",
       "weight": 1.0
     },
     {
@@ -3084,7 +3585,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.test.js",
-      "source_location": "L11",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -3102,7 +3603,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/validation.js",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -3111,7 +3612,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/validation.js",
-      "source_location": "L31",
+      "source_location": "L32",
       "weight": 1.0
     },
     {
@@ -3120,7 +3621,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/validation.js",
-      "source_location": "L47",
+      "source_location": "L48",
       "weight": 1.0
     },
     {
@@ -3130,7 +3631,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/validation.js",
-      "source_location": "L48",
+      "source_location": "L49",
       "weight": 1.0
     },
     {
@@ -3310,6 +3811,708 @@
       "weight": 1.0
     },
     {
+      "source": "candidate_candidate",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.jsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate",
+      "target": "admin_auth_getsession",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.jsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate",
+      "target": "candidate_candidateservice",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.jsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate",
+      "target": "candidate_candidateservice_milestones",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.jsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate",
+      "target": "candidate_candidateservice_readcandidateapplications",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.jsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate",
+      "target": "candidate_candidateservice_stagefor",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.jsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate",
+      "target": "candidate_profileedit",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate",
+      "target": "candidate_candidate_candidate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.jsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate_test",
+      "target": "candidate_candidate",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate_test",
+      "target": "data_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate_test",
+      "target": "data_mockdata_seedmockdata",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate_test",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate_test",
+      "target": "admin_auth_login",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate_test",
+      "target": "admin_auth_registercandidate",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate_test",
+      "target": "admin_auth_logout",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate_test",
+      "target": "candidate_candidate_test_rendercandidate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate_test",
+      "target": "candidate_candidate_test_setstage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profileedit",
+      "target": "candidate_candidateservice",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/ProfileEdit.jsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profileedit",
+      "target": "candidate_candidateservice_updatecandidatecontact",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/ProfileEdit.jsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profileedit",
+      "target": "candidate_candidateservice_validatecontact",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/ProfileEdit.jsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profileedit",
+      "target": "candidate_profileedit_fields",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/ProfileEdit.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profileedit",
+      "target": "candidate_profileedit_profileedit",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/ProfileEdit.jsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profileedit_test",
+      "target": "data_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/ProfileEdit.test.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profileedit_test",
+      "target": "data_mockdata_seedmockdata",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/ProfileEdit.test.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profileedit_test",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/ProfileEdit.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profileedit_test",
+      "target": "admin_auth_login",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/ProfileEdit.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profileedit_test",
+      "target": "admin_auth_logout",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/ProfileEdit.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profileedit_test",
+      "target": "admin_auth_getsession",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/ProfileEdit.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profileedit_test",
+      "target": "candidate_candidateservice",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/ProfileEdit.test.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profileedit_test",
+      "target": "candidate_candidateservice_readcandidateapplications",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/ProfileEdit.test.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profileedit_test",
+      "target": "candidate_profileedit",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/ProfileEdit.test.jsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profileedit_test",
+      "target": "candidate_profileedit_test_harness",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/ProfileEdit.test.jsx",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profileedit_test",
+      "target": "candidate_profileedit_test_opendialog",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/ProfileEdit.test.jsx",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice",
+      "target": "admin_auth_getsession",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice",
+      "target": "data_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice",
+      "target": "data_mockdata_validsubmissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice",
+      "target": "data_mockdata_validusers",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice",
+      "target": "data_mockdata_persistchanges",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice",
+      "target": "apply_validation",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice",
+      "target": "apply_validation_validatesubmission",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice",
+      "target": "candidate_candidateservice_milestones",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice",
+      "target": "candidate_candidateservice_stages",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice",
+      "target": "candidate_candidateservice_stagefor",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice",
+      "target": "candidate_candidateservice_currentcandidate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice",
+      "target": "candidate_candidateservice_readrecords",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice",
+      "target": "candidate_candidateservice_visiblerecord",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice",
+      "target": "candidate_candidateservice_readcandidateapplications",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice",
+      "target": "candidate_candidateservice_validatecontact",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice",
+      "target": "candidate_candidateservice_updatecandidatecontact",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L64",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_readcandidateapplications",
+      "target": "candidate_candidateservice_currentcandidate",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_readcandidateapplications",
+      "target": "candidate_candidateservice_readrecords",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_updatecandidatecontact",
+      "target": "candidate_candidateservice_currentcandidate",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L65",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_updatecandidatecontact",
+      "target": "candidate_candidateservice_readrecords",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L66",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_updatecandidatecontact",
+      "target": "candidate_candidateservice_validatecontact",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_updatecandidatecontact",
+      "target": "candidate_candidateservice_visiblerecord",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L99",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_test",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_test",
+      "target": "admin_auth_getsession",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_test",
+      "target": "admin_auth_login",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_test",
+      "target": "admin_auth_logout",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_test",
+      "target": "admin_auth_registercandidate",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_test",
+      "target": "data_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_test",
+      "target": "data_mockdata_seedmockdata",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_test",
+      "target": "data_mockdata_default_submissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_test",
+      "target": "candidate_candidateservice",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.test.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_test",
+      "target": "candidate_candidateservice_milestones",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.test.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_test",
+      "target": "candidate_candidateservice_stagefor",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.test.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_test",
+      "target": "candidate_candidateservice_readcandidateapplications",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.test.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_test",
+      "target": "candidate_candidateservice_validatecontact",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.test.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_test",
+      "target": "candidate_candidateservice_updatecandidatecontact",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.test.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_test",
+      "target": "candidate_candidateservice_test_contact",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.test.js",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_test",
+      "target": "candidate_candidateservice_test_read",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.test.js",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
       "source": "data_mockdata",
       "target": "apply_validation",
       "relation": "imports_from",
@@ -3372,7 +4575,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/data/mockData.js",
-      "source_location": "L40",
+      "source_location": "L43",
       "weight": 1.0
     },
     {
@@ -3381,7 +4584,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/data/mockData.js",
-      "source_location": "L49",
+      "source_location": "L52",
       "weight": 1.0
     },
     {
@@ -3390,7 +4593,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/data/mockData.js",
-      "source_location": "L69",
+      "source_location": "L72",
       "weight": 1.0
     },
     {
@@ -3399,7 +4602,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/data/mockData.js",
-      "source_location": "L91",
+      "source_location": "L117",
       "weight": 1.0
     },
     {
@@ -3408,7 +4611,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/data/mockData.js",
-      "source_location": "L101",
+      "source_location": "L127",
       "weight": 1.0
     },
     {
@@ -3417,7 +4620,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/data/mockData.js",
-      "source_location": "L131",
+      "source_location": "L157",
       "weight": 1.0
     },
     {
@@ -3426,7 +4629,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/data/mockData.js",
-      "source_location": "L152",
+      "source_location": "L178",
       "weight": 1.0
     },
     {
@@ -3435,7 +4638,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/data/mockData.js",
-      "source_location": "L189",
+      "source_location": "L215",
       "weight": 1.0
     },
     {
@@ -3445,7 +4648,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/data/mockData.js",
-      "source_location": "L137",
+      "source_location": "L163",
       "weight": 1.0
     },
     {
@@ -3455,7 +4658,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/data/mockData.js",
-      "source_location": "L137",
+      "source_location": "L163",
       "weight": 1.0
     },
     {
@@ -3465,7 +4668,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/data/mockData.js",
-      "source_location": "L137",
+      "source_location": "L163",
       "weight": 1.0
     },
     {
@@ -3475,7 +4678,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/data/mockData.js",
-      "source_location": "L176",
+      "source_location": "L202",
       "weight": 1.0
     },
     {
@@ -3485,7 +4688,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/data/mockData.js",
-      "source_location": "L191",
+      "source_location": "L217",
       "weight": 1.0
     },
     {
@@ -3761,6 +4964,16 @@
       "weight": 1.0
     },
     {
+      "source": "src_app",
+      "target": "candidate_candidate_candidate",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
       "source": "src_app_test",
       "target": "src_app_app",
       "relation": "imports",
@@ -3831,6 +5044,36 @@
       "weight": 1.0
     },
     {
+      "source": "candidate_candidate",
+      "target": "candidate_profileedit_profileedit",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate_test",
+      "target": "candidate_candidate_candidate",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profileedit_test",
+      "target": "candidate_profileedit_profileedit",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/ProfileEdit.test.jsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
       "source": "home_home_test",
       "target": "home_home_home",
       "relation": "imports",
@@ -3862,12 +5105,12 @@
     },
     {
       "source": "apply_submissions_validdataset",
-      "target": "apply_validation_validatesubmission",
+      "target": "data_mockdata_validsubmissions",
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L42",
+      "source_location": "L61",
       "weight": 1.0
     },
     {
@@ -3877,18 +5120,37 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L97",
+      "source_location": "L106",
       "weight": 1.0
     },
     {
-      "source": "src_app_app",
-      "target": "data_mockdata_readmockdata",
+      "source": "candidate_profileedit_test_harness",
+      "target": "candidate_candidateservice_readcandidateapplications",
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "frontend/src/App.jsx",
-      "source_location": "L27",
+      "source_file": "frontend/src/features/candidate/ProfileEdit.test.jsx",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_currentcandidate",
+      "target": "admin_auth_getsession",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_readrecords",
+      "target": "data_mockdata_validsubmissions",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L33",
       "weight": 1.0
     },
     {
@@ -3899,7 +5161,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L31",
+      "source_location": "L23",
       "weight": 1.0
     },
     {
@@ -3912,13 +5174,79 @@
       "source_file": "frontend/src/features/admin/auth.js",
       "source_location": "L119",
       "weight": 1.0
+    },
+    {
+      "source": "apply_apply_apply",
+      "target": "admin_auth_getsession",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/apply/Apply.jsx",
+      "source_location": "L142",
+      "weight": 1.0
+    },
+    {
+      "source": "apply_submissions_createsubmission",
+      "target": "admin_auth_getsession",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/apply/submissions.js",
+      "source_location": "L140",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate_candidate",
+      "target": "admin_auth_getsession",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/candidate/Candidate.jsx",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_validatecontact",
+      "target": "apply_validation_validatesubmission",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_updatecandidatecontact",
+      "target": "data_mockdata_validusers",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L78",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidateservice_updatecandidatecontact",
+      "target": "data_mockdata_persistchanges",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/candidate/candidateService.js",
+      "source_location": "L95",
+      "weight": 1.0
     }
   ],
   "metadata": {
-    "built_at": "2026-10-27T07:25:18.540646+00:00",
+    "built_at": "2026-10-27T07:39:06.922268+00:00",
     "version": "graph_update-v1",
     "codebase_root": "/data/artifacts-v2/T011RNFvLqRR0008727102606471629/developer",
     "force": true,
-    "files_scanned": 36
+    "files_scanned": 43
   }
 }

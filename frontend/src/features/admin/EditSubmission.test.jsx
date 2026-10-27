@@ -6,10 +6,14 @@ import userEvent from '@testing-library/user-event';
 import EditSubmission from './EditSubmission';
 import { readSubmissions, SUBMISSIONS_KEY } from '../apply/submissions';
 import { FIELD_ERRORS } from '../apply/validation';
+import { DEFAULT_USERS, USERS_KEY } from '../data/mockData';
+import { AUTH_KEY, login } from './auth';
+import { NOTES_MAX_LENGTH, withRecruiterDefaults } from './recruiterService';
 
 const submission = {
   id: 'alice', fullName: 'Alice Smith', email: 'alice@example.com', mobile: '0123456789',
   department: 'Engineering', submittedAt: '2026-03-04T12:00:00.000Z',
+  ...withRecruiterDefaults({}),
 };
 
 /** Mount and close the modal through real state transitions for lifecycle assertions. */
@@ -29,6 +33,8 @@ function LifecycleHarness() {
 
 beforeEach(() => {
   localStorage.clear();
+  localStorage.setItem(USERS_KEY, JSON.stringify(DEFAULT_USERS));
+  expect(login('admin', 'admin').success).toBe(true);
   localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([submission]));
 });
 afterEach(() => {
@@ -152,6 +158,77 @@ describe('EditSubmission', () => {
     expect(screen.getByRole('alert')).toHaveTextContent('Unable to read submissions.');
     expect(screen.getByLabelText('Full Name')).toHaveValue('Saved Name');
     expect(readSubmissions()[0].fullName).toBe('Saved Name');
+  });
+
+  it('edits stage, notes and materials while preserving latest untouched contact and schedule fields', async () => {
+    const user = userEvent.setup();
+    render(<EditSubmission submission={submission} onSaved={vi.fn()} onCancel={vi.fn()} />);
+    await user.selectOptions(screen.getByLabelText('Pipeline Stage'), 'offer');
+    await user.type(screen.getByLabelText('Internal Recruiter Notes'), 'Private assessment');
+    await user.type(screen.getByLabelText('Portfolio URL'), 'https://example.com/work');
+    await user.selectOptions(screen.getByLabelText('Sample Resume'), 'UI/UX Case Study');
+    const latest = { ...submission, fullName: 'Alice Current', mobile: '9876543210', userId: 'u-201',
+      interviewSchedule: { dateTime: '2026-11-02T15:00:00.000Z', format: 'Video', location: 'Demo room' } };
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([latest]));
+    await user.click(screen.getByRole('button', { name: 'Save Changes' }));
+    expect(readSubmissions()).toEqual([{
+      ...latest, status: 'offer', notes: 'Private assessment', portfolioUrl: 'https://example.com/work', sampleResume: 'UI/UX Case Study',
+    }]);
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  });
+
+  it.each(['javascript:alert(1)', '//example.com', 'https://user:pass@example.com'])('rejects unsafe editable portfolio %s with associated validation', async (value) => {
+    const user = userEvent.setup();
+    const onSaved = vi.fn();
+    render(<EditSubmission submission={submission} onSaved={onSaved} onCancel={vi.fn()} />);
+    await user.type(screen.getByLabelText('Portfolio URL'), value);
+    await user.click(screen.getByRole('button', { name: 'Save Changes' }));
+    expect(screen.getByLabelText('Portfolio URL')).toHaveAttribute('aria-invalid', 'true');
+    expect(screen.getByLabelText('Portfolio URL')).toHaveAccessibleDescription(/complete HTTP or HTTPS/);
+    expect(onSaved).not.toHaveBeenCalled();
+    expect(readSubmissions()).toEqual([submission]);
+  });
+
+  it('rejects oversized notes and synthetic invalid stage/sample selections', async () => {
+    const user = userEvent.setup();
+    render(<EditSubmission submission={submission} onSaved={vi.fn()} onCancel={vi.fn()} />);
+    fireEvent.change(screen.getByLabelText('Internal Recruiter Notes'), { target: { value: 'x'.repeat(NOTES_MAX_LENGTH + 1) } });
+    for (const label of ['Pipeline Stage', 'Sample Resume']) {
+      const control = screen.getByLabelText(label);
+      const invalid = document.createElement('option');
+      invalid.value = 'invalid';
+      control.append(invalid);
+      fireEvent.change(control, { target: { value: 'invalid' } });
+    }
+    await user.click(screen.getByRole('button', { name: 'Save Changes' }));
+    expect(screen.getAllByRole('alert')).toHaveLength(3);
+    for (const label of ['Internal Recruiter Notes', 'Pipeline Stage', 'Sample Resume']) {
+      expect(screen.getByLabelText(label)).toHaveAttribute('aria-invalid', 'true');
+    }
+    expect(readSubmissions()).toEqual([submission]);
+  });
+
+  it('blocks edits when admin session disappears while the modal is open', async () => {
+    const user = userEvent.setup();
+    const onSaved = vi.fn();
+    render(<EditSubmission submission={submission} onSaved={onSaved} onCancel={vi.fn()} />);
+    await user.type(screen.getByLabelText('Internal Recruiter Notes'), 'Unsaved note');
+    localStorage.removeItem(AUTH_KEY);
+    await user.click(screen.getByRole('button', { name: 'Save Changes' }));
+    expect(screen.getByRole('alert')).toHaveTextContent('Administrator access');
+    expect(screen.getByLabelText('Internal Recruiter Notes')).toHaveValue('Unsaved note');
+    expect(onSaved).not.toHaveBeenCalled();
+    expect(readSubmissions()).toEqual([submission]);
+  });
+
+  it('includes the notes textarea in keyboard navigation before the action buttons', async () => {
+    const user = userEvent.setup();
+    render(<EditSubmission submission={submission} onSaved={vi.fn()} onCancel={vi.fn()} />);
+    screen.getByLabelText('Pipeline Stage').focus();
+    await user.tab();
+    expect(screen.getByLabelText('Internal Recruiter Notes')).toHaveFocus();
+    await user.tab();
+    expect(screen.getByLabelText('Portfolio URL')).toHaveFocus();
   });
 
   it('cancels without saving any changed details', async () => {
