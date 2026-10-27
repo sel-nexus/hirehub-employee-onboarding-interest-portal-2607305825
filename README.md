@@ -1,6 +1,6 @@
-# HireHub
+# HireHub 2.0
 
-A responsive candidate-interest **demo** built with React 18, Vite, JavaScript/JSX and React Router 6. Public landing, validated application form, demo administrator login and submission review/edit/delete run entirely in the browser.
+A responsive, browser-only recruiting demonstration built with React 18, Vite, JavaScript/JSX and React Router 6. This revision extends the existing HireHub app; it does not add a backend, cloud database, API, authentication service, tracking, remote fonts or image dependency.
 
 ## Run locally
 
@@ -12,22 +12,40 @@ npm ci --no-bin-links
 npm run dev
 ```
 
-Configuration defaults are in `frontend/.env.example`; copy to `.env` to customize HOST, PORT and BASE_URL. The app makes no API calls and needs no secrets. Browser storage requires a trustworthy origin (localhost or HTTPS) for `crypto.randomUUID()`.
+`frontend/.env.example` documents HOST, PORT and BASE_URL for local Vite/Playwright configuration. Copy it to `.env` to customize those public settings. No secrets are required. Use localhost or HTTPS for `crypto.randomUUID()`.
 
-## Demo journey
+## Explore the demo
 
-1. Open Home and choose Express Your Interest or Apply Now.
-2. Enter an alphabetic full name (max 100 characters), valid email, exactly ten mobile digits and a department.
-3. Submit; the confirmation clears after four seconds. Duplicate email checks ignore letter case and surrounding whitespace.
-4. Choose Admin. Demo credentials are **admin / admin**.
-5. Review the counts and table, edit permitted fields or confirm deletion. Email, record identity and submission time cannot be edited.
-6. Logout returns home. Closing the tab clears the demo session; candidate records remain in the same browser origin.
+On missing storage, HireHub seeds **eight submissions**, eight candidate accounts, two recruiter accounts, and Engineering, Design, Product, Marketing and Operations departments.
 
-## Important limitations
+| Access | Username | Password | Initial pipeline |
+|---|---|---|---|
+| Candidate | alex@example.com | password123 | Interview Scheduled |
+| Candidate | jordan@example.com | password123 | Under Review |
+| Candidate | taylor@example.com | password123 | Offer Extended |
+| Recruiter | admin | admin | All submissions |
+| Recruiter | recruiter@hirehub.demo | admin123 | All submissions |
 
-This is not real authentication or a production recruitment service. Credentials and browser session state are visible and editable by anyone using browser developer tools. Do not collect real sensitive candidate information. No backend, database, central storage, email notifications, accounts or external integrations exist. Records are local to the current browser/origin, can be lost when browser data is cleared, and are not backed up. Corrupt/invalid datasets reset to an empty array; unavailable storage produces visible errors. Browser storage is not safe for concurrent multi-user administration.
+- **Home `/`** retains public culture information and application entry links.
+- **Login `/login`** offers Candidate and Administrator/Recruiter tabs. The legacy Admin link `/admin` opens recruiter login when signed out.
+- **Register `/register`** creates a local candidate account and signs in immediately.
+- **Candidate `/candidate`** shows only submissions owned by the signed-in user, a four-milestone hiring tracker, mock interview schedule where present, selected resume and portfolio, and contact editing. Changing your email also changes your local login username. Recruiter notes are not exposed here.
+- **Apply `/apply`** validates contact details, department and optional HTTP(S) portfolio/sample resume. Public submissions remain available; candidate ownership is derived from the validated local session. Duplicate application emails remain rejected.
+- **Recruiter `/admin`** offers live name/email search, five department chips, stage filters, quick status controls, application editing, internal notes, deletion confirmation and local resume/portfolio preview. Filters live in the URL and survive reload/back navigation. Review/edit dialogs trap focus, close with Escape/backdrop and restore focus.
+- **Theme** honors OS preference initially and immediately saves explicit light/dark choices. CSS variables adapt cards, text, borders and status colors.
+- **Reset Mock Data** in the common footer restores the curated datasets, removes stale test accounts/submissions and the active session, and returns Home. It preserves theme and unrelated browser storage. Logout also returns Home while retaining application data.
 
-## Build and host
+Recruiter changes appear when the candidate revisits, focuses the window or receives a same-origin storage event. There is no cross-device sync. Portfolio links open only on deliberate clicks, in a protected new tab; previews render local sample text, not uploaded PDFs.
+
+## Persistence and compatibility
+
+Data uses `hirehub_users`, `hirehub_submissions`, `hirehub_departments`, `hirehub_session` and `hirehub_theme` in localStorage. Sessions persist across tab closure/browser restarts until Logout or Reset; old `hirehub_admin_auth` sessionStorage values are not trusted.
+
+Valid existing six-field submissions and intentionally empty arrays are preserved. Legacy records have no candidate ownership and remain recruiter-visible; new submissions have the full 2.0 schema. Recruiter editing enriches legacy records with new-field defaults. There is no destructive automatic email-based claiming. Corrupted initialization datasets recover to defaults with feedback; the shared submission reader retains its legacy empty-array recovery. Blocked/quota writes expose retryable errors and never claim successful persistence; multi-key writes use best-effort rollback, not database transactions.
+
+**Never use real sensitive information.** Accounts/passwords/session state are visible and editable in browser tools. Local role checks are demo behavior, not secure authentication or employer decisions. Clearing browser data loses records; no backups, employer delivery, email notifications, live scheduling or post-hire onboarding are provided. Simultaneous edits have no distributed conflict resolution, although untouched fields are merged with fresh storage records.
+
+## Build and static hosting
 
 ```sh
 cd frontend
@@ -35,18 +53,18 @@ npm run build
 npm run preview -- --host 0.0.0.0 --port 4173
 ```
 
-Build output is `frontend/dist`. On Vercel, set the **Root Directory to frontend**, framework Vite, normal build `npm run build`, and output `dist` in the project settings. `frontend/vercel.json` contains only the specified SPA rewrite. The root rewrite is included as the repository-level copy; do not configure the repository root as the Vercel build root without setting the corresponding build/output directories externally. Reloading `/apply` and `/admin` requires the SPA rewrite.
+Build output: `frontend/dist`. Production needs only a static web server, not Node.js. On Vercel set **Root Directory to frontend**, build `npm run build`, output `dist`; the supplied SPA rewrite supports refreshing `/login`, `/register`, `/candidate`, `/apply` and `/admin`. The root rewrite is a repository copy; a repository-root build requires corresponding build/output project settings.
 
-A portable nginx image is also supplied:
+The inherited portable nginx image remains available:
 
 ```sh
 docker build -t hirehub-demo frontend
 docker run --rm -p 8080:80 hirehub-demo
 ```
 
-Its nginx configuration serves static files with SPA fallback and no backend proxy. Container build was not executed in this run; production Vite build and local serving were verified. DevOps independently validates the container deployment. The PRD's under-one-second Vercel load target remains unverified until deployed and measured on a stated standard connection.
+It serves static assets with SPA history fallback and no backend proxy. This revision verified Vite production compilation and live browser journeys, **not Docker image execution or a hosted deployment**. DevOps independently validates deployment.
 
-## Tests
+## Tests and verified results
 
 From `frontend`:
 
@@ -56,21 +74,26 @@ node node_modules/@playwright/test/cli.js install chromium
 npm run test:e2e
 ```
 
-Scripts invoke Node entrypoints directly for environments where npm bin symlinks are disabled. Playwright starts a real Vite server when no server is available, and can reuse a production preview at BASE_URL. Desktop Chromium and mobile iPhone-layout Chromium projects run with one worker; there is no API mocking. Browser specs cover navigation, validation, duplicate rejection, real localStorage CRUD, reload persistence, corruption recovery, actual tab closure and demo-session lifecycle. Console errors fail tests.
+Scripts invoke package Node entrypoints directly where npm bin symlinks are disabled. Playwright starts a real Vite server if needed, or reuses an existing host at BASE_URL; one worker runs desktop Chrome and iPhone-layout Chromium projects. No browser API mocks are used. On the Ubuntu 26.04 sandbox, Chromium used `PLAYWRIGHT_HOST_PLATFORM_OVERRIDE=ubuntu24.04-x64` and installed OS libraries.
 
-For the Ubuntu 26.04 sandbox, Chromium installation/testing required `PLAYWRIGHT_HOST_PLATFORM_OVERRIDE=ubuntu24.04-x64`; OS browser libraries also had to be installed. This is a sandbox compatibility setting, not required for supported development hosts.
+Final results: **771 unit/component tests across 19 files**, **46 browser tests** (23 journeys across desktop/mobile), and a green production build. Independent read-only test critic: final round 3, score 1.00, zero high failures. Review-note stale saves and BrowserRouter reset/logout navigation were reproduced failing before source fixes and passing afterward. Browser journeys cover all supplied credentials, signup, isolation, profile editing, application materials, pipeline/search/filters, review/notes/edit/delete, candidate stage handoff, themes, persistence and exact reset restoration.
 
-Verified: **304 unit/component tests**, **20 full-suite browser tests**, and **16 capture-producing reruns** after enabling HTML evidence retention. The latter overlap the full suite, not 16 extra distinct tests. Independent test critic passed in round two with score 1.00 and zero high failures. A timer regression was reproduced red before fixing the source and passed afterward.
+`frontend/playwright-report/index.html` contains the generated browser report with screenshots and embedded ARIA/HTML/computed-style attachments; keep its `data/` sibling when sharing it. Generated reports are not committed. Production build verification is separate from the final live Vite-server browser run. No backend API/integration/database/compose layer applies.
 
-HTML browser report and screenshot/ARIA/HTML/computed-style attachments are in `frontend/playwright-report` after E2E. These generated outputs are not committed. No backend API, backend integration, database persistence or compose test is applicable to this explicitly static product.
+### Known inherited dependency risk
 
-## Structure
+The unchanged pinned dependency set reports **10 npm advisories** (2 moderate, 6 high, 2 critical). `npm audit --omit=dev` reports **3 high** React Router-chain advisories. This scoped revision did not blindly upgrade dependencies. Review and retest supported patched versions before any non-demo use. React Router future-flag notices in MemoryRouter tests are nonfatal.
 
-- `frontend/src/features/home` — public culture messaging.
-- `frontend/src/features/apply` — validation, local storage service and form.
-- `frontend/src/features/admin` — demo session, login, dashboard and edit dialog.
-- `frontend/src/components` — persistent navigation and reusable labeled fields.
-- `frontend/src/App.css` — single supplied light-theme design system.
-- `frontend/e2e` — real user journeys.
+## Feature layout
 
-The canonical discovery PRD was the only upstream design input. HLD/LLD were absent; layout/module decisions are explicitly inferred in the separately published development plan.
+- `frontend/src/features/data` — curated datasets, strict schema validation, seed/reset and rollback.
+- `frontend/src/features/admin` — local role auth, unified login, recruiter pipeline/edit/review services and dialogs.
+- `frontend/src/features/auth` — candidate registration.
+- `frontend/src/features/candidate` — ownership-safe application projection and contact self-service.
+- `frontend/src/features/apply` — validated application entry and shared local persistence.
+- `frontend/src/features/theme` — saved/system preference control.
+- `frontend/src/features/home` — inherited public culture content.
+- `frontend/src/components` — header, labelled fields and demo reset footer.
+- `frontend/e2e` — real click journeys and review evidence.
+
+The discovery PRD was the only upstream design input; inferred decisions and revision inventory are in the separately published development plan. See `CHANGELOG.md` for migration notes and modified modules.

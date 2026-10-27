@@ -3,6 +3,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   createSubmission, deleteSubmission, DUPLICATE_EMAIL_ERROR, readSubmissions, SUBMISSIONS_KEY, updateSubmission,
 } from './submissions';
+import { SAMPLE_RESUMES, validateMaterials } from './submissions';
+import { seedMockData, DEFAULT_SUBMISSIONS } from '../data/mockData';
+import { getSession, login, registerCandidate } from '../admin/auth';
 
 const valid = { fullName: 'Alice Smith', email: 'alice@example.com', mobile: '0123456789', department: 'Engineering' };
 const stored = { id: 'record-one', ...valid, submittedAt: '2026-03-04T12:00:00.000Z' };
@@ -32,6 +35,7 @@ describe('submission persistence', () => {
     const created = createSubmission({ ...valid, fullName: ' Alice Smith ', email: ' Alice@Example.com ' });
     expect(created).toEqual({
       ...valid, email: 'Alice@Example.com', id: expect.any(String), submittedAt: expect.any(String),
+      userId: '', status: 'received', notes: '', portfolioUrl: '', sampleResume: '',
     });
     expect(created.id).toMatch(/^[\da-f]{8}-[\da-f]{4}-4[\da-f]{3}-[89ab][\da-f]{3}-[\da-f]{12}$/i);
     expect(new Date(created.submittedAt).toISOString()).toBe(created.submittedAt);
@@ -173,6 +177,86 @@ describe('corrupt storage recovery', () => {
     localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([stored]));
     expect(readSubmissions()).toEqual([stored]);
     expect(persisted()).toEqual([stored]);
+  });
+});
+
+/** Extended schema/materials preserve legacy data and derive ownership only from current sessions. */
+describe('extended applications', () => {
+  it('preserves mixed legacy/PRD records and optional schedule byte-for-byte across reads and permitted updates', () => {
+    const records = [stored, ...DEFAULT_SUBMISSIONS];
+    const raw = JSON.stringify(records, null, 2);
+    localStorage.setItem(SUBMISSIONS_KEY, raw);
+    expect(readSubmissions()).toEqual(records);
+    expect(localStorage.getItem(SUBMISSIONS_KEY)).toBe(raw);
+    const updated = updateSubmission('c-101', { fullName: 'Alex Updated', mobile: '0123456789', department: 'Product',
+      status: 'archived', notes: 'ignore', userId: 'u-admin', sampleResume: 'ignore', portfolioUrl: 'javascript:bad' });
+    expect(updated).toEqual({ ...DEFAULT_SUBMISSIONS[0], fullName: 'Alex Updated', mobile: '0123456789', department: 'Product' });
+    expect(readSubmissions()).toEqual([stored, updated, ...DEFAULT_SUBMISSIONS.slice(1)]);
+    expect(persisted()).toEqual([stored, updated, ...DEFAULT_SUBMISSIONS.slice(1)]);
+  });
+  it.each([
+    ...['userId', 'status', 'notes', 'portfolioUrl', 'sampleResume'].map((key) => { const record = { ...DEFAULT_SUBMISSIONS[1] }; delete record[key]; return record; }),
+    { ...DEFAULT_SUBMISSIONS[1], userId: 42 }, { ...DEFAULT_SUBMISSIONS[1], userId: ' spaced ' },
+    { ...DEFAULT_SUBMISSIONS[1], status: 'hired' }, { ...DEFAULT_SUBMISSIONS[1], notes: {} },
+    { ...DEFAULT_SUBMISSIONS[1], portfolioUrl: 'javascript:alert(1)' }, { ...DEFAULT_SUBMISSIONS[1], portfolioUrl: ' https://example.com ' },
+    { ...DEFAULT_SUBMISSIONS[1], portfolioUrl: 'https://name:pass@example.com' },
+    { ...DEFAULT_SUBMISSIONS[0], portfolioUrl: 'not a url' },
+    { ...DEFAULT_SUBMISSIONS[0], interviewSchedule: { ...DEFAULT_SUBMISSIONS[0].interviewSchedule, dateTime: '2026-11-01' } },
+    { ...DEFAULT_SUBMISSIONS[1], sampleResume: 'Unknown' }, { ...DEFAULT_SUBMISSIONS[1], extra: 'unknown' },
+    { ...DEFAULT_SUBMISSIONS[1], interviewSchedule: null }, { ...DEFAULT_SUBMISSIONS[1], interviewSchedule: [] },
+    { ...DEFAULT_SUBMISSIONS[1], interviewSchedule: { dateTime: 'invalid', format: 'Video', location: 'Demo' } },
+    { ...DEFAULT_SUBMISSIONS[1], interviewSchedule: { dateTime: '2026-11-01T09:00:00.000Z', format: ' ', location: 'Demo' } },
+    { ...DEFAULT_SUBMISSIONS[1], interviewSchedule: { dateTime: '2026-11-01T09:00:00.000Z', format: 'Video', location: 'Demo', extra: 'unknown' } },
+  ])('resets malformed extended schema %j instead of trusting a partial dataset', (record) => {
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([record]));
+    expect(readSubmissions()).toEqual([]);
+    expect(persisted()).toEqual([]);
+  });
+  it('creates owned applications with selected materials and ignores input privilege fields', () => {
+    seedMockData();
+    registerCandidate({ displayName: 'New Candidate', username: 'new@example.com', password: 'password123', confirmPassword: 'password123' });
+    const created = createSubmission({ ...valid, email: 'new@example.com', portfolioUrl: ' https://example.com/work ', sampleResume: SAMPLE_RESUMES[1],
+      userId: 'u-admin', notes: 'attacker', status: 'offer', submittedAt: 'bad', id: 'forged' });
+    expect(created).toEqual({ ...valid, email: 'new@example.com', id: expect.any(String), userId: getSession().userId, status: 'received',
+      submittedAt: expect.any(String), notes: '', portfolioUrl: 'https://example.com/work', sampleResume: 'UI/UX Case Study' });
+    expect(persisted()).toEqual([...DEFAULT_SUBMISSIONS, created]);
+    expect(readSubmissions()).toEqual(persisted());
+  });
+  it('admin sessions and public input cannot create candidate ownership', () => {
+    seedMockData();
+    login('admin', 'admin');
+    const created = createSubmission({ ...valid, userId: 'u-201' });
+    expect(created.userId).toBe('');
+    expect(persisted().at(-1)).toEqual(created);
+  });
+  it('rejects UUID collision without corrupting existing data', () => {
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([stored]));
+    vi.spyOn(crypto, 'randomUUID').mockReturnValue(stored.id);
+    expect(() => createSubmission({ ...valid, email: 'other@example.com' })).toThrow('Unable to create a valid unique submission');
+    expect(persisted()).toEqual([stored]);
+  });
+  it.each(SAMPLE_RESUMES)('persists sample selection %s', (sampleResume) => {
+    const record = createSubmission({ ...valid, sampleResume });
+    expect(readSubmissions()[0].sampleResume).toBe(sampleResume);
+    expect(persisted()).toEqual([record]);
+  });
+  it.each(['javascript:alert(1)', 'data:text/html,bad', 'ftp://example.com', '//example.com', 'example.com', 'https://u:p@example.com', `https://example.com/${'x'.repeat(2048)}`])('rejects unsafe portfolio %s before saving', (portfolioUrl) => {
+    expect(validateMaterials({ portfolioUrl }).errors).toHaveProperty('portfolioUrl');
+    expect(() => createSubmission({ ...valid, portfolioUrl })).toThrow('Please correct the application materials');
+    expect(localStorage.getItem(SUBMISSIONS_KEY)).toBeNull();
+  });
+  it.each(['http://example.com', 'https://example.com/work?q=one#two'])('accepts explicit safe URL %s', (portfolioUrl) => {
+    const created = createSubmission({ ...valid, portfolioUrl });
+    expect(created.portfolioUrl).toBe(portfolioUrl);
+    expect(persisted()).toEqual([created]);
+  });
+  it.each([undefined, null, false, 42, [], {}])('handles empty/non-object materials %j without coercion', (input) => {
+    expect(validateMaterials(input)).toEqual({ values: { portfolioUrl: '', sampleResume: '' }, errors: {} });
+  });
+  it.each([{ portfolioUrl: 42 }, { portfolioUrl: null }, { sampleResume: {} }, { sampleResume: 'Unknown resume' }])('rejects invalid typed/unknown material %j', (input) => {
+    expect(Object.keys(validateMaterials(input).errors)).toHaveLength(1);
+    expect(() => createSubmission({ ...valid, ...input })).toThrow('Please correct the application materials');
+    expect(persisted()).toBeNull();
   });
 });
 

@@ -1,9 +1,36 @@
 /** Persist validated candidate records exclusively in the browser's localStorage. */
 import { validateSubmission } from './validation';
+import { getSession } from '../admin/auth';
+import { validSubmissions } from '../data/mockData';
 
 export const SUBMISSIONS_KEY = 'hirehub_submissions';
 export const DUPLICATE_EMAIL_ERROR = 'This email has already been submitted.';
-const RECORD_KEYS = ['id', 'fullName', 'email', 'mobile', 'department', 'submittedAt'];
+export const SAMPLE_RESUMES = Object.freeze([
+  'Full-Stack Developer Resume (Sample)', 'UI/UX Case Study', 'Frontend Software Engineer (5 YOE)',
+]);
+
+/** Validate optional materials without coercion; only explicit HTTP(S) portfolios are allowed.
+ * @param {*} input @returns {{values: object, errors: object}} */
+export function validateMaterials(input) {
+  const source = input && typeof input === 'object' && !Array.isArray(input) ? input : {};
+  const values = {};
+  const errors = {};
+  for (const field of ['portfolioUrl', 'sampleResume']) {
+    values[field] = typeof source[field] === 'string' ? source[field].trim() : '';
+    if (source[field] !== undefined && typeof source[field] !== 'string') errors[field] = 'Enter a valid application material.';
+  }
+  if (values.portfolioUrl) {
+    try {
+      const url = new URL(values.portfolioUrl);
+      if (!/^https?:\/\//i.test(values.portfolioUrl) || !['http:', 'https:'].includes(url.protocol)
+        || url.username || url.password || values.portfolioUrl.length > 2048) throw new Error('Unsafe URL');
+    } catch {
+      errors.portfolioUrl = 'Enter a complete HTTP or HTTPS portfolio URL (maximum 2048 characters).';
+    }
+  }
+  if (values.sampleResume && !SAMPLE_RESUMES.includes(values.sampleResume)) errors.sampleResume = 'Select a preset sample resume.';
+  return { values, errors };
+}
 
 /**
  * Write a complete dataset or surface the browser storage failure.
@@ -31,25 +58,7 @@ function writeSubmissions(records) {
  * @returns {boolean}
  */
 function validDataset(records) {
-  if (!Array.isArray(records)) return false;
-  const ids = new Set();
-  const emails = new Set();
-  return records.every((record) => {
-    if (!record || typeof record !== 'object' || Array.isArray(record)) return false;
-    if (Object.keys(record).length !== RECORD_KEYS.length || !RECORD_KEYS.every((key) => typeof record[key] === 'string')) {
-      return false;
-    }
-    const { values, errors } = validateSubmission(record);
-    if (Object.keys(errors).length || Object.keys(values).some((key) => values[key] !== record[key])) return false;
-    if (!record.id.trim() || record.id !== record.id.trim()) return false;
-    const date = new Date(record.submittedAt);
-    if (Number.isNaN(date.getTime()) || date.toISOString() !== record.submittedAt) return false;
-    const email = record.email.toLowerCase();
-    if (ids.has(record.id) || emails.has(email)) return false;
-    ids.add(record.id);
-    emails.add(email);
-    return true;
-  });
+  return validSubmissions(records);
 }
 
 /**
@@ -116,13 +125,24 @@ function requireValid(input) {
  */
 export function createSubmission(input) {
   const values = requireValid(input);
+  const materials = validateMaterials(input);
+  if (Object.keys(materials.errors).length) {
+    const error = new Error('Please correct the application materials.');
+    error.fieldErrors = materials.errors;
+    throw error;
+  }
   const records = readSubmissions();
   if (records.some((record) => record.email.toLowerCase() === values.email.toLowerCase())) {
     const error = new Error(DUPLICATE_EMAIL_ERROR);
     error.fieldErrors = { email: DUPLICATE_EMAIL_ERROR };
     throw error;
   }
-  const record = { id: crypto.randomUUID(), ...values, submittedAt: new Date().toISOString() };
+  const session = getSession();
+  const record = {
+    id: crypto.randomUUID(), userId: session?.role === 'candidate' ? session.userId : '',
+    ...values, status: 'received', submittedAt: new Date().toISOString(), notes: '', ...materials.values,
+  };
+  if (!validDataset([...records, record])) throw new Error('Unable to create a valid unique submission. Please try again.');
   writeSubmissions([...records, record]);
   return record;
 }

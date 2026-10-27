@@ -1,6 +1,16 @@
 /** Verify dashboard review and CRUD outcomes against the actual browser-storage helpers. */
+import { useState } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, render, screen, within } from '@testing-library/react';
+import { cleanup, render as rtlRender, screen, within } from '@testing-library/react';
+import { MemoryRouter, useLocation, useNavigate } from 'react-router-dom';
+import { DEFAULT_USERS, USERS_KEY } from '../data/mockData';
+import { AUTH_KEY, login } from './auth';
+import { withRecruiterDefaults } from './recruiterService';
+
+/** Render the standalone dashboard with the application router contract. */
+function render(ui, options) {
+  return rtlRender(<MemoryRouter>{ui}</MemoryRouter>, options);
+}
 import userEvent from '@testing-library/user-event';
 import Dashboard from './Dashboard';
 import { readSubmissions, SUBMISSIONS_KEY } from '../apply/submissions';
@@ -8,6 +18,7 @@ import { readSubmissions, SUBMISSIONS_KEY } from '../apply/submissions';
 const alice = {
   id: 'alice', fullName: 'Alice Smith', email: 'alice@example.com', mobile: '0123456789',
   department: 'Engineering', submittedAt: '2026-03-04T12:00:00.000Z',
+  ...withRecruiterDefaults({}),
 };
 const bob = {
   ...alice, id: 'bob', fullName: 'Bob Jones', email: 'bob@example.com',
@@ -30,7 +41,11 @@ async function openEditor(user) {
   return within(screen.getByRole('dialog', { name: 'Edit Submission' }));
 }
 
-beforeEach(() => localStorage.clear());
+beforeEach(() => {
+  localStorage.clear();
+  localStorage.setItem(USERS_KEY, JSON.stringify(DEFAULT_USERS));
+  expect(login('admin', 'admin').success).toBe(true);
+});
 afterEach(() => {
   cleanup();
   vi.restoreAllMocks();
@@ -46,7 +61,7 @@ describe('Dashboard', () => {
     expectStat('Latest Submission', 'Mar 4, 2026');
     const columns = screen.getAllByRole('columnheader');
     expect(columns.map((cell) => cell.textContent.trim())).toEqual([
-      '#', 'Full Name', 'Email', 'Mobile', 'Department', 'Submitted On', 'Actions',
+      '#', 'Full Name', 'Email', 'Mobile', 'Department', 'Submitted On', 'Stage', 'Actions',
     ]);
     columns.forEach((cell) => expect(cell).toHaveAttribute('scope', 'col'));
     expect(screen.getByRole('region', { name: 'Submissions table, scroll horizontally' })).toHaveAttribute('tabindex', '0');
@@ -243,6 +258,154 @@ describe('Dashboard', () => {
     await user.click(screen.getByRole('button', { name: 'Retry loading submissions' }));
     expect(screen.getByText('No submissions yet.')).toBeVisible();
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  });
+
+  it.each(['Engineering', 'Design', 'Product', 'Marketing', 'Operations'])('combines live name/email search with %s and stage filters', async (department) => {
+    const selected = { ...alice, department, status: 'review' };
+    seed([selected, { ...bob, department, status: 'offer' }]);
+    const user = userEvent.setup();
+    render(<Dashboard onLogout={vi.fn()} />);
+    await user.click(screen.getByRole('button', { name: department, exact: true }));
+    expect(screen.getByRole('button', { name: department, exact: true })).toHaveAttribute('aria-pressed', 'true');
+    await user.selectOptions(screen.getByLabelText('Filter by stage'), 'review');
+    expect(screen.getByText(alice.email)).toBeVisible();
+    expect(screen.queryByText(bob.email)).not.toBeInTheDocument();
+    await user.type(screen.getByLabelText('Search candidate name or email'), 'ALICE@EXAMPLE');
+    expect(screen.getByText(alice.email)).toBeVisible();
+    await user.clear(screen.getByLabelText('Search candidate name or email'));
+    await user.type(screen.getByLabelText('Search candidate name or email'), 'smith');
+    expect(screen.getByText(alice.email)).toBeVisible();
+    await user.click(screen.getByRole('button', { name: 'All', exact: true }));
+    expect(screen.getByText(alice.email)).toBeVisible();
+    await user.selectOptions(screen.getByLabelText('Filter by stage'), 'offer');
+    expect(screen.getByText('No submissions match your filters.')).toBeVisible();
+    expect(screen.queryByText('No submissions yet.')).not.toBeInTheDocument();
+    expectStat('Total Submissions', '2');
+    expect(readSubmissions()).toEqual([selected, { ...bob, department, status: 'offer' }]);
+  });
+
+  it('restores URL-backed search/filter combinations through Back and remount', async () => {
+    seed([alice, bob]);
+    const user = userEvent.setup();
+    /** Expose browser history controls and location without mocking router hooks. */
+    function RouterHarness() {
+      const location = useLocation();
+      const navigate = useNavigate();
+      const [mounted, setMounted] = useState(true);
+      return (
+        <>
+          <output aria-label="Current URL">{location.search}</output>
+          <button type="button" onClick={() => navigate(-1)}>Back</button>
+          <button type="button" onClick={() => setMounted((current) => !current)}>Toggle dashboard</button>
+          {mounted && <Dashboard onLogout={vi.fn()} />}
+        </>
+      );
+    }
+    rtlRender(
+      <MemoryRouter initialEntries={['/admin?search=alice&department=Engineering&status=received&keep=yes']}>
+        <RouterHarness />
+      </MemoryRouter>,
+    );
+    expect(screen.getByLabelText('Search candidate name or email')).toHaveValue('alice');
+    expect(screen.getByLabelText('Filter by stage')).toHaveValue('received');
+    expect(screen.queryByText(bob.email)).not.toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Design', exact: true }));
+    expect(screen.getByText('No submissions match your filters.')).toBeVisible();
+    expect(screen.getByLabelText('Current URL')).toHaveTextContent('keep=yes');
+    await user.click(screen.getByRole('button', { name: 'Back', exact: true }));
+    expect(screen.getByRole('button', { name: 'Engineering', exact: true })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByText(alice.email)).toBeVisible();
+    await user.click(screen.getByRole('button', { name: 'Toggle dashboard' }));
+    await user.click(screen.getByRole('button', { name: 'Toggle dashboard' }));
+    expect(screen.getByLabelText('Search candidate name or email')).toHaveValue('alice');
+    expect(screen.getByText(alice.email)).toBeVisible();
+  });
+
+  it('saves quick stages using unique labels and latest metadata, updates badges, and obeys the active stage filter', async () => {
+    seed([alice, bob]);
+    const user = userEvent.setup();
+    render(<Dashboard onLogout={vi.fn()} />);
+    const control = screen.getByLabelText('Change stage for Alice Smith, alice@example.com, alice');
+    await user.selectOptions(screen.getByLabelText('Filter by stage'), 'received');
+    seed([{ ...alice, notes: 'Concurrent note', mobile: '9876543210' }, bob]);
+    await user.selectOptions(control, 'review');
+    expect(screen.queryByText(alice.email)).not.toBeInTheDocument();
+    expect(readSubmissions()[0]).toEqual({ ...alice, notes: 'Concurrent note', mobile: '9876543210', status: 'review' });
+    await user.selectOptions(screen.getByLabelText('Filter by stage'), 'review');
+    expect(screen.getByLabelText('Change stage for Alice Smith, alice@example.com, alice')).toHaveValue('review');
+    expect(screen.getByText('Stage saved for Alice Smith.')).toBeVisible();
+    const row = screen.getByRole('row', { name: /Alice Smith/ });
+    expect(within(row).getByRole('status')).toHaveTextContent('Under Review');
+  });
+
+  it('retains the previous quick stage on failure, shows no false success, and saves on retry', async () => {
+    seed();
+    const user = userEvent.setup();
+    render(<Dashboard onLogout={vi.fn()} />);
+    const control = screen.getByLabelText('Change stage for Alice Smith, alice@example.com, alice');
+    const spy = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('quota'); });
+    await user.selectOptions(control, 'review');
+    expect(screen.getByRole('alert')).toHaveTextContent('Unable to save submissions');
+    expect(control).toHaveValue('received');
+    expect(screen.queryByText(/Stage saved for/)).not.toBeInTheDocument();
+    expect(readSubmissions()).toEqual([alice]);
+    spy.mockRestore();
+    await user.selectOptions(control, 'review');
+    expect(control).toHaveValue('review');
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    expect(readSubmissions()[0].status).toBe('review');
+  });
+
+  it('does not show quick-stage success if the verification read fails after the write and reconciles on retry', async () => {
+    seed();
+    const user = userEvent.setup();
+    render(<Dashboard onLogout={vi.fn()} />);
+    const control = screen.getByLabelText('Change stage for Alice Smith, alice@example.com, alice');
+    const original = Storage.prototype.getItem;
+    let reads = 0;
+    const spy = vi.spyOn(Storage.prototype, 'getItem').mockImplementation(function getItem(key) {
+      if (key === SUBMISSIONS_KEY && ++reads === 2) throw new Error('denied');
+      return original.call(this, key);
+    });
+    await user.selectOptions(control, 'review');
+    expect(screen.getByRole('alert')).toHaveTextContent('Unable to read submissions');
+    expect(screen.queryByText(/Stage saved for/)).not.toBeInTheDocument();
+    expect(control).toHaveValue('received');
+    spy.mockRestore();
+    expect(readSubmissions()[0].status).toBe('review');
+    await user.click(screen.getByRole('button', { name: 'Retry loading submissions' }));
+    expect(control).toHaveValue('review');
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  });
+
+  it('enforces fresh admin authorization before quick status and confirmed legacy delete', async () => {
+    seed();
+    const user = userEvent.setup();
+    render(<Dashboard onLogout={vi.fn()} />);
+    localStorage.removeItem(AUTH_KEY);
+    await user.selectOptions(screen.getByLabelText('Change stage for Alice Smith, alice@example.com, alice'), 'review');
+    expect(screen.getByRole('alert')).toHaveTextContent('Administrator access');
+    vi.spyOn(window, 'confirm').mockReturnValue(true);
+    await user.click(screen.getByRole('button', { name: /Delete submission for Alice/ }));
+    expect(screen.getByRole('alert')).toHaveTextContent('Administrator access');
+    expect(readSubmissions()).toEqual([alice]);
+  });
+
+  it('opens local review, saves internal notes and restores the row trigger on close', async () => {
+    seed([{ ...alice, sampleResume: 'UI/UX Case Study' }]);
+    const user = userEvent.setup();
+    render(<Dashboard onLogout={vi.fn()} />);
+    const trigger = screen.getByRole('button', { name: /Review submission for Alice/ });
+    await user.click(trigger);
+    const dialog = within(screen.getByRole('dialog', { name: 'Review Submission' }));
+    await user.click(dialog.getByRole('button', { name: 'Preview Resume' }));
+    expect(dialog.getByRole('article')).toHaveTextContent('Journey mapping');
+    await user.type(dialog.getByLabelText('Internal Recruiter Notes'), 'Internal only');
+    await user.click(dialog.getByRole('button', { name: 'Save Notes' }));
+    expect(readSubmissions()[0].notes).toBe('Internal only');
+    await user.click(dialog.getByRole('button', { name: 'Close' }));
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(trigger).toHaveFocus();
   });
 
   it('delegates Logout to the shared handler without altering submission storage', async () => {

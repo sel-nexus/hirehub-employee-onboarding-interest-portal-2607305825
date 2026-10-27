@@ -6,7 +6,10 @@ import { MemoryRouter } from 'react-router-dom';
 import Apply, { SUCCESS_MESSAGE } from './Apply';
 import { SubmissionFields } from '../../components/SubmissionFields';
 import { DEPARTMENTS, FIELD_ERRORS } from './validation';
-import { createSubmission, DUPLICATE_EMAIL_ERROR, readSubmissions, SUBMISSIONS_KEY } from './submissions';
+import { createSubmission, DUPLICATE_EMAIL_ERROR, readSubmissions, SUBMISSIONS_KEY, SAMPLE_RESUMES } from './submissions';
+import { seedMockData } from '../data/mockData';
+import { getSession, registerCandidate } from '../admin/auth';
+const materialDefaults = { userId: '', status: 'received', notes: '', portfolioUrl: '', sampleResume: '' };
 
 const defaultAsyncWrapper = getConfig().asyncWrapper;
 
@@ -77,7 +80,9 @@ describe('Apply', () => {
       expect(screen.getByLabelText(label)).toHaveAttribute('aria-invalid', 'false');
       expect(screen.getByLabelText(label)).not.toHaveAttribute('aria-describedby');
     }
-    expect(screen.getAllByRole('option').map((option) => option.textContent.trim())).toEqual(['Select a department', ...DEPARTMENTS]);
+    expect(screen.getAllByRole('option').map((option) => option.textContent.trim())).toEqual([
+      'Select a department', ...DEPARTMENTS, 'Select a sample resume', ...SAMPLE_RESUMES,
+    ]);
     expect(screen.queryByRole('status')).not.toBeInTheDocument();
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   });
@@ -123,7 +128,7 @@ describe('Apply', () => {
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
     const records = JSON.parse(localStorage.getItem(SUBMISSIONS_KEY));
     expect(records).toEqual([{
-      ...valid, email: 'Alice@Example.com', id: expect.any(String), submittedAt: expect.any(String),
+      ...valid, ...materialDefaults, email: 'Alice@Example.com', id: expect.any(String), submittedAt: expect.any(String),
     }]);
     expect(readSubmissions()).toEqual(records);
   });
@@ -149,7 +154,7 @@ describe('Apply', () => {
     await user.click(screen.getByRole('button', { name: 'Submit Application' }));
     const firstRecords = readSubmissions();
     expect(firstRecords).toEqual([{
-      ...valid, id: expect.any(String), submittedAt: expect.any(String),
+      ...valid, ...materialDefaults, id: expect.any(String), submittedAt: expect.any(String),
     }]);
     expect(screen.getByRole('status')).toHaveTextContent(SUCCESS_MESSAGE);
     act(() => vi.advanceTimersByTime(2000));
@@ -160,7 +165,7 @@ describe('Apply', () => {
     const records = readSubmissions();
     expect(records).toEqual([
       firstRecords[0],
-      { ...secondValues, id: expect.any(String), submittedAt: expect.any(String) },
+      { ...secondValues, ...materialDefaults, id: expect.any(String), submittedAt: expect.any(String) },
     ]);
     expectCleared();
     expect(screen.getByRole('status')).toHaveTextContent(SUCCESS_MESSAGE);
@@ -262,6 +267,61 @@ describe('Apply', () => {
     renderApply();
     expect(screen.getByRole('alert')).toHaveTextContent('Unable to save submissions.');
     expect(localStorage.getItem(SUBMISSIONS_KEY)).toBe('{}');
+  });
+});
+
+/** Exercise new application materials and candidate account-to-application ownership. */
+describe('Apply candidate materials', () => {
+  it('signs a new candidate application into ownership while preserving seed peers and materials across a fresh render', async () => {
+    const user = userEvent.setup();
+    seedMockData();
+    registerCandidate({ displayName: 'New Candidate', username: 'new@example.com', password: 'password123', confirmPassword: 'password123' });
+    const view = renderApply();
+    await fillForm(user, { ...valid, email: 'new@example.com', department: 'Product' });
+    await user.type(screen.getByLabelText('Portfolio URL (optional)'), 'https://example.com/work');
+    await user.selectOptions(screen.getByLabelText('Sample resume (optional)'), 'UI/UX Case Study');
+    await user.click(screen.getByRole('button', { name: 'Submit Application' }));
+    const records = readSubmissions();
+    expect(records).toHaveLength(9);
+    expect(records[8]).toEqual({ ...valid, ...materialDefaults, email: 'new@example.com', department: 'Product', userId: getSession().userId,
+      id: expect.any(String), submittedAt: expect.any(String), portfolioUrl: 'https://example.com/work', sampleResume: 'UI/UX Case Study' });
+    expect(screen.getByRole('link', { name: 'View my applications' })).toHaveAttribute('href', '/candidate');
+    expect(screen.getByLabelText('Portfolio URL (optional)')).toHaveValue('');
+    expect(screen.getByLabelText('Sample resume (optional)')).toHaveValue('');
+    view.unmount();
+    renderApply();
+    expect(JSON.parse(localStorage.getItem(SUBMISSIONS_KEY))).toEqual(records);
+  });
+  it.each(['javascript:alert(1)', 'ftp://example.com', '//example.com', 'example.com'])('rejects portfolio %s with a linked error and keeps all values', async (portfolioUrl) => {
+    const user = userEvent.setup();
+    renderApply();
+    await fillForm(user);
+    await user.type(screen.getByLabelText('Portfolio URL (optional)'), portfolioUrl);
+    await user.selectOptions(screen.getByLabelText('Sample resume (optional)'), SAMPLE_RESUMES[0]);
+    await user.click(screen.getByRole('button', { name: 'Submit Application' }));
+    expect(screen.getByLabelText('Portfolio URL (optional)')).toHaveValue(portfolioUrl);
+    expect(screen.getByLabelText('Portfolio URL (optional)')).toHaveAccessibleDescription(/HTTP or HTTPS/);
+    expect(screen.getByLabelText('Portfolio URL (optional)')).toHaveAttribute('aria-invalid', 'true');
+    expect(screen.getByLabelText('Sample resume (optional)')).toHaveValue(SAMPLE_RESUMES[0]);
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+    expect(readSubmissions()).toEqual([]);
+  });
+  it('retains selected materials on failed save and saves them after actual retry', async () => {
+    const user = userEvent.setup();
+    renderApply();
+    await fillForm(user);
+    await user.type(screen.getByLabelText('Portfolio URL (optional)'), 'https://example.com');
+    await user.selectOptions(screen.getByLabelText('Sample resume (optional)'), SAMPLE_RESUMES[2]);
+    const write = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('quota'); });
+    await user.click(screen.getByRole('button', { name: 'Submit Application' }));
+    expect(screen.getByRole('alert')).toHaveTextContent('Unable to save submissions');
+    expect(screen.getByLabelText('Portfolio URL (optional)')).toHaveValue('https://example.com');
+    expect(screen.getByLabelText('Sample resume (optional)')).toHaveValue(SAMPLE_RESUMES[2]);
+    expect(localStorage.getItem(SUBMISSIONS_KEY)).toBeNull();
+    write.mockRestore();
+    await user.click(screen.getByRole('button', { name: 'Submit Application' }));
+    expect(readSubmissions()[0]).toMatchObject({ portfolioUrl: 'https://example.com', sampleResume: SAMPLE_RESUMES[2] });
+    expect(screen.getByRole('status')).toHaveTextContent(SUCCESS_MESSAGE);
   });
 });
 
