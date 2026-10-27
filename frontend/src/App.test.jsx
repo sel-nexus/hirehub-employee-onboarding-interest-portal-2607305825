@@ -157,33 +157,37 @@ describe('App local initialization and public routes', () => {
     expect(screen.getByRole('heading', { name: 'Candidate Login' })).toBeVisible();
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   });
-  it('does not mount the destructive legacy public form for extended records', () => {
+  it('mounts the real public application form without changing extended seeded records', () => {
     seedMockData();
     const before = localStorage.getItem(SUBMISSIONS_KEY);
     renderApp('/apply');
     expect(screen.getByRole('heading', { name: 'Join Our Team' })).toBeVisible();
-    expect(within(screen.getByRole('main')).getByRole('status')).toHaveTextContent('Your demo records have been preserved.');
-    expect(screen.queryByRole('form')).not.toBeInTheDocument();
+    expect(screen.getByRole('form', { name: 'Application form' })).toBeVisible();
+    expect(screen.getByLabelText('Portfolio URL (optional)')).toBeVisible();
+    expect(screen.getByLabelText('Sample resume (optional)')).toBeVisible();
     expect(localStorage.getItem(SUBMISSIONS_KEY)).toBe(before);
-    expect(within(screen.getByRole('main')).getByRole('link', { name: 'Candidate Login' })).toHaveAttribute('href', '/login');
+    expect(screen.queryByText(/awaiting candidate data integration/)).not.toBeInTheDocument();
   });
-  it('blocks a legacy public save when extended records arrive after mount without reporting success', async () => {
+  it('saves against extended records arriving after mount, preserving all seeded fields', async () => {
     const user = userEvent.setup();
     seedMockData();
     localStorage.setItem(SUBMISSIONS_KEY, '[]');
     renderApp('/apply');
     localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify(DEFAULT_SUBMISSIONS));
-    const before = localStorage.getItem(SUBMISSIONS_KEY);
     await user.type(screen.getByLabelText('Full Name'), 'New Candidate');
     await user.type(screen.getByLabelText('Email Address'), 'new@example.com');
     await user.type(screen.getByLabelText('Mobile Number'), '4155552671');
-    await user.selectOptions(screen.getByLabelText('Department of Interest'), 'Engineering');
+    await user.selectOptions(screen.getByLabelText('Department of Interest'), 'Product');
     await user.click(screen.getByRole('button', { name: 'Submit Application' }));
-    expect(screen.getByRole('alert')).toHaveTextContent('Your demo records have been preserved.');
-    expect(localStorage.getItem(SUBMISSIONS_KEY)).toBe(before);
-    expect(screen.queryByRole('form')).not.toBeInTheDocument();
-    expect(within(screen.getByRole('main')).getByRole('status')).toHaveTextContent('Your demo records have been preserved.');
-    expect(screen.queryByText('Thank you! Your interest has been submitted successfully.')).not.toBeInTheDocument();
+    const records = JSON.parse(localStorage.getItem(SUBMISSIONS_KEY));
+    expect(records.slice(0, 8)).toEqual(DEFAULT_SUBMISSIONS);
+    expect(records[8]).toEqual({
+      id: expect.any(String), userId: '', fullName: 'New Candidate', email: 'new@example.com', mobile: '4155552671',
+      department: 'Product', status: 'received', notes: '', portfolioUrl: '', sampleResume: '', submittedAt: expect.any(String),
+    });
+    expect(screen.getByRole('form')).toBeVisible();
+    expect(within(screen.getByRole('form')).getByRole('status')).toHaveTextContent('Thank you! Your interest has been submitted successfully.');
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   });
   it('allows legacy public saves on intentional empty storage without seeding over them', async () => {
     const user = userEvent.setup();
@@ -217,14 +221,16 @@ describe('App role session routing', () => {
     expectLoginGate();
     expect(getSession()).toBeNull();
   });
-  it('restores seeded recruiter preview without any destructive legacy read', () => {
+  it('restores the actual recruiter dashboard without losing extended seed fields', () => {
     seedMockData();
     login('admin', 'admin');
     const before = localStorage.getItem(SUBMISSIONS_KEY);
     const persistedSession = localStorage.getItem(AUTH_KEY);
     renderApp('/admin');
     expectDashboard();
-    expect(screen.getByRole('table')).toHaveTextContent('8 local submissions');
+    expect(screen.getByRole('table')).toBeVisible();
+    expect(screen.getAllByRole('button', { name: /^Edit / })).toHaveLength(8);
+    expect(screen.queryByText(/Seeded application preview/)).not.toBeInTheDocument();
     expect(screen.getByRole('cell', { name: 'alex@example.com' })).toBeVisible();
     expect(screen.getAllByRole('cell', { name: 'Product' })).toHaveLength(2);
     for (const cell of screen.getAllByRole('cell', { name: 'Product' })) expect(cell).toBeVisible();
@@ -246,7 +252,7 @@ describe('App role session routing', () => {
     expect(screen.getByLabelText('Current route')).toHaveTextContent(/^\/admin$/);
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   });
-  it('defaults /login to candidate, signs in and reaches only the interim candidate portal', async () => {
+  it('defaults /login to candidate and reaches the owned self-service portal', async () => {
     const user = userEvent.setup();
     renderApp('/login');
     await user.type(screen.getByLabelText('Email Address'), 'alex@example.com');
@@ -254,7 +260,11 @@ describe('App role session routing', () => {
     await user.click(screen.getByRole('button', { name: 'Login', exact: true }));
     expect(screen.getByRole('heading', { name: 'Candidate Portal' })).toBeVisible();
     expect(screen.getByText('Welcome, Alex Rivera.')).toBeVisible();
-    expect(within(screen.getByRole('main')).getByRole('status')).toHaveTextContent('Application self-service will be available in the next feature slice.');
+    expect(within(screen.getByRole('main')).getByRole('status')).toHaveTextContent('Interview Scheduled');
+    expect(screen.getByRole('list', { name: 'Hiring progress' })).toBeVisible();
+    expect(screen.getByText('alex@example.com')).toBeVisible();
+    expect(screen.queryByText('jordan@example.com')).not.toBeInTheDocument();
+    expect(screen.queryByText('Strong background in React and frontend architecture.')).not.toBeInTheDocument();
     expect(screen.getByLabelText('Current route')).toHaveTextContent('/candidate');
     expect(header().getByRole('link', { name: 'Candidate Portal' })).toHaveAttribute('href', '/candidate');
     expect(screen.queryByRole('table')).not.toBeInTheDocument();

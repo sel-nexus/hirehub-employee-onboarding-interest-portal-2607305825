@@ -337,7 +337,7 @@
       "label": "App()",
       "file_type": "code",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L18",
+      "source_location": "L19",
       "_origin": "ast"
     },
     {
@@ -353,7 +353,7 @@
       "label": "CurrentRoute()",
       "file_type": "code",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L22",
+      "source_location": "L23",
       "_origin": "ast"
     },
     {
@@ -361,7 +361,7 @@
       "label": "renderApp()",
       "file_type": "code",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L28",
+      "source_location": "L33",
       "_origin": "ast"
     },
     {
@@ -369,7 +369,7 @@
       "label": "header()",
       "file_type": "code",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L38",
+      "source_location": "L43",
       "_origin": "ast"
     },
     {
@@ -377,7 +377,7 @@
       "label": "expectLoginGate()",
       "file_type": "code",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L43",
+      "source_location": "L48",
       "_origin": "ast"
     },
     {
@@ -385,7 +385,15 @@
       "label": "expectDashboard()",
       "file_type": "code",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L51",
+      "source_location": "L56",
+      "_origin": "ast"
+    },
+    {
+      "id": "src_app_test_signinadmin",
+      "label": "signInAdmin()",
+      "file_type": "code",
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L65",
       "_origin": "ast"
     },
     {
@@ -553,7 +561,7 @@
       "label": "Login()",
       "file_type": "code",
       "source_file": "frontend/src/features/admin/Login.jsx",
-      "source_location": "L13",
+      "source_location": "L14",
       "_origin": "ast"
     },
     {
@@ -565,11 +573,11 @@
       "_origin": "ast"
     },
     {
-      "id": "admin_login_test_loginfeedback",
-      "label": "LoginFeedback()",
+      "id": "admin_login_test_renderlogin",
+      "label": "renderLogin()",
       "file_type": "code",
       "source_file": "frontend/src/features/admin/Login.test.jsx",
-      "source_location": "L18",
+      "source_location": "L22",
       "_origin": "ast"
     },
     {
@@ -577,7 +585,7 @@
       "label": "submitCredentials()",
       "file_type": "code",
       "source_file": "frontend/src/features/admin/Login.test.jsx",
-      "source_location": "L34",
+      "source_location": "L31",
       "_origin": "ast"
     },
     {
@@ -589,11 +597,43 @@
       "_origin": "ast"
     },
     {
+      "id": "admin_auth_registration_errors",
+      "label": "REGISTRATION_ERRORS",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L9",
+      "_origin": "ast"
+    },
+    {
+      "id": "admin_auth_readusers",
+      "label": "readUsers()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L18",
+      "_origin": "ast"
+    },
+    {
+      "id": "admin_auth_sessionfor",
+      "label": "sessionFor()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L29",
+      "_origin": "ast"
+    },
+    {
+      "id": "admin_auth_getsession",
+      "label": "getSession()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L37",
+      "_origin": "ast"
+    },
+    {
       "id": "admin_auth_isauthenticated",
       "label": "isAuthenticated()",
       "file_type": "code",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L12",
+      "source_location": "L54",
       "_origin": "ast"
     },
     {
@@ -601,7 +641,23 @@
       "label": "login()",
       "file_type": "code",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L30",
+      "source_location": "L65",
+      "_origin": "ast"
+    },
+    {
+      "id": "admin_auth_validateregistration",
+      "label": "validateRegistration()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L87",
+      "_origin": "ast"
+    },
+    {
+      "id": "admin_auth_registercandidate",
+      "label": "registerCandidate()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L108",
       "_origin": "ast"
     },
     {
@@ -609,7 +665,7 @@
       "label": "logout()",
       "file_type": "code",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L47",
+      "source_location": "L131",
       "_origin": "ast"
     },
     {
@@ -618,6 +674,14 @@
       "file_type": "code",
       "source_file": "frontend/src/features/admin/auth.test.js",
       "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "admin_auth_test_registration",
+      "label": "registration",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/auth.test.js",
+      "source_location": "L21",
       "_origin": "ast"
     },
     {
@@ -869,6 +933,158 @@
       "_origin": "ast"
     },
     {
+      "id": "auth_register",
+      "label": "Register.jsx",
+      "file_type": "code",
+      "source_file": "frontend/src/features/auth/Register.jsx",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "auth_register_register",
+      "label": "Register()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/auth/Register.jsx",
+      "source_location": "L13",
+      "_origin": "ast"
+    },
+    {
+      "id": "auth_register_test",
+      "label": "Register.test.jsx",
+      "file_type": "code",
+      "source_file": "frontend/src/features/auth/Register.test.jsx",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "auth_register_test_renderregister",
+      "label": "renderRegister()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/auth/Register.test.jsx",
+      "source_location": "L21",
+      "_origin": "ast"
+    },
+    {
+      "id": "auth_register_test_fillregistration",
+      "label": "fillRegistration()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/auth/Register.test.jsx",
+      "source_location": "L30",
+      "_origin": "ast"
+    },
+    {
+      "id": "data_mockdata",
+      "label": "mockData.js",
+      "file_type": "code",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "data_mockdata_default_departments",
+      "label": "DEFAULT_DEPARTMENTS",
+      "file_type": "code",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L9",
+      "_origin": "ast"
+    },
+    {
+      "id": "data_mockdata_default_users",
+      "label": "DEFAULT_USERS",
+      "file_type": "code",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L10",
+      "_origin": "ast"
+    },
+    {
+      "id": "data_mockdata_default_submissions",
+      "label": "DEFAULT_SUBMISSIONS",
+      "file_type": "code",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L21",
+      "_origin": "ast"
+    },
+    {
+      "id": "data_mockdata_text",
+      "label": "text()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L40",
+      "_origin": "ast"
+    },
+    {
+      "id": "data_mockdata_validusers",
+      "label": "validUsers()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L49",
+      "_origin": "ast"
+    },
+    {
+      "id": "data_mockdata_validsubmissions",
+      "label": "validSubmissions()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L69",
+      "_origin": "ast"
+    },
+    {
+      "id": "data_mockdata_validdepartments",
+      "label": "validDepartments()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L91",
+      "_origin": "ast"
+    },
+    {
+      "id": "data_mockdata_persistchanges",
+      "label": "persistChanges()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L101",
+      "_origin": "ast"
+    },
+    {
+      "id": "data_mockdata_readmockdata",
+      "label": "readMockData()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L131",
+      "_origin": "ast"
+    },
+    {
+      "id": "data_mockdata_seedmockdata",
+      "label": "seedMockData()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L152",
+      "_origin": "ast"
+    },
+    {
+      "id": "data_mockdata_resettodefaults",
+      "label": "resetToDefaults()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L189",
+      "_origin": "ast"
+    },
+    {
+      "id": "data_mockdata_test",
+      "label": "mockData.test.js",
+      "file_type": "code",
+      "source_file": "frontend/src/features/data/mockData.test.js",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "data_mockdata_test_legacyrecord",
+      "label": "legacyRecord()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/data/mockData.test.js",
+      "source_location": "L16",
+      "_origin": "ast"
+    },
+    {
       "id": "home_home",
       "label": "Home.jsx",
       "file_type": "code",
@@ -984,6 +1200,14 @@
       "source_location": "L1",
       "_origin": "ast",
       "community": 15
+    },
+    {
+      "id": "admin_auth_auth_key",
+      "label": "AUTH_KEY",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L4",
+      "_origin": "ast"
     }
   ],
   "links": [
@@ -1318,7 +1542,7 @@
     },
     {
       "source": "src_app",
-      "target": "admin_dashboard",
+      "target": "auth_register",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -1328,7 +1552,7 @@
     },
     {
       "source": "src_app",
-      "target": "admin_auth",
+      "target": "admin_dashboard",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -1338,12 +1562,22 @@
     },
     {
       "source": "src_app",
-      "target": "admin_auth_isauthenticated",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "admin_auth_getsession",
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0
     },
     {
@@ -1353,7 +1587,57 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L9",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "data_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "data_mockdata_seedmockdata",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "data_mockdata_readmockdata",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "apply_validation",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "apply_validation_validatesubmission",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L12",
       "weight": 1.0
     },
     {
@@ -1362,7 +1646,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L18",
+      "source_location": "L19",
       "weight": 1.0
     },
     {
@@ -1372,7 +1656,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0
     },
     {
@@ -1382,7 +1666,67 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L7",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_test",
+      "target": "admin_auth_auth_key",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_test",
+      "target": "admin_auth_getsession",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_test",
+      "target": "admin_auth_login",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_test",
+      "target": "data_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_test",
+      "target": "data_mockdata_seedmockdata",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_test",
+      "target": "data_mockdata_default_submissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L9",
       "weight": 1.0
     },
     {
@@ -1391,7 +1735,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L22",
+      "source_location": "L23",
       "weight": 1.0
     },
     {
@@ -1400,7 +1744,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L28",
+      "source_location": "L33",
       "weight": 1.0
     },
     {
@@ -1409,7 +1753,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L38",
+      "source_location": "L43",
       "weight": 1.0
     },
     {
@@ -1418,7 +1762,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L43",
+      "source_location": "L48",
       "weight": 1.0
     },
     {
@@ -1427,7 +1771,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L51",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_test",
+      "target": "src_app_test_signinadmin",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L65",
       "weight": 1.0
     },
     {
@@ -1437,7 +1790,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L46",
+      "source_location": "L51",
       "weight": 1.0
     },
     {
@@ -1447,7 +1800,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L55",
+      "source_location": "L59",
       "weight": 1.0
     },
     {
@@ -1784,7 +2137,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/Login.jsx",
-      "source_location": "L4",
+      "source_location": "L5",
       "weight": 1.0
     },
     {
@@ -1794,7 +2147,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/Login.jsx",
-      "source_location": "L4",
+      "source_location": "L5",
       "weight": 1.0
     },
     {
@@ -1803,7 +2156,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/Login.jsx",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -1828,6 +2181,26 @@
     },
     {
       "source": "admin_login_test",
+      "target": "admin_auth_auth_key",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Login.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_login_test",
+      "target": "admin_auth_getsession",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Login.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_login_test",
       "target": "admin_auth_isauthenticated",
       "relation": "imports",
       "context": "import",
@@ -1838,11 +2211,31 @@
     },
     {
       "source": "admin_login_test",
-      "target": "admin_login_test_loginfeedback",
+      "target": "data_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Login.test.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_login_test",
+      "target": "data_mockdata_seedmockdata",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Login.test.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_login_test",
+      "target": "admin_login_test_renderlogin",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/Login.test.jsx",
-      "source_location": "L18",
+      "source_location": "L22",
       "weight": 1.0
     },
     {
@@ -1851,7 +2244,73 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/Login.test.jsx",
-      "source_location": "L34",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth",
+      "target": "data_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth",
+      "target": "data_mockdata_validusers",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth",
+      "target": "data_mockdata_persistchanges",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth",
+      "target": "admin_auth_registration_errors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth",
+      "target": "admin_auth_readusers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth",
+      "target": "admin_auth_sessionfor",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth",
+      "target": "admin_auth_getsession",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L37",
       "weight": 1.0
     },
     {
@@ -1860,7 +2319,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L12",
+      "source_location": "L54",
       "weight": 1.0
     },
     {
@@ -1869,7 +2328,25 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L30",
+      "source_location": "L65",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth",
+      "target": "admin_auth_validateregistration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L87",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth",
+      "target": "admin_auth_registercandidate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L108",
       "weight": 1.0
     },
     {
@@ -1878,7 +2355,77 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.js",
-      "source_location": "L47",
+      "source_location": "L131",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth_getsession",
+      "target": "admin_auth_readusers",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth_isauthenticated",
+      "target": "admin_auth_getsession",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth_login",
+      "target": "admin_auth_readusers",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth_login",
+      "target": "admin_auth_sessionfor",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L74",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth_registercandidate",
+      "target": "admin_auth_validateregistration",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L109",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth_registercandidate",
+      "target": "admin_auth_readusers",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L112",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth_registercandidate",
+      "target": "admin_auth_sessionfor",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L118",
       "weight": 1.0
     },
     {
@@ -1893,6 +2440,36 @@
     },
     {
       "source": "admin_auth_test",
+      "target": "admin_auth_auth_key",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth_test",
+      "target": "admin_auth_registration_errors",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth_test",
+      "target": "admin_auth_getsession",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth_test",
       "target": "admin_auth_isauthenticated",
       "relation": "imports",
       "context": "import",
@@ -1919,6 +2496,65 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.test.js",
       "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth_test",
+      "target": "admin_auth_validateregistration",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth_test",
+      "target": "admin_auth_registercandidate",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth_test",
+      "target": "data_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.test.js",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth_test",
+      "target": "data_mockdata_seedmockdata",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.test.js",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth_test",
+      "target": "data_mockdata_default_users",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.test.js",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth_test",
+      "target": "admin_auth_test_registration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.test.js",
+      "source_location": "L21",
       "weight": 1.0
     },
     {
@@ -2557,6 +3193,411 @@
       "weight": 1.0
     },
     {
+      "source": "auth_register",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/auth/Register.jsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "auth_register",
+      "target": "admin_auth_registercandidate",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/auth/Register.jsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "auth_register",
+      "target": "auth_register_register",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/auth/Register.jsx",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "auth_register_test",
+      "target": "auth_register",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/auth/Register.test.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "auth_register_test",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/auth/Register.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "auth_register_test",
+      "target": "admin_auth_getsession",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/auth/Register.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "auth_register_test",
+      "target": "admin_auth_registration_errors",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/auth/Register.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "auth_register_test",
+      "target": "data_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/auth/Register.test.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "auth_register_test",
+      "target": "data_mockdata_seedmockdata",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/auth/Register.test.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "auth_register_test",
+      "target": "data_mockdata_default_users",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/auth/Register.test.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "auth_register_test",
+      "target": "auth_register_test_renderregister",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/auth/Register.test.jsx",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "auth_register_test",
+      "target": "auth_register_test_fillregistration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/auth/Register.test.jsx",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata",
+      "target": "apply_validation",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata",
+      "target": "apply_validation_validatesubmission",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata",
+      "target": "apply_validation_departments",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata",
+      "target": "data_mockdata_default_departments",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata",
+      "target": "data_mockdata_default_users",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata",
+      "target": "data_mockdata_default_submissions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata",
+      "target": "data_mockdata_text",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata",
+      "target": "data_mockdata_validusers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata",
+      "target": "data_mockdata_validsubmissions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata",
+      "target": "data_mockdata_validdepartments",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L91",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata",
+      "target": "data_mockdata_persistchanges",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L101",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata",
+      "target": "data_mockdata_readmockdata",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L131",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata",
+      "target": "data_mockdata_seedmockdata",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L152",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata",
+      "target": "data_mockdata_resettodefaults",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L189",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata_readmockdata",
+      "target": "data_mockdata_validusers",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L137",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata_readmockdata",
+      "target": "data_mockdata_validsubmissions",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L137",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata_readmockdata",
+      "target": "data_mockdata_validdepartments",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L137",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata_seedmockdata",
+      "target": "data_mockdata_persistchanges",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L176",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata_resettodefaults",
+      "target": "data_mockdata_persistchanges",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.js",
+      "source_location": "L191",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata_test",
+      "target": "data_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata_test",
+      "target": "data_mockdata_default_users",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata_test",
+      "target": "data_mockdata_default_submissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata_test",
+      "target": "data_mockdata_default_departments",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata_test",
+      "target": "data_mockdata_seedmockdata",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata_test",
+      "target": "data_mockdata_resettodefaults",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata_test",
+      "target": "data_mockdata_readmockdata",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata_test",
+      "target": "data_mockdata_validusers",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata_test",
+      "target": "data_mockdata_validsubmissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata_test",
+      "target": "data_mockdata_persistchanges",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "data_mockdata_test",
+      "target": "data_mockdata_test_legacyrecord",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/data/mockData.test.js",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
       "source": "home_home",
       "target": "home_home_features",
       "relation": "contains",
@@ -2660,6 +3701,16 @@
       "weight": 1.0
     },
     {
+      "source": "admin_auth",
+      "target": "data_mockdata",
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
       "source": "src_app",
       "target": "home_home_home",
       "relation": "imports",
@@ -2691,12 +3742,22 @@
     },
     {
       "source": "src_app",
-      "target": "admin_dashboard_dashboard",
+      "target": "auth_register_register",
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.jsx",
       "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "admin_dashboard_dashboard",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L9",
       "weight": 1.0
     },
     {
@@ -2706,7 +3767,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/App.test.jsx",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0
     },
     {
@@ -2760,6 +3821,16 @@
       "weight": 1.0
     },
     {
+      "source": "auth_register_test",
+      "target": "auth_register_register",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/auth/Register.test.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
       "source": "home_home_test",
       "target": "home_home_home",
       "relation": "imports",
@@ -2780,13 +3851,13 @@
       "weight": 1.0
     },
     {
-      "source": "admin_login_test_loginfeedback",
-      "target": "admin_auth_isauthenticated",
+      "source": "admin_auth_readusers",
+      "target": "data_mockdata_validusers",
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
-      "source_file": "frontend/src/features/admin/Login.test.jsx",
-      "source_location": "L23",
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
@@ -2808,13 +3879,46 @@
       "source_file": "frontend/src/features/apply/submissions.js",
       "source_location": "L97",
       "weight": 1.0
+    },
+    {
+      "source": "src_app_app",
+      "target": "data_mockdata_readmockdata",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_app",
+      "target": "admin_auth_getsession",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_auth_registercandidate",
+      "target": "data_mockdata_persistchanges",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/admin/auth.js",
+      "source_location": "L119",
+      "weight": 1.0
     }
   ],
   "metadata": {
-    "built_at": "2026-10-27T07:04:05.782803+00:00",
+    "built_at": "2026-10-27T07:25:18.540646+00:00",
     "version": "graph_update-v1",
     "codebase_root": "/data/artifacts-v2/T011RNFvLqRR0008727102606471629/developer",
     "force": true,
-    "files_scanned": 32
+    "files_scanned": 36
   }
 }

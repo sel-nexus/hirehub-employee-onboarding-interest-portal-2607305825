@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SubmissionFields } from '../../components/SubmissionFields';
 import { validateSubmission } from './validation';
-import { createSubmission, readSubmissions } from './submissions';
+import { createSubmission, readSubmissions, SAMPLE_RESUMES, validateMaterials } from './submissions';
+import { getSession } from '../admin/auth';
 
-const EMPTY_VALUES = { fullName: '', email: '', mobile: '', department: '' };
+const EMPTY_VALUES = { fullName: '', email: '', mobile: '', department: '', portfolioUrl: '', sampleResume: '' };
 export const SUCCESS_MESSAGE = 'Thank you! Your interest has been submitted successfully.';
 
 /**
@@ -58,10 +59,12 @@ export default function Apply() {
     setSuccess(false);
     setStorageError('');
     const result = validateSubmission(values);
-    setErrors(result.errors);
-    if (Object.keys(result.errors).length) return;
+    const materials = validateMaterials(values);
+    const fieldErrors = { ...result.errors, ...materials.errors };
+    setErrors(fieldErrors);
+    if (Object.keys(fieldErrors).length) return;
     try {
-      createSubmission(result.values);
+      createSubmission({ ...result.values, ...materials.values });
       setValues(EMPTY_VALUES);
       setSuccessGeneration((current) => current + 1);
       setSuccess(true);
@@ -95,10 +98,52 @@ export default function Apply() {
             </p>
           )}
           <SubmissionFields values={values} errors={errors} onChange={handleChange} />
+          <div className="submission-field">
+            <label htmlFor="apply-portfolio">
+              Portfolio URL (optional)
+            </label>
+            <input
+              id="apply-portfolio" name="portfolioUrl" type="url" value={values.portfolioUrl} onChange={handleChange}
+              aria-invalid={Boolean(errors.portfolioUrl)} aria-describedby={errors.portfolioUrl ? 'apply-portfolio-error' : undefined}
+            />
+            {errors.portfolioUrl && (
+              <p id="apply-portfolio-error" role="alert" className="field-error">
+                {errors.portfolioUrl}
+              </p>
+            )}
+          </div>
+          <div className="submission-field">
+            <label htmlFor="apply-resume">
+              Sample resume (optional)
+            </label>
+            <select
+              id="apply-resume" name="sampleResume" value={values.sampleResume} onChange={handleChange}
+              aria-invalid={Boolean(errors.sampleResume)} aria-describedby={errors.sampleResume ? 'apply-resume-error' : undefined}
+            >
+              <option value="">
+                Select a sample resume
+              </option>
+              {SAMPLE_RESUMES.map((resume) => (
+                <option key={resume} value={resume}>
+                  {resume}
+                </option>
+              ))}
+            </select>
+            {errors.sampleResume && (
+              <p id="apply-resume-error" role="alert" className="field-error">
+                {errors.sampleResume}
+              </p>
+            )}
+          </div>
           <button className="submission-button" type="submit">
             Submit Application
           </button>
         </form>
+        {getSession()?.role === 'candidate' && (
+          <Link className="back-home-link" to="/candidate">
+            View my applications
+          </Link>
+        )}
         <Link className="back-home-link" to="/">
           ← Back to Home
         </Link>

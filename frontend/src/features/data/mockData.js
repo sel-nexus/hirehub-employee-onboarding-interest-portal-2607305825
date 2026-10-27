@@ -30,6 +30,9 @@ export const DEFAULT_SUBMISSIONS = Object.freeze(DEFAULT_USERS.filter((user) => 
   notes: index === 0 ? 'Strong background in React and frontend architecture.' : '',
   portfolioUrl: index === 0 ? 'https://alexrivera.dev' : '',
   sampleResume: index === 0 ? 'Frontend Software Engineer (5 YOE)' : 'Full-Stack Developer Resume (Sample)',
+  ...(index === 0 ? { interviewSchedule: Object.freeze({
+    dateTime: '2026-11-02T15:00:00.000Z', format: 'Video interview', location: 'HireHub demo meeting room',
+  }) } : {}),
 })));
 
 /**
@@ -62,7 +65,7 @@ export function validUsers(users) {
 
 /**
  * Accept intact legacy records and source extensions without migrating or removing fields.
- * Notes: Product is valid in the new schema even though the legacy public form lacks it.
+ * Notes: Only the six legacy fields or all eleven PRD fields plus optional interviewSchedule are accepted.
  * @param {*} records
  * @returns {boolean}
  */
@@ -72,7 +75,14 @@ export function validSubmissions(records) {
   const emails = new Set();
   return records.every((record) => {
     if (!record || Array.isArray(record) || !text(record.id) || !text(record.submittedAt)) return false;
-    const { values, errors } = validateSubmission({ ...record, department: 'Engineering' });
+    const legacyKeys = ['id', 'fullName', 'email', 'mobile', 'department', 'submittedAt'];
+    const extendedKeys = [...legacyKeys, 'userId', 'status', 'notes', 'portfolioUrl', 'sampleResume'];
+    const keys = Object.keys(record);
+    const expected = keys.length === legacyKeys.length ? legacyKeys : extendedKeys;
+    if (!expected.every((key) => typeof record[key] === 'string')
+      || keys.some((key) => !expected.includes(key) && key !== 'interviewSchedule')
+      || (expected === legacyKeys && 'interviewSchedule' in record)) return false;
+    const { values, errors } = validateSubmission(record);
     if (Object.keys(errors).length || ['fullName', 'email', 'mobile'].some((key) => values[key] !== record[key])) return false;
     if (![...DEFAULT_DEPARTMENTS, ...LEGACY_DEPARTMENTS].includes(record.department)) return false;
     if (!Number.isFinite(Date.parse(record.submittedAt)) || new Date(record.submittedAt).toISOString() !== record.submittedAt) return false;
@@ -80,6 +90,22 @@ export function validSubmissions(records) {
       if (key in record && typeof record[key] !== 'string') return false;
     }
     if ('status' in record && !['received', 'applied', 'review', 'interview', 'offer', 'archived'].includes(record.status)) return false;
+    if ('userId' in record && record.userId !== record.userId.trim()) return false;
+    if ('sampleResume' in record && !['', 'Full-Stack Developer Resume (Sample)', 'UI/UX Case Study', 'Frontend Software Engineer (5 YOE)'].includes(record.sampleResume)) return false;
+    if (record.portfolioUrl) {
+      try {
+        const url = new URL(record.portfolioUrl);
+        if (!/^https?:\/\//i.test(record.portfolioUrl) || !['http:', 'https:'].includes(url.protocol)
+          || url.username || url.password || record.portfolioUrl !== record.portfolioUrl.trim() || record.portfolioUrl.length > 2048) return false;
+      } catch { return false; }
+    }
+    if ('interviewSchedule' in record) {
+      const schedule = record.interviewSchedule;
+      if (!schedule || Array.isArray(schedule) || Object.keys(schedule).length !== 3
+        || !['dateTime', 'format', 'location'].every((key) => text(schedule[key]))
+        || !Number.isFinite(Date.parse(schedule.dateTime))
+        || new Date(schedule.dateTime).toISOString() !== schedule.dateTime) return false;
+    }
     if (ids.has(record.id) || emails.has(record.email.toLowerCase())) return false;
     ids.add(record.id);
     emails.add(record.email.toLowerCase());
@@ -124,7 +150,7 @@ export function persistChanges(storage, changes) {
 }
 
 /**
- * Read all datasets without writing or passing extended records to the legacy service.
+ * Read validated demo datasets without writing; consumers receive intact legacy or extended records.
  * @param {Storage} [storage] Browser localStorage by default.
  * @returns {{success: boolean, error: string, users: object[], submissions: object[], departments: string[]}}
  */

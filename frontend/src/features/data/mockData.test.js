@@ -31,7 +31,10 @@ describe('seedMockData and readMockData', () => {
     expect(new Set(data.submissions.map((record) => record.department))).toEqual(new Set(DEFAULT_DEPARTMENTS));
     expect(new Set(data.submissions.map((record) => record.status))).toEqual(new Set(['received', 'applied', 'review', 'interview', 'offer', 'archived']));
     for (const record of data.submissions) {
-      expect(Object.keys(record)).toEqual(['id', 'userId', 'fullName', 'email', 'mobile', 'department', 'status', 'submittedAt', 'notes', 'portfolioUrl', 'sampleResume']);
+      expect(Object.keys(record).filter((key) => key !== 'interviewSchedule')).toEqual(['id', 'userId', 'fullName', 'email', 'mobile', 'department', 'status', 'submittedAt', 'notes', 'portfolioUrl', 'sampleResume']);
+      if (record.interviewSchedule) expect(record.interviewSchedule).toEqual({
+        dateTime: '2026-11-02T15:00:00.000Z', format: 'Video interview', location: 'HireHub demo meeting room',
+      });
       expect(data.users.find((user) => user.id === record.userId)?.username).toBe(record.email);
     }
     expect(localStorage.getItem(SESSION_KEY)).toBeNull();
@@ -64,7 +67,7 @@ describe('seedMockData and readMockData', () => {
   });
 
   it('preserves mixed legacy and extended records and optional future schedule metadata', () => {
-    const records = [legacyRecord(), { ...DEFAULT_SUBMISSIONS[1], interviewAt: '2026-11-01T09:00:00.000Z' }];
+    const records = [legacyRecord(), { ...DEFAULT_SUBMISSIONS[1], interviewSchedule: { dateTime: '2026-11-01T09:00:00.000Z', format: 'In person', location: 'Demo office' } }];
     const raw = JSON.stringify(records);
     localStorage.setItem(SUBMISSIONS_KEY, raw);
     seedMockData();
