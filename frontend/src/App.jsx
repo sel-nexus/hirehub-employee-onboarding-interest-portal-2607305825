@@ -1,5 +1,5 @@
 /** Compose public access and validated local role routes with one-time demo initialization. */
-import { useState, useEffect, useRef } from 'react';
+import { startTransition, useState, useEffect, useRef } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { Header } from './components/Header';
 import { DemoUtility } from './components/DemoUtility';
@@ -76,18 +76,24 @@ export default function App() {
       setStorageError(result.error);
       return;
     }
-    setSession(null);
-    setStorageError('');
-    navigate('/');
+    // Match BrowserRouter's transition priority so revoked-session guards cannot race home.
+    startTransition(() => {
+      setSession(null);
+      setStorageError('');
+      navigate('/');
+    });
   }
 
   /** Refresh shell identity and return home after the footer successfully restores defaults. */
   function onReset() {
-    setSession(null);
-    setStorageError('');
-    setRecovery('');
-    setReady(true);
-    navigate('/', { replace: true });
+    // Commit the shell refresh with the route change, not on the old protected route.
+    startTransition(() => {
+      setSession(null);
+      setStorageError('');
+      setRecovery('');
+      setReady(true);
+      navigate('/', { replace: true });
+    });
   }
 
   const candidatePage = session?.role === 'candidate' ? (

@@ -1,12 +1,12 @@
 /** Exercise real local role routes, initialization, storage sync and recoverable logout. */
 import { StrictMode } from 'react';
 import { beforeEach, afterEach, describe, it, expect, vi } from 'vitest';
-import { act, cleanup, render, screen, within } from '@testing-library/react';
+import { act, cleanup, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter, useLocation } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter, useLocation } from 'react-router-dom';
 import App from './App';
 import { AUTH_KEY, INVALID_CREDENTIALS, LOGOUT_STORAGE_ERROR, getSession, login } from './features/admin/auth';
-import { seedMockData, USERS_KEY, SUBMISSIONS_KEY, DEFAULT_SUBMISSIONS, DATA_STORAGE_ERROR } from './features/data/mockData';
+import { seedMockData, USERS_KEY, SUBMISSIONS_KEY, DEPARTMENTS_KEY, DEFAULT_USERS, DEFAULT_SUBMISSIONS, DEFAULT_DEPARTMENTS, DATA_STORAGE_ERROR } from './features/data/mockData';
 
 beforeEach(() => {
   sessionStorage.clear();
@@ -415,6 +415,83 @@ describe('App role session routing', () => {
 });
 
 describe('App themes and local reset', () => {
+  it.each(['reset', 'logout'])('returns home after %s from a newly registered owner under production BrowserRouter transitions', async (action) => {
+    const user = userEvent.setup();
+    window.history.replaceState(null, '', '/');
+    const view = render(
+      <StrictMode>
+        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <App />
+          <CurrentRoute />
+        </BrowserRouter>
+      </StrictMode>,
+    );
+    try {
+      await user.click(header().getByRole('button', { name: 'Switch to dark theme' }));
+      localStorage.setItem('unrelated', 'keep');
+      await user.click(header().getByRole('link', { name: 'Register' }));
+      await user.type(screen.getByLabelText('Full Name'), 'Browser Candidate');
+      await user.type(screen.getByLabelText('Email Address'), 'browser@example.com');
+      await user.type(screen.getByLabelText('Password', { exact: true }), 'password123');
+      await user.type(screen.getByLabelText('Confirm Password'), 'password123');
+      await user.click(screen.getByRole('button', { name: 'Create Account' }));
+      expect(await screen.findByRole('heading', { name: 'Candidate Portal' })).toBeVisible();
+      const ownerId = getSession().userId;
+      await user.click(header().getByRole('link', { name: 'Apply', exact: true }));
+      await screen.findByRole('heading', { name: 'Join Our Team' });
+      await user.clear(screen.getByLabelText('Full Name'));
+      await user.type(screen.getByLabelText('Full Name'), 'Browser Candidate');
+      await user.clear(screen.getByLabelText('Email Address'));
+      await user.type(screen.getByLabelText('Email Address'), 'browser@example.com');
+      await user.type(screen.getByLabelText('Mobile Number'), '4155552671');
+      await user.selectOptions(screen.getByLabelText('Department of Interest'), 'Engineering');
+      await user.click(screen.getByRole('button', { name: 'Submit Application' }));
+      await user.click(header().getByRole('link', { name: 'Candidate Portal' }));
+      expect(await screen.findByRole('heading', { name: 'Engineering application' })).toBeVisible();
+      const usersBefore = JSON.parse(localStorage.getItem(USERS_KEY));
+      const submissionsBefore = JSON.parse(localStorage.getItem(SUBMISSIONS_KEY));
+      expect(submissionsBefore.at(-1)).toMatchObject({ userId: ownerId, email: 'browser@example.com' });
+      await user.click(action === 'reset'
+        ? screen.getByRole('button', { name: 'Reset Mock Data' })
+        : header().getByRole('button', { name: 'Logout', exact: true }));
+      await waitFor(() => {
+        expect(screen.getByLabelText('Current route')).toHaveTextContent(/^\/$/);
+        expect(window.location.pathname).toBe('/');
+        expect(screen.getByRole('heading', { name: 'Build Your Future With Us' })).toBeVisible();
+      });
+      // Drain subsequent effects too: an intermediate Home render is not sufficient.
+      await act(async () => { await new Promise((resolve) => setTimeout(resolve, 0)); });
+      expect(screen.getByLabelText('Current route')).toHaveTextContent(/^\/$/);
+      expect(window.location.pathname).toBe('/');
+      expect(screen.queryByRole('heading', { name: 'Candidate Login' })).not.toBeInTheDocument();
+      expect(screen.queryByRole('heading', { name: 'Candidate Portal' })).not.toBeInTheDocument();
+      expect(localStorage.getItem(AUTH_KEY)).toBeNull();
+      expect(getSession()).toBeNull();
+      expect(JSON.parse(localStorage.getItem(USERS_KEY))).toEqual(action === 'reset' ? DEFAULT_USERS : usersBefore);
+      expect(JSON.parse(localStorage.getItem(SUBMISSIONS_KEY))).toEqual(action === 'reset' ? DEFAULT_SUBMISSIONS : submissionsBefore);
+      expect(JSON.parse(localStorage.getItem(DEPARTMENTS_KEY))).toEqual(DEFAULT_DEPARTMENTS);
+      expect(localStorage.getItem('hirehub_theme')).toBe('dark');
+      expect(document.documentElement.dataset.theme).toBe('dark');
+      expect(header().getByRole('button', { name: 'Switch to light theme' })).toHaveAttribute('aria-pressed', 'true');
+      expect(localStorage.getItem('unrelated')).toBe('keep');
+      expect(sessionStorage.length).toBe(0);
+      expect(header().getByRole('link', { name: 'Login', exact: true })).toBeVisible();
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+      if (action === 'reset') {
+        expect(within(screen.getByRole('contentinfo')).getByRole('status')).toHaveTextContent('Mock data reset');
+      }
+      // Revoked identity must still fail closed on a fresh protected-route visit.
+      act(() => {
+        window.history.pushState(null, '', '/candidate');
+        window.dispatchEvent(new PopStateEvent('popstate'));
+      });
+      expect(await screen.findByRole('heading', { name: 'Candidate Login' })).toBeVisible();
+      expect(window.location.pathname).toBe('/login');
+    } finally {
+      view.unmount();
+      window.history.replaceState(null, '', '/');
+    }
+  });
   it('applies saved theme before content and persists toggles across remount and navigation', async () => {
     localStorage.setItem('hirehub_theme', 'dark');
     const user = userEvent.setup(); const view = renderApp('/');
