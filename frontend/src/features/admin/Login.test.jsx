@@ -1,95 +1,137 @@
-/** Verify visible login outcomes with real session helpers and user interactions. */
-import { useState } from 'react';
+/** Verify role switching, accessible login errors, persistence and retries with real auth. */
 import { beforeEach, afterEach, describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router-dom';
 import Login from './Login';
-import { AUTH_KEY, INVALID_CREDENTIALS, LOGIN_STORAGE_ERROR, isAuthenticated } from './auth';
+import { AUTH_KEY, INVALID_CREDENTIALS, LOGIN_STORAGE_ERROR, getSession, isAuthenticated } from './auth';
+import { seedMockData } from '../data/mockData';
 
 beforeEach(() => {
+  localStorage.clear();
   sessionStorage.clear();
+  seedMockData();
 });
 afterEach(() => {
+  cleanup();
   vi.restoreAllMocks();
-  sessionStorage.clear();
+  localStorage.clear();
 });
 
-/** Render visible session feedback after the component's owner callback. */
-function LoginFeedback() {
-  const [authenticated, setAuthenticated] = useState(false);
-  return authenticated ? (
-    <p role="status">Demo admin session is active.</p>
-  ) : (
-    <Login onLogin={() => setAuthenticated(isAuthenticated())} />
+/** Mount the real login with its URL-backed access selector. */
+function renderLogin(onLogin = vi.fn(), initialRole = 'candidate', route = '/login') {
+  return render(
+    <MemoryRouter initialEntries={[route]}>
+      <Login onLogin={onLogin} initialRole={initialRole} />
+    </MemoryRouter>,
   );
 }
 
-/**
- * Enter supplied credentials using the accessible fields and submit the form.
- * Args:
- *   user: The test's user-event instance.
- *   username: The username to enter, if not empty.
- *   password: The password to enter, if not empty.
- */
+/** Enter visible credentials and submit without bypassing form validation. */
 async function submitCredentials(user, username, password) {
-  if (username) {
-    await user.type(screen.getByLabelText('Username'), username);
-  }
-  if (password) {
-    await user.type(screen.getByLabelText('Password'), password);
-  }
+  if (username) await user.type(screen.getByLabelText(/Username|Email Address/), username);
+  if (password) await user.type(screen.getByLabelText('Password'), password);
   await user.click(screen.getByRole('button', { name: 'Login', exact: true }));
 }
 
 describe('Login', () => {
-  it('renders the exact title, accessible fields, demo hint and nonsecurity disclaimer', () => {
-    render(<Login onLogin={vi.fn()} />);
+  it('defaults to candidate with accessible fields, exact demos, role tabs, disclaimer and signup link', () => {
+    renderLogin();
     expect(screen.getByRole('main')).toHaveAttribute('id', 'main-content');
-    expect(screen.getByRole('heading', { level: 1, name: 'Admin Login' })).toBeVisible();
-    expect(screen.getByLabelText('Username')).toHaveAttribute('placeholder', 'Enter username');
-    expect(screen.getByLabelText('Username')).toHaveAttribute('autocomplete', 'username');
-    expect(screen.getByLabelText('Password')).toHaveAttribute('placeholder', 'Enter password');
+    expect(screen.getByRole('heading', { level: 1, name: 'Candidate Login' })).toBeVisible();
+    expect(screen.getByLabelText('Email Address')).toHaveAttribute('type', 'email');
+    expect(screen.getByLabelText('Email Address')).toHaveAttribute('autocomplete', 'username');
     expect(screen.getByLabelText('Password')).toHaveAttribute('type', 'password');
     expect(screen.getByLabelText('Password')).toHaveAttribute('autocomplete', 'current-password');
-    expect(screen.getByRole('button', { name: 'Login', exact: true })).toHaveClass('submission-button');
-    expect(screen.getByText('Demo credentials: admin/admin')).toBeVisible();
+    expect(screen.getByLabelText('Password')).toHaveAttribute('placeholder', 'Enter password');
+    expect(screen.getByRole('tab', { name: 'Candidate', exact: true })).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByRole('tabpanel')).toHaveAttribute('aria-labelledby', 'login-tab-candidate');
+    expect(screen.getByText('Demo candidates: alex@example.com, jordan@example.com, taylor@example.com — password123')).toBeVisible();
     expect(screen.getByText('Browser-only demo. This is not real authentication or secure access control.')).toBeVisible();
+    expect(screen.getByRole('link', { name: 'Create a candidate account' })).toHaveAttribute('href', '/register');
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
-    expect(isAuthenticated()).toBe(false);
+    expect(getSession()).toBeNull();
   });
-
+  it('supports legacy recruiter entry and exposes both exact admin hints', () => {
+    renderLogin(vi.fn(), 'admin', '/admin');
+    expect(screen.getByRole('heading', { name: 'Admin Login' })).toBeVisible();
+    expect(screen.getByLabelText('Username')).toHaveAttribute('placeholder', 'Enter username');
+    expect(screen.getByText('Demo credentials: admin/admin or recruiter@hirehub.demo/admin123')).toBeVisible();
+    expect(screen.getByRole('tab', { name: 'Administrator / Recruiter' })).toHaveAttribute('aria-selected', 'true');
+  });
+  it.each(['/login?role=admin', '/admin?role=admin'])('restores administrator tab from URL %s', (route) => {
+    renderLogin(vi.fn(), 'candidate', route);
+    expect(screen.getByRole('heading', { name: 'Admin Login' })).toBeVisible();
+  });
+  it('ignores unsupported URL roles and stays candidate', () => {
+    renderLogin(vi.fn(), 'candidate', '/login?role=owner');
+    expect(screen.getByRole('heading', { name: 'Candidate Login' })).toBeVisible();
+  });
   it.each([
-    ['', ''], ['wrong', 'admin'], ['admin', 'wrong'],
-    ['Admin', 'admin'], [' admin', 'admin'], ['admin', 'admin '],
+    ['', ''], ['wrong', 'admin'], ['admin', 'wrong'], ['Admin', 'admin'], [' admin', 'admin'], ['admin', 'admin '],
   ])('shows the exact invalid error and no session for %j / %j', async (username, password) => {
     const user = userEvent.setup();
     const onLogin = vi.fn();
-    render(<Login onLogin={onLogin} />);
+    renderLogin(onLogin, 'admin');
     await submitCredentials(user, username, password);
     expect(screen.getByRole('alert')).toHaveTextContent(INVALID_CREDENTIALS);
     expect(screen.getByLabelText('Username')).toHaveAttribute('aria-invalid', 'true');
     expect(screen.getByLabelText('Password')).toHaveAttribute('aria-describedby', 'login-error');
-    expect(sessionStorage.getItem(AUTH_KEY)).toBeNull();
+    expect(localStorage.getItem(AUTH_KEY)).toBeNull();
     expect(isAuthenticated()).toBe(false);
     expect(onLogin).not.toHaveBeenCalled();
     expect(screen.getByRole('heading', { name: 'Admin Login' })).toBeVisible();
   });
-
-  it('renders the valid result after persisting the session', async () => {
-    const user = userEvent.setup();
-    render(<LoginFeedback />);
-    await submitCredentials(user, 'admin', 'admin');
-    expect(sessionStorage.getItem(AUTH_KEY)).toBe('true');
-    expect(isAuthenticated()).toBe(true);
-    expect(screen.getByRole('status')).toHaveTextContent('Demo admin session is active.');
-    expect(screen.queryByRole('heading', { name: 'Admin Login' })).not.toBeInTheDocument();
-    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
-  });
-
-  it('clears an invalid error when a corrected login succeeds', async () => {
+  it.each([
+    ['alex@example.com', 'password123', 'candidate', 'u-201'],
+    ['jordan@example.com', 'password123', 'candidate', 'u-202'],
+    ['taylor@example.com', 'password123', 'candidate', 'u-203'],
+    ['admin', 'admin', 'admin', 'u-admin'],
+    ['recruiter@hirehub.demo', 'admin123', 'admin', 'u-recruiter'],
+  ])('notifies success only after persisting the correct session for %s', async (username, password, role, userId) => {
     const user = userEvent.setup();
     const onLogin = vi.fn();
-    render(<Login onLogin={onLogin} />);
+    renderLogin(onLogin, role);
+    await submitCredentials(user, username, password);
+    expect(onLogin).toHaveBeenCalledTimes(1);
+    expect(getSession()).toMatchObject({ userId, role });
+    expect(JSON.parse(localStorage.getItem(AUTH_KEY))).toEqual(getSession());
+    expect(isAuthenticated(role)).toBe(true);
+    expect(sessionStorage.length).toBe(0);
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  });
+  it('rejects candidate credentials on the admin tab and clears credentials/errors when switching', async () => {
+    const user = userEvent.setup();
+    renderLogin(vi.fn(), 'admin');
+    await submitCredentials(user, 'alex@example.com', 'password123');
+    expect(screen.getByRole('alert')).toHaveTextContent(INVALID_CREDENTIALS);
+    expect(getSession()).toBeNull();
+    await user.click(screen.getByRole('tab', { name: 'Candidate', exact: true }));
+    expect(screen.getByLabelText('Email Address')).toHaveValue('');
+    expect(screen.getByLabelText('Password')).toHaveValue('');
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: 'Candidate', exact: true })).toHaveAttribute('aria-selected', 'true');
+  });
+  it('supports tab arrow/Home/End keys, focus, and ignores unrelated keys', async () => {
+    const user = userEvent.setup();
+    renderLogin();
+    screen.getByRole('tab', { name: 'Candidate', exact: true }).focus();
+    await user.keyboard('{ArrowRight}');
+    expect(screen.getByRole('tab', { name: 'Administrator / Recruiter' })).toHaveFocus();
+    expect(screen.getByRole('heading', { name: 'Admin Login' })).toBeVisible();
+    await user.keyboard('x');
+    expect(screen.getByRole('heading', { name: 'Admin Login' })).toBeVisible();
+    await user.keyboard('{ArrowLeft}');
+    expect(screen.getByRole('tab', { name: 'Candidate', exact: true })).toHaveFocus();
+    await user.keyboard('{End}');
+    expect(screen.getByRole('heading', { name: 'Admin Login' })).toBeVisible();
+    await user.keyboard('{Home}');
+    expect(screen.getByRole('heading', { name: 'Candidate Login' })).toBeVisible();
+  });
+  it('clears invalid error and aria associations after a corrected login', async () => {
+    const user = userEvent.setup();
+    const onLogin = vi.fn();
+    renderLogin(onLogin, 'admin');
     await submitCredentials(user, 'admin', 'wrong');
     expect(screen.getByRole('alert')).toHaveTextContent(INVALID_CREDENTIALS);
     await user.clear(screen.getByLabelText('Password'));
@@ -101,31 +143,29 @@ describe('Login', () => {
     expect(onLogin).toHaveBeenCalledTimes(1);
     expect(isAuthenticated()).toBe(true);
   });
-
-  it('shows actionable write failure without success and allows retry after recovery', async () => {
+  it('shows actionable write failure with retained fields and retries after recovery', async () => {
     const user = userEvent.setup();
     const onLogin = vi.fn();
     const write = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('quota'); });
-    render(<Login onLogin={onLogin} />);
+    renderLogin(onLogin, 'admin');
     await submitCredentials(user, 'admin', 'admin');
     expect(screen.getByRole('alert')).toHaveTextContent(LOGIN_STORAGE_ERROR);
     expect(screen.getByLabelText('Username')).toHaveValue('admin');
     expect(screen.getByLabelText('Password')).toHaveValue('admin');
-    expect(sessionStorage.getItem(AUTH_KEY)).toBeNull();
-    expect(isAuthenticated()).toBe(false);
+    expect(localStorage.getItem(AUTH_KEY)).toBeNull();
     expect(onLogin).not.toHaveBeenCalled();
+    expect(isAuthenticated()).toBe(false);
     write.mockRestore();
     await user.click(screen.getByRole('button', { name: 'Login', exact: true }));
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
     expect(onLogin).toHaveBeenCalledTimes(1);
     expect(isAuthenticated()).toBe(true);
   });
-
-  it('shows actionable storage-access failure without notifying success', async () => {
+  it('shows storage getter failure without notifying success', async () => {
     const user = userEvent.setup();
     const onLogin = vi.fn();
-    vi.spyOn(window, 'sessionStorage', 'get').mockImplementation(() => { throw new Error('blocked'); });
-    render(<Login onLogin={onLogin} />);
+    vi.spyOn(window, 'localStorage', 'get').mockImplementation(() => { throw new Error('blocked'); });
+    renderLogin(onLogin, 'admin');
     await submitCredentials(user, 'admin', 'admin');
     expect(screen.getByRole('alert')).toHaveTextContent(LOGIN_STORAGE_ERROR);
     expect(screen.getByRole('heading', { name: 'Admin Login' })).toBeVisible();

@@ -1,23 +1,24 @@
-/** Render persistent public navigation with a caller-controlled session action. */
+/** Render public and role-specific navigation without managing browser storage. */
 import PropTypes from 'prop-types';
 import { Link, NavLink } from 'react-router-dom';
 
 /**
- * Show route links and the appropriate login or logout control.
- * Args:
- *   authenticated: Whether the owning application has an active demo session.
- *   onLogout: The owning application's logout action; storage is not managed here.
- * Returns:
- *   A semantic sticky header with accessible active navigation.
+ * Keep legacy public entry links and expose the current role's portal and session action.
+ * @param {object} props
+ * @param {object|null} [props.session] Validated session controlled by App.
+ * @param {boolean} [props.authenticated=false] Compatibility for legacy admin-only callers.
+ * @param {Function} props.onLogout Session-removal action owned by App.
+ * @returns {JSX.Element}
  */
-export function Header({ authenticated = false, onLogout }) {
+export function Header({ session = null, authenticated = false, onLogout }) {
+  const role = session?.role ?? (authenticated ? 'admin' : null);
   return (
-    <header className="site-header">
-      <div className="header-inner">
+    <header className="site-header" style={{ height: 'auto', minHeight: 60 }}>
+      <div className="header-inner" style={{ flexWrap: 'wrap', gap: 12, paddingBlock: 12 }}>
         <Link className="logo" to="/">
           HireHub
         </Link>
-        <nav aria-label="Main navigation" className="main-nav">
+        <nav aria-label="Main navigation" className="main-nav" style={{ flexWrap: 'wrap', gap: 12 }}>
           <NavLink className="nav-link" to="/" end>
             Home
           </NavLink>
@@ -25,15 +26,25 @@ export function Header({ authenticated = false, onLogout }) {
             Apply
           </NavLink>
           <NavLink className="nav-link" to="/admin">
-            Admin
+            {role === 'admin' ? 'Recruiter Dashboard' : 'Admin'}
           </NavLink>
+          {role !== 'admin' && (
+            <NavLink className="nav-link" to="/candidate">
+              {role === 'candidate' ? 'Candidate Portal' : 'Candidate'}
+            </NavLink>
+          )}
+          {!role && (
+            <NavLink className="nav-link" to="/register">
+              Register
+            </NavLink>
+          )}
         </nav>
-        {authenticated ? (
+        {role ? (
           <button className="session-control logout-button" type="button" onClick={onLogout}>
             Logout
           </button>
         ) : (
-          <Link className="session-control login-link" to="/admin">
+          <Link className="session-control login-link" to="/login">
             Login
           </Link>
         )}
@@ -43,6 +54,12 @@ export function Header({ authenticated = false, onLogout }) {
 }
 
 Header.propTypes = {
+  session: PropTypes.shape({
+    userId: PropTypes.string.isRequired,
+    role: PropTypes.oneOf(['admin', 'candidate']).isRequired,
+    displayName: PropTypes.string.isRequired,
+    loginTimestamp: PropTypes.string.isRequired,
+  }),
   authenticated: PropTypes.bool,
   onLogout: PropTypes.func.isRequired,
 };
