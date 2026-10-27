@@ -150,7 +150,8 @@ describe('App local initialization and public routes', () => {
     const user = userEvent.setup();
     const getter = vi.spyOn(window, 'localStorage', 'get').mockImplementation(() => { throw new Error('blocked'); });
     renderApp('/login');
-    expect(screen.getByRole('alert')).toHaveTextContent(DATA_STORAGE_ERROR);
+    expect(screen.getAllByRole('alert').some((alert) => alert.textContent.includes(DATA_STORAGE_ERROR))).toBe(true);
+    expect(screen.getAllByRole('alert').some((alert) => alert.textContent.includes('Theme preference could not be saved or read'))).toBe(true);
     expect(screen.getByRole('heading', { name: 'Demo data unavailable' })).toBeVisible();
     getter.mockRestore();
     await user.click(screen.getByRole('button', { name: 'Retry demo initialization' }));
@@ -394,9 +395,12 @@ describe('App role session routing', () => {
     const remove = vi.spyOn(window, 'removeEventListener');
     const { unmount } = renderApp('/');
     const initial = add.mock.calls.filter(([type]) => type === 'storage' || type === 'focus');
-    expect(initial.map(([type]) => type).sort()).toEqual(['focus', 'storage']);
+    expect(initial.map(([type]) => type).sort()).toEqual(['focus', 'storage', 'storage']);
+    const themeListener = initial[0];
+    const sessionListeners = initial.slice(1);
     await user.click(header().getByRole('link', { name: 'Admin', exact: true }));
-    for (const [type, listener] of initial) expect(remove).toHaveBeenCalledWith(type, listener);
+    for (const [type, listener] of sessionListeners) expect(remove).toHaveBeenCalledWith(type, listener);
+    expect(remove).not.toHaveBeenCalledWith(...themeListener);
     const replacement = add.mock.calls.filter(([type]) => type === 'storage' || type === 'focus').slice(initial.length);
     expect(replacement.map(([type]) => type).sort()).toEqual(['focus', 'storage']);
     login('admin', 'admin');
@@ -406,5 +410,54 @@ describe('App role session routing', () => {
     for (const [type, listener] of replacement) expect(remove).toHaveBeenCalledWith(type, listener);
     expect(screen.queryByRole('banner')).not.toBeInTheDocument();
     expect(screen.queryByRole('main')).not.toBeInTheDocument();
+    expect(remove).toHaveBeenCalledWith(...themeListener);
+  });
+});
+
+describe('App themes and local reset', () => {
+  it('applies saved theme before content and persists toggles across remount and navigation', async () => {
+    localStorage.setItem('hirehub_theme', 'dark');
+    const user = userEvent.setup(); const view = renderApp('/');
+    expect(document.documentElement.dataset.theme).toBe('dark');
+    expect(header().getByRole('button', { name: 'Switch to light theme' })).toHaveAttribute('aria-pressed', 'true');
+    await user.click(header().getByRole('button', { name: 'Switch to light theme' }));
+    expect(localStorage.getItem('hirehub_theme')).toBe('light'); expect(document.documentElement.dataset.theme).toBe('light');
+    await user.click(header().getByRole('link', { name: 'Login', exact: true }));
+    expect(header().getByRole('button', { name: 'Switch to dark theme' })).toHaveAttribute('aria-pressed', 'false');
+    view.unmount(); renderApp('/login'); expect(document.documentElement.dataset.theme).toBe('light');
+  });
+  it('shows temporary theme failure without claiming persistence and clears it on successful toggle', async () => {
+    const user = userEvent.setup(); renderApp('/');
+    const write = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('quota'); });
+    await user.click(header().getByRole('button', { name: 'Switch to dark theme' }));
+    expect(screen.getByRole('alert')).toHaveTextContent('Changes are temporary until saved');
+    expect(localStorage.getItem('hirehub_theme')).toBeNull(); expect(document.documentElement.dataset.theme).toBe('dark');
+    write.mockRestore(); await user.click(header().getByRole('button', { name: 'Switch to light theme' }));
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument(); expect(localStorage.getItem('hirehub_theme')).toBe('light');
+  });
+  it.each(['admin', 'candidate'])('resets from %s portal, clears stale records/session, retains theme and returns home', async (role) => {
+    seedMockData(); login(role === 'admin' ? 'admin' : 'alex@example.com', role === 'admin' ? 'admin' : 'password123', role);
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify(DEFAULT_SUBMISSIONS.slice(0, 1)));
+    localStorage.setItem('hirehub_theme', 'dark'); localStorage.setItem('unrelated', 'keep');
+    const user = userEvent.setup(); renderApp(role === 'admin' ? '/admin?search=Alex' : '/candidate');
+    await user.click(screen.getByRole('button', { name: 'Reset Mock Data' }));
+    expect(screen.getByLabelText('Current route')).toHaveTextContent(/^\/$/);
+    expect(screen.getByRole('heading', { name: 'Build Your Future With Us' })).toBeVisible();
+    expect(localStorage.getItem(AUTH_KEY)).toBeNull(); expect(JSON.parse(localStorage.getItem(SUBMISSIONS_KEY))).toEqual(DEFAULT_SUBMISSIONS);
+    expect(localStorage.getItem('hirehub_theme')).toBe('dark'); expect(localStorage.getItem('unrelated')).toBe('keep');
+    expect(within(screen.getByRole('contentinfo')).getByRole('status')).toHaveTextContent('Mock data reset');
+    expect(header().getByRole('link', { name: 'Login', exact: true })).toBeVisible();
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  });
+  it('does not navigate or sign out on failed reset, and allows retry', async () => {
+    seedMockData(); login('admin', 'admin'); const session = getSession();
+    const user = userEvent.setup(); renderApp('/admin');
+    const remove = vi.spyOn(Storage.prototype, 'removeItem').mockImplementation(() => { throw new Error('blocked'); });
+    await user.click(screen.getByRole('button', { name: 'Reset Mock Data' }));
+    expect(screen.getByLabelText('Current route')).toHaveTextContent(/^\/admin$/); expect(getSession()).toEqual(session);
+    expect(within(screen.getByRole('contentinfo')).getByRole('alert')).toHaveTextContent(DATA_STORAGE_ERROR);
+    expect(within(screen.getByRole('contentinfo')).getByRole('status')).toBeEmptyDOMElement();
+    remove.mockRestore(); await user.click(screen.getByRole('button', { name: 'Reset Mock Data' }));
+    expect(screen.getByLabelText('Current route')).toHaveTextContent(/^\/$/); expect(getSession()).toBeNull();
   });
 });

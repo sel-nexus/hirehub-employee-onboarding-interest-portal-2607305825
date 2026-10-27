@@ -8,17 +8,19 @@ import { Link, NavLink } from 'react-router-dom';
  * @param {object|null} [props.session] Validated session controlled by App.
  * @param {boolean} [props.authenticated=false] Compatibility for legacy admin-only callers.
  * @param {Function} props.onLogout Session-removal action owned by App.
+ * @param {string} [props.theme='light'] Current theme owned by App.
+ * @param {Function} [props.onToggleTheme] Apply and persist the opposite theme.
  * @returns {JSX.Element}
  */
-export function Header({ session = null, authenticated = false, onLogout }) {
+export function Header({ session = null, authenticated = false, onLogout, theme = 'light', onToggleTheme }) {
   const role = session?.role ?? (authenticated ? 'admin' : null);
   return (
-    <header className="site-header" style={{ height: 'auto', minHeight: 60 }}>
-      <div className="header-inner" style={{ flexWrap: 'wrap', gap: 12, paddingBlock: 12 }}>
+    <header className="site-header">
+      <div className="header-inner">
         <Link className="logo" to="/">
           HireHub
         </Link>
-        <nav aria-label="Main navigation" className="main-nav" style={{ flexWrap: 'wrap', gap: 12 }}>
+        <nav aria-label="Main navigation" className="main-nav">
           <NavLink className="nav-link" to="/" end>
             Home
           </NavLink>
@@ -39,6 +41,24 @@ export function Header({ session = null, authenticated = false, onLogout }) {
             </NavLink>
           )}
         </nav>
+        <button
+          className="theme-toggle"
+          type="button"
+          aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+          aria-pressed={theme === 'dark'}
+          onClick={onToggleTheme}
+        >
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            {theme === 'dark' ? (
+              <>
+                <circle cx="12" cy="12" r="4" />
+                <path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5" />
+              </>
+            ) : (
+              <path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z" />
+            )}
+          </svg>
+        </button>
         {role ? (
           <button className="session-control logout-button" type="button" onClick={onLogout}>
             Logout
@@ -61,5 +81,7 @@ Header.propTypes = {
     loginTimestamp: PropTypes.string.isRequired,
   }),
   authenticated: PropTypes.bool,
+  theme: PropTypes.oneOf(['light', 'dark']),
+  onToggleTheme: PropTypes.func,
   onLogout: PropTypes.func.isRequired,
 };

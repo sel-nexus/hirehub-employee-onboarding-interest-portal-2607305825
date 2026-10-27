@@ -1,18 +1,33 @@
-/* Keep the supplied HireHub visual system light-only and responsive. */
+/* Preserve HireHub's system typography and PRD indigo/slate language in both themes. */
 :root {
   color-scheme: light;
-  --color-primary: #2563eb;
-  --color-primary-hover: #1d4ed8;
-  --color-primary-light: rgba(37, 99, 235, 0.1);
-  --color-bg: #f1f5f9;
-  --color-card: #ffffff;
-  --color-text: #1e293b;
-  --color-text-muted: #64748b;
-  --color-success: #16a34a;
-  --color-danger: #dc2626;
-  --color-warning: #f59e0b;
-  --color-border: #e2e8f0;
-  --color-row-alt: #f8fafc;
+  --color-brand: #4F46E5;
+  --color-accent: #6366F1;
+  --color-primary: #4F46E5;
+  --color-primary-hover: #4338CA;
+  --color-primary-light: #EEF2FF;
+  --color-on-action: #FFFFFF;
+  --color-bg: #F8FAFC;
+  --color-card: #FFFFFF;
+  --color-text: #0F172A;
+  --color-text-muted: #475569;
+  --color-success: #047857;
+  --color-danger: #BE123C;
+  --color-warning: #92400E;
+  --color-border: #E2E8F0;
+  --color-row-alt: #F8FAFC;
+  --stage-slate-bg: #F1F5F9;
+  --stage-slate-text: #334155;
+  --stage-amber-bg: #FEF3C7;
+  --stage-amber-text: #92400E;
+  --stage-sky-bg: #E0F2FE;
+  --stage-sky-text: #075985;
+  --stage-emerald-bg: #D1FAE5;
+  --stage-emerald-text: #065F46;
+  --stage-rose-bg: #FFE4E6;
+  --stage-rose-text: #9F1239;
+  --motion-fast: 160ms;
+  --hover-elevation: 0 3px 10px rgb(15 23 42 / 0.08);
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -694,4 +709,195 @@ button:focus-visible {
     padding: max(var(--space-3), env(safe-area-inset-top)) var(--space-3)
       max(var(--space-3), env(safe-area-inset-bottom));
   }
+}
+
+/* Theme role overrides keep existing surfaces and inline variable consumers compatible. */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-bg: #0F172A;
+  --color-card: #1E293B;
+  --color-border: #334155;
+  --color-row-alt: #0F172A;
+  --color-text: #F8FAFC;
+  --color-text-muted: #CBD5E1;
+  --color-primary: #A5B4FC;
+  --color-primary-light: #312E81;
+  --color-success: #6EE7B7;
+  --color-danger: #FDA4AF;
+  --color-warning: #FDE68A;
+  --stage-slate-bg: #334155;
+  --stage-slate-text: #E2E8F0;
+  --stage-amber-bg: #451A03;
+  --stage-amber-text: #FDE68A;
+  --stage-sky-bg: #082F49;
+  --stage-sky-text: #BAE6FD;
+  --stage-emerald-bg: #022C22;
+  --stage-emerald-text: #A7F3D0;
+  --stage-rose-bg: #4C0519;
+  --stage-rose-text: #FECDD3;
+  --hover-elevation: 0 3px 10px rgb(0 0 0 / 0.25);
+}
+body, .app-shell { background: var(--color-bg); color: var(--color-text); }
+.app-shell { min-height: 100dvh; display: flex; flex-direction: column; }
+.app-shell > main { flex: 1; width: 100%; }
+.site-header {
+  height: auto;
+  min-height: 60px;
+  color: var(--color-text);
+  background: var(--color-card);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: none;
+}
+.header-inner { flex-wrap: wrap; gap: var(--space-3); padding-block: var(--space-3); }
+.main-nav { flex-wrap: wrap; gap: var(--space-3); }
+.nav-link { min-height: 40px; }
+.nav-link:hover, .nav-link[aria-current='page'] { border-bottom-color: var(--color-primary); }
+.logo { color: var(--color-primary); }
+.site-header a:focus-visible, .site-header button:focus-visible, .hero a:focus-visible {
+  outline-color: var(--color-primary);
+}
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-card);
+  color: var(--color-text);
+  margin-left: auto;
+}
+.theme-toggle:hover, .login-link:hover { background: var(--color-row-alt); }
+.login-link { border-color: var(--color-border); }
+.logout-button { color: var(--color-danger); background: var(--color-card); }
+.hero { color: var(--color-text); background: var(--color-bg); }
+.hero-subtitle { color: var(--color-text-muted); opacity: 1; }
+.cta-link, .submission-button {
+  background: var(--color-brand);
+  color: var(--color-on-action);
+  border-color: var(--color-brand);
+}
+.cta-link:hover, .submission-button:hover { background: var(--color-primary-hover); }
+.feature-card, .submission-form, .stat-card, .dashboard-table-card {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  box-shadow: none;
+}
+.feature-card, .dashboard-page section:has(> ol[aria-label='Hiring progress']) {
+  transition: transform var(--motion-fast) ease-out, box-shadow var(--motion-fast) ease-out;
+}
+@media (hover: hover) {
+  .feature-card:hover, .dashboard-page section:has(> ol[aria-label='Hiring progress']):hover {
+    transform: translateY(-2px);
+    box-shadow: var(--hover-elevation);
+  }
+}
+button, .session-control, .nav-link {
+  transition: background-color var(--motion-fast) ease-out, border-color var(--motion-fast) ease-out, color var(--motion-fast) ease-out;
+}
+button:disabled { cursor: not-allowed; opacity: 0.65; }
+input, select, textarea {
+  font: inherit;
+  color: var(--color-text);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: var(--space-3);
+  min-width: 0;
+}
+.submission-field textarea { width: 100%; resize: vertical; min-height: 120px; }
+input::placeholder, textarea::placeholder { color: var(--color-text-muted); opacity: 1; }
+input:focus, select:focus, textarea:focus {
+  border-color: var(--color-primary);
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+[aria-invalid='true'] { border-color: var(--color-danger); }
+.auth-card > a { display: inline-block; margin-top: var(--space-5); color: var(--color-primary); }
+.auth-card [role='tablist'] { margin-top: var(--space-6); gap: var(--space-2); }
+.auth-card [role='tab'] { flex: 1; width: auto; height: auto; min-height: 48px; }
+.dashboard-heading { flex-wrap: wrap; }
+.dashboard-page section[aria-label='Submission filters'] { margin-bottom: var(--space-6); }
+[aria-label='Department filters'] { margin-bottom: var(--space-5); }
+[aria-label='Department filters'] button { width: auto; min-height: 44px; height: auto; padding: var(--space-2) var(--space-3); }
+.submissions-table th { background: var(--color-row-alt); color: var(--color-text-muted); font-weight: 600; }
+.submissions-table td, .submissions-table th { border-bottom: 1px solid var(--color-border); }
+.submissions-table tbody tr:nth-child(even) { background: var(--color-card); }
+.submissions-table tbody tr:hover { background: var(--color-row-alt); }
+.submissions-table select { display: block; width: 170px; margin-top: var(--space-2); padding: var(--space-2); }
+.row-actions button { min-height: 44px; height: auto; }
+.row-edit:hover { color: var(--color-on-action); background: var(--color-brand); }
+.row-delete:hover { color: var(--stage-rose-text); background: var(--stage-rose-bg); }
+.department-badge { color: var(--color-text-muted); background: var(--color-row-alt); }
+.status-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.status-received, .status-applied { color: var(--stage-slate-text); background: var(--stage-slate-bg); }
+.status-review { color: var(--stage-amber-text); background: var(--stage-amber-bg); }
+.status-interview { color: var(--stage-sky-text); background: var(--stage-sky-bg); }
+.status-offer { color: var(--stage-emerald-text); background: var(--stage-emerald-bg); }
+.status-archived { color: var(--stage-rose-text); background: var(--stage-rose-bg); }
+.dashboard-page ol[aria-label='Hiring progress'] {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding-bottom: var(--space-2) !important;
+}
+ol[aria-label='Hiring progress'] > li { min-width: 140px !important; position: relative; }
+ol[aria-label='Hiring progress'] > li::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: var(--color-border);
+  transform-origin: left;
+}
+ol[aria-label='Hiring progress'] > li[aria-current='step']::before {
+  background: var(--color-accent);
+  animation: progress-enter 400ms ease-out;
+}
+@keyframes progress-enter { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.edit-dialog {
+  max-height: calc(100dvh - 40px) !important;
+  box-shadow: 0 12px 40px rgb(0 0 0 / 0.2);
+  overflow-wrap: anywhere;
+}
+.edit-dialog > p, .edit-dialog > h3, .edit-dialog > form, .edit-dialog article { margin-block: var(--space-4); }
+.edit-dialog article { padding: var(--space-4); border: 1px solid var(--color-border); background: var(--color-row-alt); border-radius: 8px; }
+.edit-dialog article p + p { margin-top: var(--space-3); }
+.edit-dialog a { color: var(--color-primary); }
+.edit-actions .submission-button { flex: 1; }
+.demo-utility { margin-top: var(--space-10); border-top: 1px solid var(--color-border); }
+.demo-utility-inner {
+  max-width: 1100px;
+  margin: auto;
+  padding: var(--space-5) var(--space-6);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-5);
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+.demo-utility-inner > p:first-child { flex: 1 1 320px; }
+.demo-reset-status, .demo-utility .field-error { flex-basis: 100%; }
+.demo-reset-status:empty { display: none; }
+@media (max-width: 767px) {
+  .main-nav { order: 3; width: 100%; }
+  .header-inner { padding: var(--space-2) var(--space-3); }
+  .auth-card [role='tablist'] { align-items: stretch; }
+  .dashboard-page section:has(> ol[aria-label='Hiring progress']) { min-width: 0; padding: var(--space-4) !important; }
+  .edit-dialog { max-height: calc(100dvh - 24px) !important; }
+  .demo-utility-inner { padding: var(--space-5); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
 }

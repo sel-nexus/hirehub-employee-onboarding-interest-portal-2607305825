@@ -465,7 +465,7 @@
       "label": "formatDate()",
       "file_type": "code",
       "source_file": "frontend/src/features/admin/Dashboard.jsx",
-      "source_location": "L8",
+      "source_location": "L14",
       "_origin": "ast"
     },
     {
@@ -473,7 +473,7 @@
       "label": "Dashboard()",
       "file_type": "code",
       "source_file": "frontend/src/features/admin/Dashboard.jsx",
-      "source_location": "L21",
+      "source_location": "L27",
       "_origin": "ast"
     },
     {
@@ -485,11 +485,19 @@
       "_origin": "ast"
     },
     {
+      "id": "admin_dashboard_test_render",
+      "label": "render()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
+      "source_location": "L11",
+      "_origin": "ast"
+    },
+    {
       "id": "admin_dashboard_test_alice",
       "label": "alice",
       "file_type": "code",
       "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
-      "source_location": "L8",
+      "source_location": "L18",
       "_origin": "ast"
     },
     {
@@ -497,7 +505,7 @@
       "label": "bob",
       "file_type": "code",
       "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
-      "source_location": "L12",
+      "source_location": "L23",
       "_origin": "ast"
     },
     {
@@ -505,7 +513,7 @@
       "label": "seed()",
       "file_type": "code",
       "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
-      "source_location": "L18",
+      "source_location": "L29",
       "_origin": "ast"
     },
     {
@@ -513,7 +521,7 @@
       "label": "expectStat()",
       "file_type": "code",
       "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
-      "source_location": "L23",
+      "source_location": "L34",
       "_origin": "ast"
     },
     {
@@ -521,7 +529,15 @@
       "label": "openEditor()",
       "file_type": "code",
       "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
-      "source_location": "L28",
+      "source_location": "L39",
+      "_origin": "ast"
+    },
+    {
+      "id": "admin_dashboard_test_routerharness",
+      "label": "RouterHarness()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
+      "source_location": "L291",
       "_origin": "ast"
     },
     {
@@ -537,7 +553,7 @@
       "label": "EditSubmission()",
       "file_type": "code",
       "source_file": "frontend/src/features/admin/EditSubmission.jsx",
-      "source_location": "L19",
+      "source_location": "L22",
       "_origin": "ast"
     },
     {
@@ -553,7 +569,7 @@
       "label": "submission",
       "file_type": "code",
       "source_file": "frontend/src/features/admin/EditSubmission.test.jsx",
-      "source_location": "L10",
+      "source_location": "L13",
       "_origin": "ast"
     },
     {
@@ -561,7 +577,7 @@
       "label": "LifecycleHarness()",
       "file_type": "code",
       "source_file": "frontend/src/features/admin/EditSubmission.test.jsx",
-      "source_location": "L16",
+      "source_location": "L20",
       "_origin": "ast"
     },
     {
@@ -602,6 +618,46 @@
       "file_type": "code",
       "source_file": "frontend/src/features/admin/Login.test.jsx",
       "source_location": "L31",
+      "_origin": "ast"
+    },
+    {
+      "id": "admin_reviewsubmission",
+      "label": "ReviewSubmission.jsx",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/ReviewSubmission.jsx",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "admin_reviewsubmission_resume_text",
+      "label": "RESUME_TEXT",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/ReviewSubmission.jsx",
+      "source_location": "L7",
+      "_origin": "ast"
+    },
+    {
+      "id": "admin_reviewsubmission_reviewsubmission",
+      "label": "ReviewSubmission()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/ReviewSubmission.jsx",
+      "source_location": "L39",
+      "_origin": "ast"
+    },
+    {
+      "id": "admin_reviewsubmission_test",
+      "label": "ReviewSubmission.test.jsx",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/ReviewSubmission.test.jsx",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "admin_reviewsubmission_test_harness",
+      "label": "Harness()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/ReviewSubmission.test.jsx",
+      "source_location": "L15",
       "_origin": "ast"
     },
     {
@@ -698,6 +754,102 @@
       "file_type": "code",
       "source_file": "frontend/src/features/admin/auth.test.js",
       "source_location": "L21",
+      "_origin": "ast"
+    },
+    {
+      "id": "admin_recruiterservice",
+      "label": "recruiterService.js",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "admin_recruiterservice_status_labels",
+      "label": "STATUS_LABELS",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L8",
+      "_origin": "ast"
+    },
+    {
+      "id": "admin_recruiterservice_editable_fields",
+      "label": "EDITABLE_FIELDS",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L13",
+      "_origin": "ast"
+    },
+    {
+      "id": "admin_recruiterservice_requirerecruiter",
+      "label": "requireRecruiter()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L20",
+      "_origin": "ast"
+    },
+    {
+      "id": "admin_recruiterservice_withrecruiterdefaults",
+      "label": "withRecruiterDefaults()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L27",
+      "_origin": "ast"
+    },
+    {
+      "id": "admin_recruiterservice_readrecruitersubmissions",
+      "label": "readRecruiterSubmissions()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L34",
+      "_origin": "ast"
+    },
+    {
+      "id": "admin_recruiterservice_filtersubmissions",
+      "label": "filterSubmissions()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L42",
+      "_origin": "ast"
+    },
+    {
+      "id": "admin_recruiterservice_validaterecruiterfields",
+      "label": "validateRecruiterFields()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L54",
+      "_origin": "ast"
+    },
+    {
+      "id": "admin_recruiterservice_updaterecruitersubmission",
+      "label": "updateRecruiterSubmission()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L83",
+      "_origin": "ast"
+    },
+    {
+      "id": "admin_recruiterservice_test",
+      "label": "recruiterService.test.js",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/recruiterService.test.js",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "admin_recruiterservice_test_legacy",
+      "label": "legacy",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/recruiterService.test.js",
+      "source_location": "L12",
+      "_origin": "ast"
+    },
+    {
+      "id": "admin_recruiterservice_test_seed",
+      "label": "seed()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/recruiterService.test.js",
+      "source_location": "L18",
       "_origin": "ast"
     },
     {
@@ -1432,6 +1584,14 @@
       "source_file": "frontend/src/features/admin/auth.js",
       "source_location": "L4",
       "_origin": "ast"
+    },
+    {
+      "id": "admin_recruiterservice_recruiter_departments",
+      "label": "RECRUITER_DEPARTMENTS",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L7",
+      "_origin": "ast"
     }
   ],
   "links": [
@@ -2080,7 +2240,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/Dashboard.jsx",
-      "source_location": "L4",
+      "source_location": "L5",
       "weight": 1.0
     },
     {
@@ -2090,17 +2250,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/Dashboard.jsx",
-      "source_location": "L4",
-      "weight": 1.0
-    },
-    {
-      "source": "admin_dashboard",
-      "target": "apply_submissions_readsubmissions",
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/src/features/admin/Dashboard.jsx",
-      "source_location": "L4",
+      "source_location": "L5",
       "weight": 1.0
     },
     {
@@ -2110,7 +2260,87 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/Dashboard.jsx",
-      "source_location": "L5",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_dashboard",
+      "target": "admin_reviewsubmission",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_dashboard",
+      "target": "admin_recruiterservice",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_dashboard",
+      "target": "admin_recruiterservice_readrecruitersubmissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_dashboard",
+      "target": "admin_recruiterservice_filtersubmissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_dashboard",
+      "target": "admin_recruiterservice_requirerecruiter",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_dashboard",
+      "target": "admin_recruiterservice_recruiter_departments",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_dashboard",
+      "target": "admin_recruiterservice_status_labels",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_dashboard",
+      "target": "admin_recruiterservice_updaterecruitersubmission",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L8",
       "weight": 1.0
     },
     {
@@ -2119,7 +2349,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/Dashboard.jsx",
-      "source_location": "L8",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -2128,7 +2358,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/Dashboard.jsx",
-      "source_location": "L21",
+      "source_location": "L27",
       "weight": 1.0
     },
     {
@@ -2138,22 +2368,12 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/Dashboard.jsx",
-      "source_location": "L111",
+      "source_location": "L145",
       "weight": 1.0
     },
     {
       "source": "admin_dashboard_test",
-      "target": "admin_dashboard",
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
-      "source_location": "L5",
-      "weight": 1.0
-    },
-    {
-      "source": "admin_dashboard_test",
-      "target": "apply_submissions",
+      "target": "data_mockdata",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -2163,7 +2383,7 @@
     },
     {
       "source": "admin_dashboard_test",
-      "target": "apply_submissions_readsubmissions",
+      "target": "data_mockdata_default_users",
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -2173,8 +2393,39 @@
     },
     {
       "source": "admin_dashboard_test",
-      "target": "admin_dashboard_test_alice",
-      "relation": "contains",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_dashboard_test",
+      "target": "admin_auth_auth_key",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_dashboard_test",
+      "target": "admin_auth_login",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_dashboard_test",
+      "target": "admin_recruiterservice",
+      "relation": "imports_from",
+      "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
       "source_location": "L8",
@@ -2182,16 +2433,56 @@
     },
     {
       "source": "admin_dashboard_test",
-      "target": "admin_dashboard_test_bob",
-      "relation": "contains",
+      "target": "admin_recruiterservice_withrecruiterdefaults",
+      "relation": "imports",
+      "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
-      "source_location": "L12",
+      "source_location": "L8",
       "weight": 1.0
     },
     {
       "source": "admin_dashboard_test",
-      "target": "admin_dashboard_test_seed",
+      "target": "admin_dashboard_test_render",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_dashboard_test",
+      "target": "admin_dashboard",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_dashboard_test",
+      "target": "apply_submissions",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_dashboard_test",
+      "target": "apply_submissions_readsubmissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_dashboard_test",
+      "target": "admin_dashboard_test_alice",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
@@ -2200,7 +2491,7 @@
     },
     {
       "source": "admin_dashboard_test",
-      "target": "admin_dashboard_test_expectstat",
+      "target": "admin_dashboard_test_bob",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
@@ -2209,11 +2500,38 @@
     },
     {
       "source": "admin_dashboard_test",
+      "target": "admin_dashboard_test_seed",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_dashboard_test",
+      "target": "admin_dashboard_test_expectstat",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_dashboard_test",
       "target": "admin_dashboard_test_openeditor",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
-      "source_location": "L28",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_dashboard_test",
+      "target": "admin_dashboard_test_routerharness",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
+      "source_location": "L291",
       "weight": 1.0
     },
     {
@@ -2238,7 +2556,7 @@
     },
     {
       "source": "admin_editsubmission",
-      "target": "apply_validation",
+      "target": "apply_submissions",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -2248,7 +2566,7 @@
     },
     {
       "source": "admin_editsubmission",
-      "target": "apply_validation_validatesubmission",
+      "target": "apply_submissions_sample_resumes",
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -2258,7 +2576,7 @@
     },
     {
       "source": "admin_editsubmission",
-      "target": "apply_submissions",
+      "target": "admin_recruiterservice",
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -2268,7 +2586,47 @@
     },
     {
       "source": "admin_editsubmission",
-      "target": "apply_submissions_updatesubmission",
+      "target": "admin_recruiterservice_editable_fields",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_editsubmission",
+      "target": "admin_recruiterservice_status_labels",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_editsubmission",
+      "target": "admin_recruiterservice_validaterecruiterfields",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_editsubmission",
+      "target": "admin_recruiterservice_updaterecruitersubmission",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_editsubmission",
+      "target": "admin_recruiterservice_withrecruiterdefaults",
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -2282,7 +2640,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/EditSubmission.jsx",
-      "source_location": "L19",
+      "source_location": "L22",
       "weight": 1.0
     },
     {
@@ -2337,11 +2695,81 @@
     },
     {
       "source": "admin_editsubmission_test",
+      "target": "data_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.test.jsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_editsubmission_test",
+      "target": "data_mockdata_default_users",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.test.jsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_editsubmission_test",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.test.jsx",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_editsubmission_test",
+      "target": "admin_auth_auth_key",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.test.jsx",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_editsubmission_test",
+      "target": "admin_auth_login",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.test.jsx",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_editsubmission_test",
+      "target": "admin_recruiterservice",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.test.jsx",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_editsubmission_test",
+      "target": "admin_recruiterservice_withrecruiterdefaults",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.test.jsx",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_editsubmission_test",
       "target": "admin_editsubmission_test_submission",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/EditSubmission.test.jsx",
-      "source_location": "L10",
+      "source_location": "L13",
       "weight": 1.0
     },
     {
@@ -2350,7 +2778,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/EditSubmission.test.jsx",
-      "source_location": "L16",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
@@ -2468,6 +2896,183 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/Login.test.jsx",
       "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_reviewsubmission",
+      "target": "apply_submissions",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/ReviewSubmission.jsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_reviewsubmission",
+      "target": "apply_submissions_validatematerials",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/ReviewSubmission.jsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_reviewsubmission",
+      "target": "admin_recruiterservice",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/ReviewSubmission.jsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_reviewsubmission",
+      "target": "admin_recruiterservice_updaterecruitersubmission",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/ReviewSubmission.jsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_reviewsubmission",
+      "target": "admin_reviewsubmission_resume_text",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/ReviewSubmission.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_reviewsubmission",
+      "target": "admin_reviewsubmission_reviewsubmission",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/ReviewSubmission.jsx",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_reviewsubmission_test",
+      "target": "admin_reviewsubmission",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/ReviewSubmission.test.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_reviewsubmission_test",
+      "target": "data_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/ReviewSubmission.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_reviewsubmission_test",
+      "target": "data_mockdata_default_submissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/ReviewSubmission.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_reviewsubmission_test",
+      "target": "data_mockdata_default_users",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/ReviewSubmission.test.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_reviewsubmission_test",
+      "target": "apply_submissions",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/ReviewSubmission.test.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_reviewsubmission_test",
+      "target": "apply_submissions_readsubmissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/ReviewSubmission.test.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_reviewsubmission_test",
+      "target": "apply_submissions_sample_resumes",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/ReviewSubmission.test.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_reviewsubmission_test",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/ReviewSubmission.test.jsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_reviewsubmission_test",
+      "target": "admin_auth_auth_key",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/ReviewSubmission.test.jsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_reviewsubmission_test",
+      "target": "admin_auth_login",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/ReviewSubmission.test.jsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_reviewsubmission_test",
+      "target": "admin_recruiterservice",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/ReviewSubmission.test.jsx",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_reviewsubmission_test",
+      "target": "admin_reviewsubmission_test_harness",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/ReviewSubmission.test.jsx",
+      "source_location": "L15",
       "weight": 1.0
     },
     {
@@ -2778,6 +3383,406 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/auth.test.js",
       "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice",
+      "target": "admin_auth_isauthenticated",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice",
+      "target": "apply_submissions",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice",
+      "target": "apply_submissions_readsubmissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice",
+      "target": "apply_submissions_validatematerials",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice",
+      "target": "apply_validation",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice",
+      "target": "apply_validation_validatesubmission",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice",
+      "target": "data_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice",
+      "target": "data_mockdata_validsubmissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice",
+      "target": "data_mockdata_default_departments",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice",
+      "target": "admin_recruiterservice_status_labels",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice",
+      "target": "admin_recruiterservice_editable_fields",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice",
+      "target": "admin_recruiterservice_requirerecruiter",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice",
+      "target": "admin_recruiterservice_withrecruiterdefaults",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice",
+      "target": "admin_recruiterservice_readrecruitersubmissions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice",
+      "target": "admin_recruiterservice_filtersubmissions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice",
+      "target": "admin_recruiterservice_validaterecruiterfields",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice",
+      "target": "admin_recruiterservice_updaterecruitersubmission",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L83",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_updaterecruitersubmission",
+      "target": "admin_recruiterservice_requirerecruiter",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L84",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_updaterecruitersubmission",
+      "target": "admin_recruiterservice_readrecruitersubmissions",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L92",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_updaterecruitersubmission",
+      "target": "admin_recruiterservice_withrecruiterdefaults",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L95",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_updaterecruitersubmission",
+      "target": "admin_recruiterservice_validaterecruiterfields",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L96",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_test",
+      "target": "data_mockdata",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_test",
+      "target": "data_mockdata_default_submissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_test",
+      "target": "data_mockdata_default_users",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_test",
+      "target": "data_mockdata_validsubmissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.test.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_test",
+      "target": "apply_submissions",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_test",
+      "target": "apply_submissions_readsubmissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.test.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_test",
+      "target": "admin_auth",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.test.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_test",
+      "target": "admin_auth_auth_key",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.test.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_test",
+      "target": "admin_auth_login",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.test.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_test",
+      "target": "admin_recruiterservice",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_test",
+      "target": "admin_recruiterservice_filtersubmissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_test",
+      "target": "admin_recruiterservice_readrecruitersubmissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_test",
+      "target": "admin_recruiterservice_requirerecruiter",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_test",
+      "target": "admin_recruiterservice_status_labels",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_test",
+      "target": "admin_recruiterservice_updaterecruitersubmission",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_test",
+      "target": "admin_recruiterservice_validaterecruiterfields",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_test",
+      "target": "admin_recruiterservice_withrecruiterdefaults",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_test",
+      "target": "admin_recruiterservice_test_legacy",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.test.js",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_test",
+      "target": "admin_recruiterservice_test_seed",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.test.js",
+      "source_location": "L18",
       "weight": 1.0
     },
     {
@@ -4914,6 +5919,16 @@
       "weight": 1.0
     },
     {
+      "source": "admin_recruiterservice",
+      "target": "data_mockdata",
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
       "source": "src_app",
       "target": "home_home_home",
       "relation": "imports",
@@ -4990,7 +6005,27 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/Dashboard.jsx",
-      "source_location": "L5",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_dashboard",
+      "target": "admin_reviewsubmission_reviewsubmission",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_dashboard",
+      "target": "data_mockdata_default_departments",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L8",
       "weight": 1.0
     },
     {
@@ -5000,7 +6035,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
-      "source_location": "L5",
+      "source_location": "L15",
       "weight": 1.0
     },
     {
@@ -5020,6 +6055,16 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/Login.test.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_reviewsubmission_test",
+      "target": "admin_reviewsubmission_reviewsubmission",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/ReviewSubmission.test.jsx",
       "source_location": "L6",
       "weight": 1.0
     },
@@ -5165,6 +6210,50 @@
       "weight": 1.0
     },
     {
+      "source": "src_app_test_renderapp",
+      "target": "admin_dashboard_test_render",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_dashboard_dashboard",
+      "target": "admin_recruiterservice_filtersubmissions",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_login_test_renderlogin",
+      "target": "admin_dashboard_test_render",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "frontend/src/features/admin/Login.test.jsx",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_reviewsubmission_reviewsubmission",
+      "target": "apply_submissions_validatematerials",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/admin/ReviewSubmission.jsx",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
       "source": "admin_auth_registercandidate",
       "target": "data_mockdata_persistchanges",
       "relation": "calls",
@@ -5173,6 +6262,61 @@
       "confidence_score": 1.0,
       "source_file": "frontend/src/features/admin/auth.js",
       "source_location": "L119",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_requirerecruiter",
+      "target": "admin_auth_isauthenticated",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_readrecruitersubmissions",
+      "target": "apply_submissions_readsubmissions",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_validaterecruiterfields",
+      "target": "apply_validation_validatesubmission",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_validaterecruiterfields",
+      "target": "apply_submissions_validatematerials",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L57",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_recruiterservice_updaterecruitersubmission",
+      "target": "data_mockdata_validsubmissions",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/admin/recruiterService.js",
+      "source_location": "L106",
       "weight": 1.0
     },
     {
@@ -5187,6 +6331,17 @@
       "weight": 1.0
     },
     {
+      "source": "apply_apply_test_renderapply",
+      "target": "admin_dashboard_test_render",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "frontend/src/features/apply/Apply.test.jsx",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
       "source": "apply_submissions_createsubmission",
       "target": "admin_auth_getsession",
       "relation": "calls",
@@ -5198,6 +6353,17 @@
       "weight": 1.0
     },
     {
+      "source": "auth_register_test_renderregister",
+      "target": "admin_dashboard_test_render",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "frontend/src/features/auth/Register.test.jsx",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
       "source": "candidate_candidate_candidate",
       "target": "admin_auth_getsession",
       "relation": "calls",
@@ -5206,6 +6372,28 @@
       "confidence_score": 1.0,
       "source_file": "frontend/src/features/candidate/Candidate.jsx",
       "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_candidate_test_rendercandidate",
+      "target": "admin_dashboard_test_render",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "frontend/src/features/candidate/Candidate.test.jsx",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "candidate_profileedit_test_opendialog",
+      "target": "admin_dashboard_test_render",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "frontend/src/features/candidate/ProfileEdit.test.jsx",
+      "source_location": "L39",
       "weight": 1.0
     },
     {
@@ -5240,13 +6428,24 @@
       "source_file": "frontend/src/features/candidate/candidateService.js",
       "source_location": "L95",
       "weight": 1.0
+    },
+    {
+      "source": "home_home_test_renderat",
+      "target": "admin_dashboard_test_render",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "frontend/src/features/home/Home.test.jsx",
+      "source_location": "L32",
+      "weight": 1.0
     }
   ],
   "metadata": {
-    "built_at": "2026-10-27T07:39:06.922268+00:00",
+    "built_at": "2026-10-27T07:52:25.997649+00:00",
     "version": "graph_update-v1",
     "codebase_root": "/data/artifacts-v2/T011RNFvLqRR0008727102606471629/developer",
     "force": true,
-    "files_scanned": 43
+    "files_scanned": 47
   }
 }

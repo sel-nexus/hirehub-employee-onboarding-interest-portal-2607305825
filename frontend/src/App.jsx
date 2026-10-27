@@ -2,6 +2,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { Header } from './components/Header';
+import { DemoUtility } from './components/DemoUtility';
+import { useTheme } from './features/theme/theme';
 import Home from './features/home/Home';
 import Apply from './features/apply/Apply';
 import Login from './features/admin/Login';
@@ -13,6 +15,7 @@ import { seedMockData, readMockData } from './features/data/mockData';
 
 /** Seed once outside rendering, refresh current local identity and mount role-appropriate portals. @returns {JSX.Element} */
 export default function App() {
+  const { theme, error: themeError, toggleTheme, refreshTheme } = useTheme();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const initialized = useRef(false);
@@ -25,6 +28,7 @@ export default function App() {
 
   /** Initialize or retry; failed seeding never reports a ready dataset. */
   function initialize() {
+    refreshTheme();
     const result = seedMockData();
     const current = readMockData();
     setReady(result.success && current.success);
@@ -77,6 +81,15 @@ export default function App() {
     navigate('/');
   }
 
+  /** Refresh shell identity and return home after the footer successfully restores defaults. */
+  function onReset() {
+    setSession(null);
+    setStorageError('');
+    setRecovery('');
+    setReady(true);
+    navigate('/', { replace: true });
+  }
+
   const candidatePage = session?.role === 'candidate' ? (
     <Candidate />
   ) : (
@@ -91,19 +104,16 @@ export default function App() {
   );
 
   return (
-    <div
-      style={{
-        '--color-primary': '#4F46E5',
-        '--color-primary-hover': '#4338CA',
-        '--color-primary-light': '#EEF2FF',
-        '--color-bg': '#F8FAFC',
-        background: 'var(--color-bg)',
-      }}
-    >
+    <div className="app-shell">
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
-      <Header session={session} onLogout={onLogout} />
+      <Header session={session} onLogout={onLogout} theme={theme} onToggleTheme={toggleTheme} />
+      {themeError && (
+        <p className="auth-storage-error" role="alert">
+          {themeError}
+        </p>
+      )}
       {recovery && (
         <p className="auth-storage-error" role="status">
           {recovery}
@@ -153,6 +163,7 @@ export default function App() {
           </p>
         </main>
       )}
+      <DemoUtility onReset={onReset} />
     </div>
   );
 }

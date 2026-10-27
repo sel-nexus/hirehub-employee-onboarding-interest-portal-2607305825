@@ -96,14 +96,16 @@ describe('Header', () => {
     ['/', 'Home'],
     ['/apply', 'Apply'],
     ['/admin', 'Admin'],
+    ['/candidate', 'Candidate'],
+    ['/register', 'Register'],
   ])('marks only %s as the active navigation destination', (route, activeName) => {
     renderAt(
       <Header authenticated={false} onLogout={vi.fn()} />,
       route,
     );
     const nav = screen.getByRole('navigation', { name: 'Main navigation' });
-    expect(within(nav).getAllByRole('link')).toHaveLength(3);
-    for (const name of ['Home', 'Apply', 'Admin']) {
+    expect(within(nav).getAllByRole('link')).toHaveLength(5);
+    for (const name of ['Home', 'Apply', 'Admin', 'Candidate', 'Register']) {
       const link = within(nav).getByRole('link', { name });
       if (name === activeName) {
         expect(link).toHaveAttribute('aria-current', 'page');
@@ -129,7 +131,9 @@ describe('Header', () => {
     ['Admin', '/admin'],
     ['Home', '/'],
     ['HireHub', '/'],
-    ['Login', '/admin'],
+    ['Login', '/login'],
+    ['Candidate', '/candidate'],
+    ['Register', '/register'],
   ])('follows the %s route without invoking logout', async (name, route) => {
     const user = userEvent.setup();
     const onLogout = vi.fn();
@@ -160,7 +164,7 @@ describe('Header', () => {
     renderAt(
       <Header onLogout={vi.fn()} />,
     );
-    expect(screen.getByRole('link', { name: 'Login' })).toHaveAttribute('href', '/admin');
+    expect(screen.getByRole('link', { name: 'Login' })).toHaveAttribute('href', '/login');
     expect(screen.queryByRole('button', { name: 'Logout' })).not.toBeInTheDocument();
   });
 });
