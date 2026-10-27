@@ -2324,7 +2324,27 @@
     },
     {
       "source": "src_app_test",
+      "target": "data_mockdata_default_users",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_test",
       "target": "data_mockdata_default_submissions",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app_test",
+      "target": "data_mockdata_default_departments",
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -6925,7 +6945,7 @@
     }
   ],
   "metadata": {
-    "built_at": "2026-10-27T08:19:01.888812+00:00",
+    "built_at": "2026-10-27T08:25:54.862269+00:00",
     "version": "graph_update-v1",
     "codebase_root": "/data/artifacts-v2/T011RNFvLqRR0008727102606471629/developer",
     "force": true,
