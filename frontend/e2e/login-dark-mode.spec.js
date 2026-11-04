@@ -39,7 +39,17 @@ test('toggle preserves input and errors, dark login succeeds and dashboard stays
   await expect(page.getByRole('alert')).toHaveText('Invalid credentials. Please try again.');
   await expect(page.getByRole('alert')).toHaveCSS('color', 'rgb(255, 180, 180)');
   await toggle.click();
+  await expect(toggle).toHaveAttribute('aria-pressed', 'false');
+  await expect(main).toHaveCSS('color-scheme', 'light');
+  await expect(main).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+  await expect(page.locator('.auth-card')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+  await expect(page.getByLabel('Username', { exact: true })).toHaveCSS('color', 'rgb(30, 41, 59)');
+  await expect(page.getByLabel('Password', { exact: true })).toHaveCSS('color', 'rgb(30, 41, 59)');
+  await expect(page.getByRole('alert')).toHaveCSS('color', 'rgb(220, 38, 38)');
   await toggle.click();
+  await expect(toggle).toHaveAttribute('aria-pressed', 'true');
+  await expect(main).toHaveCSS('color-scheme', 'dark');
+  await expect(main).toHaveCSS('background-color', 'rgb(18, 21, 25)');
   await expect(page.getByLabel('Username', { exact: true })).toHaveValue('admin');
   await expect(page.getByLabel('Password', { exact: true })).toHaveValue('wrong');
   await expect(page.getByRole('alert')).toHaveText('Invalid credentials. Please try again.');
