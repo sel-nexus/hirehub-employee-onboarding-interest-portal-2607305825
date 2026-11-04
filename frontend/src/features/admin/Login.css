@@ -1,0 +1,47 @@
+/* Theme only the demo login; retain HireHub's shared layout and controls. */
+.login-dark {
+  color-scheme: dark;
+  --color-bg: #101214;
+  --color-card: #1b1e22;
+  --color-text: #f1f5f9;
+  --color-text-muted: #b0b8c4;
+  --color-border: #727b89;
+  --color-danger: #fca5a5;
+  --login-input-bg: #14171b;
+  --login-button-text: #ffffff;
+  --login-focus: #93c5fd;
+  min-height: calc(100dvh - 60px);
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+.login-dark .submission-field input {
+  background: var(--login-input-bg);
+}
+
+.login-dark .submission-field input::placeholder {
+  color: var(--color-text-muted);
+  opacity: 1;
+}
+
+.login-dark .submission-field input:autofill,
+.login-dark .submission-field input:-webkit-autofill {
+  -webkit-text-fill-color: var(--color-text);
+  caret-color: var(--color-text);
+  box-shadow: 0 0 0 1000px var(--login-input-bg) inset;
+}
+
+.login-dark .submission-button {
+  /* The shared card token also colors button text, so separate these roles. */
+  color: var(--login-button-text);
+}
+
+.login-dark .submission-field input:focus,
+.login-dark .submission-button:focus-visible {
+  outline: 3px solid var(--login-focus);
+  outline-offset: 2px;
+}
+
+.login-dark .submission-field input:focus:not(:autofill) {
+  box-shadow: none;
+}

@@ -42,6 +42,27 @@ async function submitCredentials(user, username, password) {
 }
 
 describe('Login', () => {
+  it('scopes the dark theme to the login main without changing its ancestors or siblings', () => {
+    const { container } = render(
+      <div data-testid="shared-shell">
+        <header>Shared navigation</header>
+        <Login onLogin={vi.fn()} />
+        <section className="submission-form">Unrelated light form</section>
+      </div>,
+    );
+    const main = screen.getByRole('main');
+    expect(main).toHaveClass('auth-page', 'login-dark');
+    expect(container.querySelectorAll('.login-dark')).toHaveLength(1);
+    expect(screen.getByLabelText('Username').closest('.login-dark')).toBe(main);
+    expect(screen.getByLabelText('Password').closest('.login-dark')).toBe(main);
+    expect(screen.getByRole('button', { name: 'Login', exact: true }).closest('.login-dark')).toBe(main);
+    expect(screen.getByTestId('shared-shell')).not.toHaveClass('login-dark');
+    expect(screen.getByRole('banner')).not.toHaveClass('login-dark');
+    expect(screen.getByText('Unrelated light form').closest('.login-dark')).toBeNull();
+    expect(document.documentElement).not.toHaveClass('login-dark');
+    expect(document.body).not.toHaveClass('login-dark');
+  });
+
   it('renders the exact title, accessible fields, demo hint and nonsecurity disclaimer', () => {
     render(<Login onLogin={vi.fn()} />);
     expect(screen.getByRole('main')).toHaveAttribute('id', 'main-content');

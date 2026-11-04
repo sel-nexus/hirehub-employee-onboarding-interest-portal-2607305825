@@ -23,6 +23,14 @@ Configuration defaults are in `frontend/.env.example`; copy to `.env` to customi
 5. Review the counts and table, edit permitted fields or confirm deletion. Email, record identity and submission time cannot be edited.
 6. Logout returns home. Closing the tab clears the demo session; candidate records remain in the same browser origin.
 
+## Login-only dark appearance
+
+Admin Login always uses a dark content background, card and controls, independent of device appearance preference. There is no theme toggle or saved preference. The shared navigation, Home, application form and authenticated dashboard keep their existing appearance. Demo credentials, validation and session behavior are unchanged.
+
+The login stylesheet is scoped to `.login-dark` in `frontend/src/features/admin/Login.css`; it does not modify document-wide tokens. Regression specs are in `frontend/e2e/login-dark.spec.js`. To capture login desktop/mobile accessibility, HTML, computed styles and screenshots against a running preview, run `node e2e/login-dark-preflight.mjs` from `frontend` (BASE_URL can override the preview URL).
+
+The inherited lockfile was repaired to restore `npm ci --no-bin-links` without changing declared dependency versions. npm reports 10 existing dependency vulnerabilities (2 moderate, 6 high, 2 critical); a dependency security upgrade is separate from this appearance-only revision.
+
 ## Important limitations
 
 This is not real authentication or a production recruitment service. Credentials and browser session state are visible and editable by anyone using browser developer tools. Do not collect real sensitive candidate information. No backend, database, central storage, email notifications, accounts or external integrations exist. Records are local to the current browser/origin, can be lost when browser data is cleared, and are not backed up. Corrupt/invalid datasets reset to an empty array; unavailable storage produces visible errors. Browser storage is not safe for concurrent multi-user administration.

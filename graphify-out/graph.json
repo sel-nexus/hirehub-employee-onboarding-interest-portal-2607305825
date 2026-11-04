@@ -196,13 +196,12 @@
       "community": 1
     },
     {
-      "id": "react",
+      "id": "ref_react",
       "label": "react",
       "file_type": "concept",
       "source_file": "frontend/package.json",
       "source_location": "L14",
-      "_origin": "ast",
-      "community": 1
+      "_origin": "ast"
     },
     {
       "id": "frontend_package_dependencies_react_dom",
@@ -214,13 +213,12 @@
       "community": 1
     },
     {
-      "id": "react_dom",
+      "id": "ref_react_dom",
       "label": "react-dom",
       "file_type": "concept",
       "source_file": "frontend/package.json",
       "source_location": "L15",
-      "_origin": "ast",
-      "community": 1
+      "_origin": "ast"
     },
     {
       "id": "frontend_package_dependencies_react_router_dom",
@@ -232,13 +230,12 @@
       "community": 1
     },
     {
-      "id": "react_router_dom",
+      "id": "ref_react_router_dom",
       "label": "react-router-dom",
       "file_type": "concept",
       "source_file": "frontend/package.json",
       "source_location": "L16",
-      "_origin": "ast",
-      "community": 1
+      "_origin": "ast"
     },
     {
       "id": "frontend_package_dependencies_prop_types",
@@ -250,13 +247,12 @@
       "community": 1
     },
     {
-      "id": "prop_types",
+      "id": "ref_prop_types",
       "label": "prop-types",
       "file_type": "concept",
       "source_file": "frontend/package.json",
       "source_location": "L17",
-      "_origin": "ast",
-      "community": 1
+      "_origin": "ast"
     },
     {
       "id": "frontend_package_devdependencies",
@@ -277,13 +273,12 @@
       "community": 12
     },
     {
-      "id": "vitejs_plugin_react",
+      "id": "ref_vitejs_plugin_react",
       "label": "@vitejs/plugin-react",
       "file_type": "concept",
       "source_file": "frontend/package.json",
       "source_location": "L20",
-      "_origin": "ast",
-      "community": 12
+      "_origin": "ast"
     },
     {
       "id": "frontend_package_devdependencies_vite",
@@ -295,13 +290,12 @@
       "community": 11
     },
     {
-      "id": "vite",
+      "id": "ref_vite",
       "label": "vite",
       "file_type": "concept",
       "source_file": "frontend/package.json",
       "source_location": "L21",
-      "_origin": "ast",
-      "community": 11
+      "_origin": "ast"
     },
     {
       "id": "frontend_package_devdependencies_vitest",
@@ -313,13 +307,12 @@
       "community": 13
     },
     {
-      "id": "vitest",
+      "id": "ref_vitest",
       "label": "vitest",
       "file_type": "concept",
       "source_file": "frontend/package.json",
       "source_location": "L22",
-      "_origin": "ast",
-      "community": 13
+      "_origin": "ast"
     },
     {
       "id": "frontend_package_devdependencies_jsdom",
@@ -331,13 +324,12 @@
       "community": 5
     },
     {
-      "id": "jsdom",
+      "id": "ref_jsdom",
       "label": "jsdom",
       "file_type": "concept",
       "source_file": "frontend/package.json",
       "source_location": "L23",
-      "_origin": "ast",
-      "community": 5
+      "_origin": "ast"
     },
     {
       "id": "frontend_package_devdependencies_testing_library_react",
@@ -349,13 +341,12 @@
       "community": 9
     },
     {
-      "id": "testing_library_react",
+      "id": "ref_testing_library_react",
       "label": "@testing-library/react",
       "file_type": "concept",
       "source_file": "frontend/package.json",
       "source_location": "L24",
-      "_origin": "ast",
-      "community": 9
+      "_origin": "ast"
     },
     {
       "id": "frontend_package_devdependencies_testing_library_jest_dom",
@@ -367,13 +358,12 @@
       "community": 8
     },
     {
-      "id": "testing_library_jest_dom",
+      "id": "ref_testing_library_jest_dom",
       "label": "@testing-library/jest-dom",
       "file_type": "concept",
       "source_file": "frontend/package.json",
       "source_location": "L25",
-      "_origin": "ast",
-      "community": 8
+      "_origin": "ast"
     },
     {
       "id": "frontend_package_devdependencies_testing_library_user_event",
@@ -385,13 +375,12 @@
       "community": 10
     },
     {
-      "id": "testing_library_user_event",
+      "id": "ref_testing_library_user_event",
       "label": "@testing-library/user-event",
       "file_type": "concept",
       "source_file": "frontend/package.json",
       "source_location": "L26",
-      "_origin": "ast",
-      "community": 10
+      "_origin": "ast"
     },
     {
       "id": "frontend_package_devdependencies_playwright_test",
@@ -403,13 +392,12 @@
       "community": 7
     },
     {
-      "id": "playwright_test",
+      "id": "ref_playwright_test",
       "label": "@playwright/test",
       "file_type": "concept",
       "source_file": "frontend/package.json",
       "source_location": "L27",
-      "_origin": "ast",
-      "community": 7
+      "_origin": "ast"
     },
     {
       "id": "frontend_playwright_config",
@@ -456,6 +444,33 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0
+    },
+    {
+      "id": "frontend_src_app_app_refreshsession",
+      "label": "refreshSession()",
+      "file_type": "code",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L27",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_src_app_app_onlogin",
+      "label": "onLogin()",
+      "file_type": "code",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L40",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_src_app_app_onlogout",
+      "label": "onLogout()",
+      "file_type": "code",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L46",
+      "_callable": true,
+      "_origin": "ast"
     },
     {
       "id": "frontend_src_app_test",
@@ -656,6 +671,51 @@
       "_origin": "ast"
     },
     {
+      "id": "frontend_src_features_admin_dashboard_dashboard_refresh",
+      "label": "refresh()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L37",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_src_features_admin_dashboard_dashboard_retry",
+      "label": "retry()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L45",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_src_features_admin_dashboard_dashboard_handlesaved",
+      "label": "handleSaved()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L54",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_src_features_admin_dashboard_dashboard_canceledit",
+      "label": "cancelEdit()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L60",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_src_features_admin_dashboard_dashboard_handledelete",
+      "label": "handleDelete()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L65",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
       "id": "frontend_src_features_admin_dashboard_test",
       "label": "Dashboard.test.jsx",
       "file_type": "code",
@@ -724,6 +784,51 @@
       "_origin": "ast"
     },
     {
+      "id": "frontend_src_features_admin_editsubmission_editsubmission_handlekeydown",
+      "label": "handleKeyDown()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/EditSubmission.jsx",
+      "source_location": "L37",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_src_features_admin_editsubmission_editsubmission_containfocus",
+      "label": "containFocus()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/EditSubmission.jsx",
+      "source_location": "L58",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_src_features_admin_editsubmission_editsubmission_handlechange",
+      "label": "handleChange()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/EditSubmission.jsx",
+      "source_location": "L73",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_src_features_admin_editsubmission_editsubmission_handlesubmit",
+      "label": "handleSubmit()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/EditSubmission.jsx",
+      "source_location": "L80",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_src_features_admin_editsubmission_editsubmission_handlebackdrop",
+      "label": "handleBackdrop()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/EditSubmission.jsx",
+      "source_location": "L96",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
       "id": "frontend_src_features_admin_editsubmission_test",
       "label": "EditSubmission.test.jsx",
       "file_type": "code",
@@ -762,6 +867,15 @@
       "file_type": "code",
       "source_file": "frontend/src/features/admin/Login.jsx",
       "source_location": "L13",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_src_features_admin_login_login_handlesubmit",
+      "label": "handleSubmit()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/admin/Login.jsx",
+      "source_location": "L19",
       "_callable": true,
       "_origin": "ast"
     },
@@ -821,6 +935,24 @@
       "file_type": "code",
       "source_file": "frontend/src/features/apply/Apply.jsx",
       "source_location": "L18",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_src_features_apply_apply_apply_handlechange",
+      "label": "handleChange()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/apply/Apply.jsx",
+      "source_location": "L46",
+      "_callable": true,
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_src_features_apply_apply_apply_handlesubmit",
+      "label": "handleSubmit()",
+      "file_type": "code",
+      "source_file": "frontend/src/features/apply/Apply.jsx",
+      "source_location": "L56",
       "_callable": true,
       "_origin": "ast"
     },
@@ -1212,6 +1344,17 @@
   "links": [
     {
       "source": "frontend_e2e_admin_spec",
+      "target": "ref_playwright_test",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/admin.spec.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_e2e_admin_spec",
       "target": "frontend_e2e_admin_spec_storedrecords",
       "relation": "contains",
       "confidence": "EXTRACTED",
@@ -1227,6 +1370,39 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/admin.spec.js",
       "source_location": "L24",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_e2e_admin_spec",
+      "target": "frontend_e2e_admin_spec_storedrecords",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/admin.spec.js",
+      "source_location": "L62",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_e2e_admin_spec",
+      "target": "frontend_e2e_admin_spec_capturestate",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/admin.spec.js",
+      "source_location": "L97",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_e2e_apply_spec",
+      "target": "ref_playwright_test",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/apply.spec.js",
+      "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -1251,12 +1427,67 @@
       "_origin": "ast"
     },
     {
+      "source": "frontend_e2e_apply_spec",
+      "target": "frontend_e2e_apply_spec_captureinvalidform",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/apply.spec.js",
+      "source_location": "L82",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_e2e_apply_spec",
+      "target": "frontend_e2e_apply_spec_fillform",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/apply.spec.js",
+      "source_location": "L99",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_e2e_auth_spec",
+      "target": "ref_playwright_test",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/auth.spec.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
       "source": "frontend_e2e_auth_spec",
       "target": "frontend_e2e_auth_spec_captureautherrors",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/auth.spec.js",
       "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_e2e_auth_spec",
+      "target": "frontend_e2e_auth_spec_captureautherrors",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/auth.spec.js",
+      "source_location": "L19",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_e2e_home_spec",
+      "target": "ref_playwright_test",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/e2e/home.spec.js",
+      "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -1381,8 +1612,8 @@
       "_origin": "ast"
     },
     {
-      "source": "frontend_package_dependencies_react",
-      "target": "react",
+      "source": "frontend_package",
+      "target": "ref_react",
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
@@ -1402,8 +1633,8 @@
       "_origin": "ast"
     },
     {
-      "source": "frontend_package_dependencies_react_dom",
-      "target": "react_dom",
+      "source": "frontend_package",
+      "target": "ref_react_dom",
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
@@ -1423,8 +1654,8 @@
       "_origin": "ast"
     },
     {
-      "source": "frontend_package_dependencies_react_router_dom",
-      "target": "react_router_dom",
+      "source": "frontend_package",
+      "target": "ref_react_router_dom",
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
@@ -1444,8 +1675,8 @@
       "_origin": "ast"
     },
     {
-      "source": "frontend_package_dependencies_prop_types",
-      "target": "prop_types",
+      "source": "frontend_package",
+      "target": "ref_prop_types",
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
@@ -1475,8 +1706,8 @@
       "_origin": "ast"
     },
     {
-      "source": "frontend_package_devdependencies_vitejs_plugin_react",
-      "target": "vitejs_plugin_react",
+      "source": "frontend_package",
+      "target": "ref_vitejs_plugin_react",
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
@@ -1496,8 +1727,8 @@
       "_origin": "ast"
     },
     {
-      "source": "frontend_package_devdependencies_vite",
-      "target": "vite",
+      "source": "frontend_package",
+      "target": "ref_vite",
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
@@ -1517,8 +1748,8 @@
       "_origin": "ast"
     },
     {
-      "source": "frontend_package_devdependencies_vitest",
-      "target": "vitest",
+      "source": "frontend_package",
+      "target": "ref_vitest",
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
@@ -1538,8 +1769,8 @@
       "_origin": "ast"
     },
     {
-      "source": "frontend_package_devdependencies_jsdom",
-      "target": "jsdom",
+      "source": "frontend_package",
+      "target": "ref_jsdom",
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
@@ -1559,8 +1790,8 @@
       "_origin": "ast"
     },
     {
-      "source": "frontend_package_devdependencies_testing_library_react",
-      "target": "testing_library_react",
+      "source": "frontend_package",
+      "target": "ref_testing_library_react",
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
@@ -1580,8 +1811,8 @@
       "_origin": "ast"
     },
     {
-      "source": "frontend_package_devdependencies_testing_library_jest_dom",
-      "target": "testing_library_jest_dom",
+      "source": "frontend_package",
+      "target": "ref_testing_library_jest_dom",
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
@@ -1601,8 +1832,8 @@
       "_origin": "ast"
     },
     {
-      "source": "frontend_package_devdependencies_testing_library_user_event",
-      "target": "testing_library_user_event",
+      "source": "frontend_package",
+      "target": "ref_testing_library_user_event",
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
@@ -1622,14 +1853,36 @@
       "_origin": "ast"
     },
     {
-      "source": "frontend_package_devdependencies_playwright_test",
-      "target": "playwright_test",
+      "source": "frontend_package",
+      "target": "ref_playwright_test",
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "frontend/package.json",
       "source_location": "L27",
       "weight": 1.0,
       "context": "import",
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_playwright_config",
+      "target": "ref_playwright_test",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/playwright.config.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_playwright_config",
+      "target": "ref_vite",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/playwright.config.js",
+      "source_location": "L3",
+      "weight": 1.0,
       "_origin": "ast"
     },
     {
@@ -1649,6 +1902,28 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/playwright.config.js",
       "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app",
+      "target": "ref_react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app",
+      "target": "ref_react_router_dom",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -1762,6 +2037,91 @@
       "_origin": "ast"
     },
     {
+      "source": "frontend_src_app_app",
+      "target": "frontend_src_app_app_refreshsession",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L27",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app_app",
+      "target": "frontend_src_app_app_onlogin",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L40",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app_app",
+      "target": "frontend_src_app_app_onlogout",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L46",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app_app",
+      "target": "frontend_src_app_app_refreshsession",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L30",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app_test",
+      "target": "ref_vitest",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app_test",
+      "target": "ref_testing_library_react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app_test",
+      "target": "ref_testing_library_user_event",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app_test",
+      "target": "ref_react_router_dom",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
       "source": "frontend_src_app_test",
       "target": "frontend_src_app",
       "relation": "imports_from",
@@ -1867,6 +2227,17 @@
       "_origin": "ast"
     },
     {
+      "source": "frontend_src_app_test_renderapp",
+      "target": "frontend_src_app_test_currentroute",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L32",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
       "source": "frontend_src_app_test_expectlogingate",
       "target": "frontend_src_app_test_header",
       "relation": "calls",
@@ -1889,12 +2260,89 @@
       "_origin": "ast"
     },
     {
+      "source": "frontend_src_app_test",
+      "target": "frontend_src_app_test_renderapp",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L65",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app_test",
+      "target": "frontend_src_app_test_header",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L67",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app_test",
+      "target": "frontend_src_app_test_expectlogingate",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L76",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app_test",
+      "target": "frontend_src_app_test_expectdashboard",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L85",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_components_header",
+      "target": "ref_prop_types",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/Header.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_components_header",
+      "target": "ref_react_router_dom",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/Header.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
       "source": "frontend_src_components_header",
       "target": "frontend_src_components_header_header",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/Header.jsx",
       "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_components_submissionfields",
+      "target": "ref_prop_types",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/SubmissionFields.jsx",
+      "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2012,6 +2460,17 @@
     },
     {
       "source": "frontend_src_features_admin_auth_test",
+      "target": "ref_vitest",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/auth.test.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_auth_test",
       "target": "frontend_src_features_admin_auth",
       "relation": "imports_from",
       "context": "import",
@@ -2100,6 +2559,28 @@
     },
     {
       "source": "frontend_src_features_admin_dashboard",
+      "target": "ref_react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_dashboard",
+      "target": "ref_prop_types",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_dashboard",
       "target": "frontend_src_features_apply_submissions",
       "relation": "imports_from",
       "context": "import",
@@ -2164,12 +2645,139 @@
     },
     {
       "source": "frontend_src_features_admin_dashboard_dashboard",
+      "target": "frontend_src_features_admin_dashboard_dashboard_refresh",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L37",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_dashboard_dashboard",
+      "target": "frontend_src_features_admin_dashboard_dashboard_retry",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L45",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_dashboard_dashboard",
+      "target": "frontend_src_features_admin_dashboard_dashboard_handlesaved",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L54",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_dashboard_dashboard",
+      "target": "frontend_src_features_admin_dashboard_dashboard_canceledit",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L60",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_dashboard_dashboard",
+      "target": "frontend_src_features_admin_dashboard_dashboard_handledelete",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L65",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_dashboard_dashboard",
       "target": "frontend_src_features_admin_dashboard_formatdate",
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/Dashboard.jsx",
       "source_location": "L111",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_dashboard_dashboard",
+      "target": "frontend_src_features_admin_dashboard_dashboard_handledelete",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L158",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_dashboard_dashboard_retry",
+      "target": "frontend_src_features_admin_dashboard_dashboard_refresh",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L47",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_dashboard_dashboard_handlesaved",
+      "target": "frontend_src_features_admin_dashboard_dashboard_refresh",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L55",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_dashboard_dashboard_handledelete",
+      "target": "frontend_src_features_admin_dashboard_dashboard_refresh",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L69",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_dashboard_test",
+      "target": "ref_vitest",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_dashboard_test",
+      "target": "ref_testing_library_react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_dashboard_test",
+      "target": "ref_testing_library_user_event",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
+      "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2268,6 +2876,61 @@
       "_origin": "ast"
     },
     {
+      "source": "frontend_src_features_admin_dashboard_test",
+      "target": "frontend_src_features_admin_dashboard_test_seed",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
+      "source_location": "L41",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_dashboard_test",
+      "target": "frontend_src_features_admin_dashboard_test_expectstat",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
+      "source_location": "L44",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_dashboard_test",
+      "target": "frontend_src_features_admin_dashboard_test_openeditor",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.test.jsx",
+      "source_location": "L122",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_editsubmission",
+      "target": "ref_react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_editsubmission",
+      "target": "ref_prop_types",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
       "source": "frontend_src_features_admin_editsubmission",
       "target": "frontend_src_components_submissionfields",
       "relation": "imports_from",
@@ -2340,6 +3003,124 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/EditSubmission.jsx",
       "source_location": "L19",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_editsubmission_editsubmission",
+      "target": "frontend_src_features_admin_editsubmission_editsubmission_handlekeydown",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.jsx",
+      "source_location": "L37",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_editsubmission_editsubmission",
+      "target": "frontend_src_features_admin_editsubmission_editsubmission_containfocus",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.jsx",
+      "source_location": "L58",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_editsubmission_editsubmission",
+      "target": "frontend_src_features_admin_editsubmission_editsubmission_handlechange",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.jsx",
+      "source_location": "L73",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_editsubmission_editsubmission",
+      "target": "frontend_src_features_admin_editsubmission_editsubmission_handlesubmit",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.jsx",
+      "source_location": "L80",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_editsubmission_editsubmission",
+      "target": "frontend_src_features_admin_editsubmission_editsubmission_handlebackdrop",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.jsx",
+      "source_location": "L96",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_editsubmission_editsubmission",
+      "target": "frontend_src_features_admin_editsubmission_editsubmission_handlekeydown",
+      "relation": "indirect_call",
+      "context": "argument",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "frontend/src/features/admin/EditSubmission.jsx",
+      "source_location": "L62",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_editsubmission_editsubmission",
+      "target": "frontend_src_features_admin_editsubmission_editsubmission_containfocus",
+      "relation": "indirect_call",
+      "context": "argument",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "frontend/src/features/admin/EditSubmission.jsx",
+      "source_location": "L63",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_editsubmission_test",
+      "target": "ref_react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.test.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_editsubmission_test",
+      "target": "ref_vitest",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.test.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_editsubmission_test",
+      "target": "ref_testing_library_react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.test.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_editsubmission_test",
+      "target": "ref_testing_library_user_event",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.test.jsx",
+      "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2430,6 +3211,39 @@
       "_origin": "ast"
     },
     {
+      "source": "frontend_src_features_admin_editsubmission_test",
+      "target": "frontend_src_features_admin_editsubmission_test_lifecycleharness",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.test.jsx",
+      "source_location": "L173",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_login",
+      "target": "ref_react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Login.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_login",
+      "target": "ref_prop_types",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Login.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
       "source": "frontend_src_features_admin_login",
       "target": "frontend_src_features_admin_auth",
       "relation": "imports_from",
@@ -2458,6 +3272,60 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/Login.jsx",
       "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_login_login",
+      "target": "frontend_src_features_admin_login_login_handlesubmit",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Login.jsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_login_test",
+      "target": "ref_react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Login.test.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_login_test",
+      "target": "ref_vitest",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Login.test.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_login_test",
+      "target": "ref_testing_library_react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Login.test.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_login_test",
+      "target": "ref_testing_library_user_event",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Login.test.jsx",
+      "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2544,6 +3412,50 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/Login.test.jsx",
       "source_location": "L34",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_login_test",
+      "target": "frontend_src_features_admin_login_test_submitcredentials",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Login.test.jsx",
+      "source_location": "L68",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_login_test",
+      "target": "frontend_src_features_admin_login_test_loginfeedback",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Login.test.jsx",
+      "source_location": "L80",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_apply_apply",
+      "target": "ref_react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_apply_apply",
+      "target": "ref_react_router_dom",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.jsx",
+      "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2651,6 +3563,70 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/Apply.jsx",
       "source_location": "L18",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_apply_apply_apply",
+      "target": "frontend_src_features_apply_apply_apply_handlechange",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.jsx",
+      "source_location": "L46",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_apply_apply_apply",
+      "target": "frontend_src_features_apply_apply_apply_handlesubmit",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.jsx",
+      "source_location": "L56",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_apply_apply_test",
+      "target": "ref_vitest",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.test.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_apply_apply_test",
+      "target": "ref_testing_library_react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.test.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_apply_apply_test",
+      "target": "ref_testing_library_user_event",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.test.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_apply_apply_test",
+      "target": "ref_react_router_dom",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.test.jsx",
+      "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -2847,6 +3823,50 @@
       "_origin": "ast"
     },
     {
+      "source": "frontend_src_features_apply_apply_test",
+      "target": "frontend_src_features_apply_apply_test_renderapply",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.test.jsx",
+      "source_location": "L69",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_apply_apply_test",
+      "target": "frontend_src_features_apply_apply_test_fillform",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.test.jsx",
+      "source_location": "L106",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_apply_apply_test",
+      "target": "frontend_src_features_apply_apply_test_expectcleared",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.test.jsx",
+      "source_location": "L122",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_apply_apply_test",
+      "target": "frontend_src_features_apply_apply_test_setuptimeruser",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.test.jsx",
+      "source_location": "L132",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
       "source": "frontend_src_features_apply_submissions",
       "target": "frontend_src_features_apply_validation",
       "relation": "imports_from",
@@ -3034,6 +4054,17 @@
       "_origin": "ast"
     },
     {
+      "source": "frontend_src_features_apply_submissions_findindex",
+      "target": "frontend_src_features_apply_submissions_findindex",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.js",
+      "source_location": "L144",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
       "source": "frontend_src_features_apply_submissions_updatesubmission",
       "target": "frontend_src_features_apply_submissions_readsubmissions",
       "relation": "calls",
@@ -3107,6 +4138,17 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/submissions.js",
       "source_location": "L193",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_apply_submissions_test",
+      "target": "ref_vitest",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.test.js",
+      "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -3218,6 +4260,17 @@
       "_origin": "ast"
     },
     {
+      "source": "frontend_src_features_apply_submissions_test",
+      "target": "frontend_src_features_apply_submissions_test_persisted",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/submissions.test.js",
+      "source_location": "L40",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
       "source": "frontend_src_features_apply_validation",
       "target": "frontend_src_features_apply_validation_departments",
       "relation": "contains",
@@ -3265,6 +4318,17 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/apply/validation.js",
       "source_location": "L48",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_apply_validation_test",
+      "target": "ref_vitest",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/validation.test.js",
+      "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -3335,6 +4399,17 @@
     },
     {
       "source": "frontend_src_features_home_home",
+      "target": "ref_react_router_dom",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/home/Home.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_home_home",
       "target": "frontend_src_features_home_home_features",
       "relation": "contains",
       "confidence": "EXTRACTED",
@@ -3350,6 +4425,50 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/home/Home.jsx",
       "source_location": "L32",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_home_home_test",
+      "target": "ref_vitest",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/home/Home.test.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_home_home_test",
+      "target": "ref_testing_library_react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/home/Home.test.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_home_home_test",
+      "target": "ref_testing_library_user_event",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/home/Home.test.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_home_home_test",
+      "target": "ref_react_router_dom",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/home/Home.test.jsx",
+      "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -3417,6 +4536,61 @@
       "_origin": "ast"
     },
     {
+      "source": "frontend_src_features_home_home_test_renderat",
+      "target": "frontend_src_features_home_home_test_locationfeedback",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/home/Home.test.jsx",
+      "source_location": "L35",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_home_home_test",
+      "target": "frontend_src_features_home_home_test_renderat",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/home/Home.test.jsx",
+      "source_location": "L49",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_main",
+      "target": "ref_react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/main.jsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_main",
+      "target": "ref_react_dom",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/main.jsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_main",
+      "target": "ref_react_router_dom",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/main.jsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
       "source": "frontend_src_main",
       "target": "frontend_src_app",
       "relation": "imports_from",
@@ -3439,12 +4613,67 @@
       "_origin": "ast"
     },
     {
+      "source": "frontend_src_test_setup",
+      "target": "ref_testing_library_jest_dom",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/test/setup.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_test_setup",
+      "target": "ref_testing_library_react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/test/setup.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_test_setup",
+      "target": "ref_vitest",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/test/setup.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
       "source": "frontend_vercel",
       "target": "frontend_vercel_rewrites",
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/vercel.json",
       "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_vite_config",
+      "target": "ref_vite",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/vite.config.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_vite_config",
+      "target": "ref_vitejs_plugin_react",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/vite.config.js",
+      "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -3591,6 +4820,83 @@
       "_origin": "ast"
     },
     {
+      "source": "frontend_src_app_app",
+      "target": "frontend_src_features_admin_auth_isauthenticated",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app_app",
+      "target": "frontend_src_features_admin_auth_logout",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L47",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_dashboard_dashboard",
+      "target": "frontend_src_features_apply_submissions_readsubmissions",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_dashboard_dashboard",
+      "target": "frontend_src_features_apply_submissions_deletesubmission",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L68",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_editsubmission_editsubmission",
+      "target": "frontend_src_features_apply_validation_validatesubmission",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.jsx",
+      "source_location": "L82",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_editsubmission_editsubmission",
+      "target": "frontend_src_features_apply_submissions_updatesubmission",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/EditSubmission.jsx",
+      "source_location": "L87",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_login_login",
+      "target": "frontend_src_features_admin_auth_login",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/admin/Login.jsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
       "source": "frontend_src_features_admin_login_test_loginfeedback",
       "target": "frontend_src_features_admin_auth_isauthenticated",
       "relation": "calls",
@@ -3598,6 +4904,39 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/features/admin/Login.test.jsx",
       "source_location": "L23",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_apply_apply_apply",
+      "target": "frontend_src_features_apply_submissions_readsubmissions",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.jsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_apply_apply_apply",
+      "target": "frontend_src_features_apply_validation_validatesubmission",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.jsx",
+      "source_location": "L60",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_apply_apply_apply",
+      "target": "frontend_src_features_apply_submissions_createsubmission",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/features/apply/Apply.jsx",
+      "source_location": "L64",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -3625,61 +4964,265 @@
     },
     {
       "source": "frontend_src_app_app",
-      "target": "frontend_src_features_admin_auth_isauthenticated",
-      "relation": "indirect_call",
-      "context": "argument",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
+      "target": "frontend_src_components_header_header",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
       "source_file": "frontend/src/App.jsx",
-      "source_location": "L21",
+      "source_location": "L62",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app_app",
+      "target": "frontend_src_features_home_home_home",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L69",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app_app",
+      "target": "frontend_src_features_apply_apply_apply",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L70",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app_app",
+      "target": "frontend_src_features_admin_dashboard_dashboard",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L74",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app_app",
+      "target": "frontend_src_features_admin_login_login",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L76",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app_app_refreshsession",
+      "target": "frontend_src_features_admin_auth_isauthenticated",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app_app_onlogin",
+      "target": "frontend_src_features_admin_auth_isauthenticated",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L41",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app_app_onlogout",
+      "target": "frontend_src_features_admin_auth_logout",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L47",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_app_test_renderapp",
+      "target": "frontend_src_app_app",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/App.test.jsx",
+      "source_location": "L31",
       "weight": 1.0,
       "_origin": "ast"
     },
     {
       "source": "frontend_src_features_admin_dashboard_dashboard",
+      "target": "frontend_src_features_admin_editsubmission_editsubmission",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L174",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_dashboard_dashboard_refresh",
       "target": "frontend_src_features_apply_submissions_readsubmissions",
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/features/admin/Dashboard.jsx",
-      "source_location": "L29",
+      "source_location": "L38",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_dashboard_dashboard_handledelete",
+      "target": "frontend_src_features_apply_submissions_deletesubmission",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/admin/Dashboard.jsx",
+      "source_location": "L68",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_editsubmission_editsubmission",
+      "target": "frontend_src_components_submissionfields_submissionfields",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/admin/EditSubmission.jsx",
+      "source_location": "L118",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_editsubmission_editsubmission_handlesubmit",
+      "target": "frontend_src_features_apply_validation_validatesubmission",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/admin/EditSubmission.jsx",
+      "source_location": "L82",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_editsubmission_editsubmission_handlesubmit",
+      "target": "frontend_src_features_apply_submissions_updatesubmission",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/admin/EditSubmission.jsx",
+      "source_location": "L87",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_editsubmission_test_lifecycleharness",
+      "target": "frontend_src_features_admin_editsubmission_editsubmission",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/admin/EditSubmission.test.jsx",
+      "source_location": "L24",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_login_login_handlesubmit",
+      "target": "frontend_src_features_admin_auth_login",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/admin/Login.jsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_admin_login_test_loginfeedback",
+      "target": "frontend_src_features_admin_login_login",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/admin/Login.test.jsx",
+      "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast"
     },
     {
       "source": "frontend_src_features_apply_apply_apply",
-      "target": "frontend_src_features_apply_submissions_readsubmissions",
+      "target": "frontend_src_components_submissionfields_submissionfields",
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "frontend/src/features/apply/Apply.jsx",
-      "source_location": "L28",
+      "source_location": "L97",
       "weight": 1.0,
       "_origin": "ast"
     },
     {
-      "source": "frontend_src_features_apply_submissions_validdataset",
-      "target": "frontend_src_features_apply_submissions_record_keys",
-      "relation": "references",
+      "source": "frontend_src_features_apply_apply_apply_handlesubmit",
+      "target": "frontend_src_features_apply_validation_validatesubmission",
+      "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "frontend/src/features/apply/submissions.js",
-      "source_location": "L39",
+      "source_file": "frontend/src/features/apply/Apply.jsx",
+      "source_location": "L60",
       "weight": 1.0,
       "_origin": "ast"
     },
     {
-      "source": "frontend_src_features_apply_validation_validatesubmission",
-      "target": "frontend_src_features_apply_validation_departments",
-      "relation": "references",
+      "source": "frontend_src_features_apply_apply_apply_handlesubmit",
+      "target": "frontend_src_features_apply_submissions_createsubmission",
+      "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "frontend/src/features/apply/validation.js",
-      "source_location": "L59",
+      "source_file": "frontend/src/features/apply/Apply.jsx",
+      "source_location": "L64",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_src_features_apply_apply_test_renderapply",
+      "target": "frontend_src_features_apply_apply_apply",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "frontend/src/features/apply/Apply.test.jsx",
+      "source_location": "L36",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -3713,9 +5256,9 @@
     }
   ],
   "metadata": {
-    "built_at": "2026-10-21T08:38:16.628186+00:00",
+    "built_at": "2026-11-04T12:54:36.162445+00:00",
     "version": "graph_update-v1",
-    "codebase_root": "C:\\artifacts-v2\\T0132PcJVCRTV000421102607305825\\developer",
+    "codebase_root": "C:\\artifacts-v2\\T011GSU2iRpR9000104112612442132\\developer",
     "force": true,
     "files_scanned": 32
   }

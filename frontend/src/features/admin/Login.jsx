@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { login } from './auth';
+import './Login.css';
 
 /**
  * Show credentials and notify the owner only after a successful session write.
@@ -26,7 +27,7 @@ export default function Login({ onLogin }) {
   }
 
   return (
-    <main id="main-content" className="auth-page">
+    <main id="main-content" className="auth-page login-dark">
       <section className="auth-card submission-form" aria-labelledby="login-title">
         <h1 id="login-title">Admin Login</h1>
         <p className="auth-hint">Demo credentials: admin/admin</p>
