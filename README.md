@@ -23,6 +23,12 @@ Configuration defaults are in `frontend/.env.example`; copy to `.env` to customi
 5. Review the counts and table, edit permitted fields or confirm deletion. Email, record identity and submission time cannot be edited.
 6. Logout returns home. Closing the tab clears the demo session; candidate records remain in the same browser origin.
 
+## Login-page dark mode
+
+On Admin Login, use **Dark mode** to toggle the login page’s appearance. The button supports keyboard activation and exposes its pressed state to assistive technology. Light is the default, including on devices set to dark mode. The choice is not saved: leaving login or reloading restores light. Switching themes keeps entered credentials and validation errors intact.
+
+Only the login content changes colors. The shared header, Home, Apply and authenticated dashboard keep their existing appearance. Demo credentials and authentication behavior remain **admin / admin** and browser-only.
+
 ## Important limitations
 
 This is not real authentication or a production recruitment service. Credentials and browser session state are visible and editable by anyone using browser developer tools. Do not collect real sensitive candidate information. No backend, database, central storage, email notifications, accounts or external integrations exist. Records are local to the current browser/origin, can be lost when browser data is cleared, and are not backed up. Corrupt/invalid datasets reset to an empty array; unavailable storage produces visible errors. Browser storage is not safe for concurrent multi-user administration.
