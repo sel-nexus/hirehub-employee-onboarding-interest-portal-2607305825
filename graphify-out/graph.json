@@ -132,6 +132,22 @@
       "_origin": "ast"
     },
     {
+      "id": "frontend_login_preflight",
+      "label": "login-preflight.mjs",
+      "file_type": "code",
+      "source_file": "frontend/login-preflight.mjs",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "frontend_login_preflight_evidence",
+      "label": "evidence",
+      "file_type": "code",
+      "source_file": "frontend/login-preflight.mjs",
+      "source_location": "L9",
+      "_origin": "ast"
+    },
+    {
       "id": "frontend_package",
       "label": "package.json",
       "file_type": "code",
@@ -1600,6 +1616,16 @@
       "confidence": "EXTRACTED",
       "source_file": "frontend/e2e/login-dark-mode.spec.js",
       "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast"
+    },
+    {
+      "source": "frontend_login_preflight",
+      "target": "frontend_login_preflight_evidence",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/login-preflight.mjs",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast"
     },
@@ -5489,10 +5515,10 @@
     }
   ],
   "metadata": {
-    "built_at": "2026-11-04T16:23:06.999516+00:00",
+    "built_at": "2026-11-04T16:41:59.317816+00:00",
     "version": "graph_update-v1",
     "codebase_root": "/data/artifacts-v2/T0132PcJVCRTV000404112616132643/developer",
     "force": true,
-    "files_scanned": 36
+    "files_scanned": 37
   }
 }
