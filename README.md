@@ -23,6 +23,12 @@ Configuration defaults are in `frontend/.env.example`; copy to `.env` to customi
 5. Review the counts and table, edit permitted fields or confirm deletion. Email, record identity and submission time cannot be edited.
 6. Logout returns home. Closing the tab clears the demo session; candidate records remain in the same browser origin.
 
+## Login-page dark mode
+
+On Admin Login, use **Dark mode** to toggle the login page’s appearance. The button supports keyboard activation and exposes its pressed state to assistive technology. Light is the default, including on devices set to dark mode. The choice is not saved: leaving login or reloading restores light. Switching themes keeps entered credentials and validation errors intact.
+
+Only the login content changes colors. The shared header, Home, Apply and authenticated dashboard keep their existing appearance. Demo credentials and authentication behavior remain **admin / admin** and browser-only.
+
 ## Important limitations
 
 This is not real authentication or a production recruitment service. Credentials and browser session state are visible and editable by anyone using browser developer tools. Do not collect real sensitive candidate information. No backend, database, central storage, email notifications, accounts or external integrations exist. Records are local to the current browser/origin, can be lost when browser data is cleared, and are not backed up. Corrupt/invalid datasets reset to an empty array; unavailable storage produces visible errors. Browser storage is not safe for concurrent multi-user administration.
@@ -60,7 +66,9 @@ Scripts invoke Node entrypoints directly for environments where npm bin symlinks
 
 For the Ubuntu 26.04 sandbox, Chromium installation/testing required `PLAYWRIGHT_HOST_PLATFORM_OVERRIDE=ubuntu24.04-x64`; OS browser libraries also had to be installed. This is a sandbox compatibility setting, not required for supported development hosts.
 
-Verified: **304 unit/component tests**, **20 full-suite browser tests**, and **16 capture-producing reruns** after enabling HTML evidence retention. The latter overlap the full suite, not 16 extra distinct tests. Independent test critic passed in round two with score 1.00 and zero high failures. A timer regression was reproduced red before fixing the source and passed afterward.
+Verified for the login dark-mode revision: **312 unit/component tests**, **24 desktop/mobile browser tests**, and production Vite build. Independent test critic passed in round two with score 1.00 and zero high failures. Six light/dark/error desktop/mobile source captures are produced by `node login-preflight.mjs` against a running preview (`BASE_URL` configurable). Browser tests initially timed out on sandbox Node 24; all passed using Node 22.14.0. Use Node 22 for the pinned Playwright 1.50.1 runner.
+
+The inherited lockfile was repaired (49 added platform entries, no existing version changes) and `npm ci --no-bin-links` now succeeds. npm audit reports 10 inherited vulnerabilities (2 moderate, 6 high, 2 critical); package upgrades were not included in this scoped visual revision.
 
 HTML browser report and screenshot/ARIA/HTML/computed-style attachments are in `frontend/playwright-report` after E2E. These generated outputs are not committed. No backend API, backend integration, database persistence or compose test is applicable to this explicitly static product.
 
