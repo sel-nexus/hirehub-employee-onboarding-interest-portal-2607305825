@@ -1,5 +1,6 @@
 /** Persist validated candidate records exclusively in the browser's localStorage. */
 import { validateSubmission } from './validation';
+import { validDemoSubmission, DEMO_DEPARTMENTS } from '../demo/seed';
 
 export const SUBMISSIONS_KEY = 'hirehub_submissions';
 export const DUPLICATE_EMAIL_ERROR = 'This email has already been submitted.';
@@ -30,24 +31,32 @@ function writeSubmissions(records) {
  * @param {*} records
  * @returns {boolean}
  */
-function validDataset(records) {
+export function validDataset(records) {
   if (!Array.isArray(records)) return false;
   const ids = new Set();
-  const emails = new Set();
+  const emails = new Map();
+  const candidateDepartments = new Set();
   return records.every((record) => {
     if (!record || typeof record !== 'object' || Array.isArray(record)) return false;
-    if (Object.keys(record).length !== RECORD_KEYS.length || !RECORD_KEYS.every((key) => typeof record[key] === 'string')) {
+    const demo = validDemoSubmission(record);
+    if (!demo && (Object.keys(record).length !== RECORD_KEYS.length
+      || !RECORD_KEYS.every((key) => typeof record[key] === 'string'))) {
       return false;
     }
     const { values, errors } = validateSubmission(record);
-    if (Object.keys(errors).length || Object.keys(values).some((key) => values[key] !== record[key])) return false;
+    if (!demo && (Object.keys(errors).length || Object.keys(values).some((key) => values[key] !== record[key]))) return false;
     if (!record.id.trim() || record.id !== record.id.trim()) return false;
     const date = new Date(record.submittedAt);
     if (Number.isNaN(date.getTime()) || date.toISOString() !== record.submittedAt) return false;
     const email = record.email.toLowerCase();
-    if (ids.has(record.id) || emails.has(email)) return false;
+    const previous = emails.get(email) || [];
+    if (ids.has(record.id) || previous.some((item) => !demo || !validDemoSubmission(item)
+      || item.userId !== record.userId || item.department === record.department)) return false;
+    const pair = `${record.userId}\u0000${record.department}`;
+    if (demo && candidateDepartments.has(pair)) return false;
+    if (demo) candidateDepartments.add(pair);
     ids.add(record.id);
-    emails.add(email);
+    emails.set(email, [...previous, record]);
     return true;
   });
 }
@@ -163,14 +172,21 @@ export function updateSubmission(id, input) {
   const records = readSubmissions();
   const index = findIndex(records, id);
   const source = input && typeof input === 'object' && !Array.isArray(input) ? input : {};
+  const demo = validDemoSubmission(records[index]);
+  const department = typeof source.department === 'string' ? source.department.trim() : '';
   const values = requireValid({
     fullName: source.fullName,
     mobile: source.mobile,
-    department: source.department,
+    department: demo && DEMO_DEPARTMENTS.includes(department) ? 'Engineering' : source.department,
     email: records[index].email,
   });
+  if (demo) {
+    if (!DEMO_DEPARTMENTS.includes(department)) throw new Error('Please correct the application fields.');
+    values.department = department;
+  }
   const updated = { ...records[index], ...values };
   records[index] = updated;
+  if (!validDataset(records)) throw new Error('This candidate already has an application in that department.');
   writeSubmissions(records);
   return updated;
 }

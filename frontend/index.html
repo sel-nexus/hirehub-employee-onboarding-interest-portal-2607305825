@@ -4,7 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Discover HireHub's culture and express your interest in joining our team." />
-    <meta name="theme-color" content="#2563eb" />
+    <meta name="theme-color" content="#4F46E5" />
+    <script>
+      /** Apply saved or OS appearance before the stylesheet/application paint. */
+      (() => {
+        let saved = null;
+        try {
+          const value = localStorage.getItem('hirehub_theme');
+          saved = value === 'light' || value === 'dark' ? value : null;
+        } catch {
+          saved = null;
+        }
+        let dark = false;
+        try {
+          dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        } catch {
+          dark = false;
+        }
+        const theme = saved || (dark ? 'dark' : 'light');
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>HireHub — Build Your Future With Us</title>
   </head>

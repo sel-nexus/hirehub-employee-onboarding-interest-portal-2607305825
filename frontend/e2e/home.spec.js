@@ -126,7 +126,8 @@ test('header links update the URL and active destination', async ({ page }) => {
     }
   }
   await page.getByRole('link', { name: 'Login', exact: true }).click();
-  await expect(page).toHaveURL(/\/admin$/);
+  await expect(page).toHaveURL(/\/login$/);
+  await expect(page.getByRole('heading', { level: 1, name: 'HireHub Login' })).toBeVisible();
   await page.getByRole('link', { name: 'HireHub', exact: true }).click();
   expect(new URL(page.url()).pathname).toBe('/');
   await expect(page.getByRole('heading', { level: 1, name: 'Build Your Future With Us' })).toBeVisible();
