@@ -1,18 +1,37 @@
-/* Keep the supplied HireHub visual system light-only and responsive. */
+/* Preserve HireHub layout while assigning every appearance role in both themes. */
 :root {
   color-scheme: light;
-  --color-primary: #2563eb;
-  --color-primary-hover: #1d4ed8;
-  --color-primary-light: rgba(37, 99, 235, 0.1);
-  --color-bg: #f1f5f9;
-  --color-card: #ffffff;
-  --color-text: #1e293b;
-  --color-text-muted: #64748b;
-  --color-success: #16a34a;
-  --color-danger: #dc2626;
-  --color-warning: #f59e0b;
-  --color-border: #e2e8f0;
-  --color-row-alt: #f8fafc;
+  --color-primary: #4F46E5;
+  --color-primary-hover: #4338CA;
+  --color-secondary: #6366F1;
+  --color-primary-light: #EEF2FF;
+  --color-bg: #F8FAFC;
+  --color-card: #FFFFFF;
+  --color-text: #1E293B;
+  --color-text-muted: #475569;
+  --color-success: #047857;
+  --color-danger: #BE123C;
+  --color-warning: #92400E;
+  --color-border: #E2E8F0;
+  --color-row-alt: #F1F5F9;
+  --color-on-brand: #FFFFFF;
+  --color-ring: #4F46E5;
+  --color-backdrop: rgba(15, 23, 42, 0.65);
+  --color-hero: linear-gradient(135deg, #4F46E5, #4338CA);
+  --color-applied: #475569;
+  --color-applied-bg: #F1F5F9;
+  --color-review: #92400E;
+  --color-review-bg: #FEF3C7;
+  --color-interview: #075985;
+  --color-interview-bg: #E0F2FE;
+  --color-offer: #065F46;
+  --color-offer-bg: #D1FAE5;
+  --color-archived: #9F1239;
+  --color-archived-bg: #FFE4E6;
+  --shadow-card: 0 2px 8px rgba(15, 23, 42, 0.08);
+  --shadow-interactive: 0 4px 12px rgba(15, 23, 42, 0.14);
+  --shadow-overlay: 0 12px 32px rgba(15, 23, 42, 0.25);
+  --motion-fast: 150ms;
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -44,6 +63,12 @@ a {
 }
 
 button {
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  background: var(--color-card);
   font: inherit;
   cursor: pointer;
 }
@@ -67,14 +92,14 @@ h2 {
 
 a:focus-visible,
 button:focus-visible {
-  outline: 3px solid var(--color-text);
+  outline: 3px solid var(--color-ring);
   outline-offset: 4px;
 }
 
 .site-header a:focus-visible,
 .site-header button:focus-visible,
 .hero a:focus-visible {
-  outline-color: var(--color-card);
+  outline-color: var(--color-on-brand);
 }
 
 .skip-link {
@@ -97,9 +122,9 @@ button:focus-visible {
   top: 0;
   z-index: 10;
   height: 60px;
-  color: var(--color-card);
+  color: var(--color-on-brand);
   background: var(--color-primary);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-card);
 }
 
 .header-inner {
@@ -139,7 +164,7 @@ button:focus-visible {
 
 .nav-link[aria-current='page'],
 .nav-link:hover {
-  border-bottom-color: var(--color-card);
+  border-bottom-color: var(--color-on-brand);
 }
 
 .session-control {
@@ -155,7 +180,7 @@ button:focus-visible {
 }
 
 .login-link {
-  border: 1px solid var(--color-card);
+  border: 1px solid var(--color-on-brand);
 }
 
 .login-link:hover {
@@ -164,7 +189,7 @@ button:focus-visible {
 
 .logout-button {
   border: 1px solid var(--color-danger);
-  color: var(--color-card);
+  color: var(--color-on-brand);
   background: var(--color-danger);
 }
 
@@ -173,8 +198,8 @@ button:focus-visible {
   place-items: center;
   min-height: 400px;
   padding: var(--space-15) var(--space-6);
-  color: var(--color-card);
-  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
+  color: var(--color-on-brand);
+  background: var(--color-hero);
   text-align: center;
 }
 
@@ -202,9 +227,9 @@ button:focus-visible {
   min-width: 220px;
   height: 50px;
   padding: 0 var(--space-6);
-  border: 1px solid var(--color-card);
+  border: 1px solid var(--color-on-brand);
   border-radius: 8px;
-  color: var(--color-card);
+  color: var(--color-on-brand);
   background: var(--color-primary);
   font-size: 16px;
   font-weight: 500;
@@ -234,7 +259,7 @@ button:focus-visible {
   border-top: 4px solid var(--color-primary);
   border-radius: 12px;
   background: var(--color-card);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-card);
   text-align: center;
 }
 
@@ -370,7 +395,7 @@ button:focus-visible {
   padding: var(--space-8);
   border-radius: 12px;
   background: var(--color-card);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-card);
 }
 
 .submission-field {
@@ -444,7 +469,7 @@ button:focus-visible {
   height: 48px;
   border: 0;
   border-radius: 8px;
-  color: var(--color-card);
+  color: var(--color-on-brand);
   background: var(--color-primary);
   font-size: 16px;
   font-weight: 500;
@@ -510,7 +535,7 @@ button:focus-visible {
   border-left: 4px solid var(--color-primary);
   border-radius: 8px;
   background: var(--color-card);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-card);
 }
 
 .stat-departments {
@@ -537,7 +562,7 @@ button:focus-visible {
   overflow: hidden;
   border-radius: 12px;
   background: var(--color-card);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-card);
 }
 
 .table-scroll {
@@ -564,7 +589,7 @@ button:focus-visible {
 }
 
 .submissions-table th {
-  color: var(--color-card);
+  color: var(--color-on-brand);
   background: var(--color-primary);
   font-weight: 700;
   white-space: nowrap;
@@ -579,14 +604,14 @@ button:focus-visible {
 }
 
 .submissions-table tbody tr:hover {
-  background: rgba(37, 99, 235, 0.05);
+  background: var(--color-primary-light);
 }
 
 .department-badge {
   display: inline-block;
   padding: 2px 10px;
   border-radius: 12px;
-  color: var(--color-card);
+  color: var(--color-on-brand);
   background: var(--color-primary);
   font-size: 12px;
   font-weight: 500;
@@ -619,12 +644,12 @@ button:focus-visible {
 }
 
 .row-edit:hover {
-  color: var(--color-card);
+  color: var(--color-on-brand);
   background: var(--color-primary);
 }
 
 .row-delete:hover {
-  color: var(--color-card);
+  color: var(--color-on-brand);
   background: var(--color-danger);
 }
 
@@ -641,7 +666,7 @@ button:focus-visible {
   align-items: center;
   justify-content: center;
   padding: var(--space-5);
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--color-backdrop);
 }
 
 .edit-dialog {
@@ -693,5 +718,319 @@ button:focus-visible {
   .edit-overlay {
     padding: max(var(--space-3), env(safe-area-inset-top)) var(--space-3)
       max(var(--space-3), env(safe-area-inset-bottom));
+  }
+}
+
+/* Repoint roles, including native controls, without changing product composition. */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-primary: #A5B4FC;
+  --color-primary-hover: #C7D2FE;
+  --color-secondary: #6366F1;
+  --color-primary-light: #283457;
+  --color-bg: #0F172A;
+  --color-card: #1E293B;
+  --color-text: #F8FAFC;
+  --color-text-muted: #CBD5E1;
+  --color-success: #6EE7B7;
+  --color-danger: #FDA4AF;
+  --color-warning: #FCD34D;
+  --color-border: #334155;
+  --color-row-alt: #243247;
+  --color-on-brand: #0F172A;
+  --color-ring: #A5B4FC;
+  --color-backdrop: rgba(2, 6, 23, 0.8);
+  --color-hero: linear-gradient(135deg, #1E293B, #283457);
+  --color-applied: #CBD5E1;
+  --color-applied-bg: #334155;
+  --color-review: #FDE68A;
+  --color-review-bg: #451A03;
+  --color-interview: #BAE6FD;
+  --color-interview-bg: #082F49;
+  --color-offer: #A7F3D0;
+  --color-offer-bg: #064E3B;
+  --color-archived: #FECDD3;
+  --color-archived-bg: #4C0519;
+  --shadow-card: 0 2px 8px rgba(2, 6, 23, 0.2);
+  --shadow-interactive: 0 4px 12px rgba(2, 6, 23, 0.35);
+  --shadow-overlay: 0 12px 32px rgba(2, 6, 23, 0.5);
+}
+
+:root[data-theme='dark'] .hero {
+  color: var(--color-text);
+}
+:root[data-theme='dark'] .hero a:focus-visible {
+  outline-color: var(--color-ring);
+}
+
+/* Intrinsic wrapping keeps all legacy navigation labels available on mobile. */
+.site-header {
+  height: auto;
+  min-height: 60px;
+}
+.header-inner {
+  min-height: 60px;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-6);
+  padding-block: var(--space-2);
+}
+.main-nav {
+  flex-wrap: wrap;
+  min-width: 0;
+  gap: var(--space-4);
+}
+.nav-link {
+  min-height: 44px;
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.theme-control {
+  position: relative;
+}
+.theme-toggle {
+  min-height: 44px;
+  border: 1px solid var(--color-on-brand);
+  color: inherit;
+  background: transparent;
+}
+.theme-toggle:hover {
+  background: var(--color-primary-hover);
+}
+.theme-feedback {
+  position: fixed;
+  right: var(--space-4);
+  top: var(--space-15);
+  width: min(280px, calc(100vw - 32px));
+  padding: var(--space-3);
+  border: 1px solid var(--color-danger);
+  border-radius: 8px;
+  color: var(--color-danger);
+  background: var(--color-card);
+  box-shadow: var(--shadow-overlay);
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+/* Native forms include candidate actions and recruiter dialog controls. */
+input, select, textarea {
+  max-width: 100%;
+  min-width: 0;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  background: var(--color-card);
+  font: inherit;
+  font-size: 16px;
+}
+input::placeholder, textarea::placeholder {
+  color: var(--color-text-muted);
+  opacity: 1;
+}
+input:focus-visible, select:focus-visible, textarea:focus-visible,
+summary:focus-visible {
+  outline: 3px solid var(--color-ring);
+  outline-offset: 2px;
+}
+[aria-invalid='true'] {
+  border-color: var(--color-danger);
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+.submission-form > label {
+  display: block;
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-2);
+}
+.submission-form > input, .submission-form > select,
+.submission-form > textarea {
+  width: 100%;
+}
+.submission-form h2 + p {
+  margin-block: var(--space-3) var(--space-5);
+  color: var(--color-text-muted);
+}
+.submission-form button[type='submit'], .submit-button {
+  min-height: 44px;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-primary);
+  border-radius: 8px;
+  color: var(--color-on-brand);
+  background: var(--color-primary);
+  transition: background-color var(--motion-fast) ease-out;
+}
+.submission-form button[type='submit']:hover, .submit-button:hover {
+  background: var(--color-primary-hover);
+}
+.apply-page [role='alert'], .dashboard-page [role='alert'] {
+  color: var(--color-danger);
+}
+
+/* Existing candidate articles remain in their original vertical reading order. */
+.application-card, .apply-container article[aria-label] {
+  margin-block: var(--space-4);
+  padding-inline: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-card);
+}
+.application-details, .apply-container details,
+.apply-container section[aria-label='Interview details'] {
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-row-alt);
+}
+.apply-container details p {
+  margin-block: var(--space-3);
+}
+summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.application-stepper, ol[aria-label='Application progress'] {
+  overflow-x: auto;
+  padding-bottom: var(--space-2) !important;
+}
+.application-stepper li, ol[aria-label='Application progress'] li {
+  min-width: 130px !important;
+  flex-shrink: 0;
+  position: relative;
+}
+ol[aria-label='Application progress'] li[aria-current='step']::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--color-secondary);
+  transform-origin: left;
+  animation: progress-enter 180ms ease-out;
+}
+@keyframes progress-enter {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+/* Elevation signals interactivity only, not a decorative animation on static cards. */
+.feature-card:has(a), .application-card:has(summary),
+.apply-container article:has(summary) {
+  transition: box-shadow var(--motion-fast) ease-out;
+}
+.feature-card:has(a):hover, .application-card:has(summary):hover,
+.apply-container article:has(summary):focus-within {
+  box-shadow: var(--shadow-interactive);
+}
+
+/* Style inherited pipeline controls without inventing new markup or behavior. */
+#recruiter-search {
+  display: block;
+  width: min(100%, 480px);
+  margin-block: var(--space-2) var(--space-4);
+}
+.filter-chips, [aria-label='Department filters'] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+[aria-label='Department filters'] [aria-pressed='true'] {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+.status-badge, select[aria-label^='Status for'] {
+  color: var(--color-applied);
+  background: var(--color-applied-bg);
+  font-weight: 600;
+}
+.status-badge[data-status='review'], select[aria-label^='Status for']:has(option[value='review']:checked) {
+  color: var(--color-review);
+  background: var(--color-review-bg);
+}
+.status-badge[data-status='interview'], select[aria-label^='Status for']:has(option[value='interview']:checked) {
+  color: var(--color-interview);
+  background: var(--color-interview-bg);
+}
+.status-badge[data-status='offer'], select[aria-label^='Status for']:has(option[value='offer']:checked) {
+  color: var(--color-offer);
+  background: var(--color-offer-bg);
+}
+.status-badge[data-status='archived'], select[aria-label^='Status for']:has(option[value='archived']:checked) {
+  color: var(--color-archived);
+  background: var(--color-archived-bg);
+}
+.submissions-table td {
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: top;
+}
+.submissions-table caption {
+  padding: var(--space-3);
+  color: var(--color-text);
+  background: var(--color-card);
+  text-align: left;
+  font-weight: 600;
+}
+.submissions-table td button {
+  margin: var(--space-1);
+}
+.submissions-table td p {
+  margin-top: var(--space-2);
+}
+.edit-dialog {
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  color: var(--color-text);
+  background: var(--color-card);
+  box-shadow: var(--shadow-overlay);
+  overflow-wrap: anywhere;
+}
+.edit-dialog .submission-form {
+  padding: 0;
+  box-shadow: none;
+}
+.edit-dialog h3, .edit-dialog > button, .edit-actions {
+  margin-top: var(--space-5);
+}
+.material-block, .edit-dialog pre {
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  background: var(--color-row-alt);
+  font-family: inherit;
+}
+.edit-dialog a, .apply-container details a {
+  color: var(--color-primary);
+}
+.edit-actions {
+  flex-wrap: wrap;
+}
+@media (max-width: 767px) {
+  .header-inner {
+    gap: var(--space-2);
+  }
+  .header-actions {
+    margin-left: auto;
+  }
+  .main-nav {
+    order: 3;
+    flex-basis: 100%;
+    justify-content: center;
+    gap: var(--space-4);
+  }
+  .edit-dialog {
+    padding: var(--space-4);
+    max-height: calc(100dvh - 32px);
+  }
+  .dashboard-heading {
+    flex-wrap: wrap;
   }
 }

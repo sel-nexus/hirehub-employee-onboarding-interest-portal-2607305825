@@ -198,7 +198,7 @@ describe('App session routing', () => {
     const add = vi.spyOn(window, 'addEventListener');
     const remove = vi.spyOn(window, 'removeEventListener');
     const { unmount } = renderApp('/');
-    const initialListeners = add.mock.calls.filter(([type]) => type === 'storage' || type === 'focus');
+    const initialListeners = add.mock.calls.filter(([type, listener]) => (type === 'storage' || type === 'focus') && listener.name === 'refreshSession');
     expect(initialListeners.map(([type]) => type).sort()).toEqual(['focus', 'storage']);
     await user.click(header().getByRole('link', { name: 'Admin', exact: true }));
     expectLoginGate();
@@ -206,7 +206,7 @@ describe('App session routing', () => {
       expect(remove).toHaveBeenCalledWith(type, listener);
     }
     const replacementListeners = add.mock.calls
-      .filter(([type]) => type === 'storage' || type === 'focus')
+      .filter(([type, listener]) => (type === 'storage' || type === 'focus') && listener.name === 'refreshSession')
       .slice(initialListeners.length);
     expect(replacementListeners.map(([type]) => type).sort()).toEqual(['focus', 'storage']);
     sessionStorage.setItem(AUTH_KEY, 'true');

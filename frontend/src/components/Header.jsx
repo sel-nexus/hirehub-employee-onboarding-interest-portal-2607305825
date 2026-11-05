@@ -1,11 +1,14 @@
 /** Render persistent public navigation with a caller-controlled session action. */
 import PropTypes from 'prop-types';
 import { Link, NavLink } from 'react-router-dom';
+import { ThemeToggle } from '../features/theme/ThemeToggle';
 
 /**
  * Show route links and the appropriate login or logout control.
  * Args:
  *   authenticated: Whether the owning application has an active demo session.
+ *   session: Current role-aware account, if present.
+ *   accessEnabled: Whether role-aware access links are available.
  *   onLogout: The owning application's logout action; storage is not managed here.
  * Returns:
  *   A semantic sticky header with accessible active navigation.
@@ -28,24 +31,33 @@ export function Header({ authenticated = false, session = null, accessEnabled = 
             Admin
           </NavLink>
           {accessEnabled && !session && (
-            <NavLink className="nav-link" to="/register">Register</NavLink>
+            <NavLink className="nav-link" to="/register">
+              Register
+            </NavLink>
           )}
           {session?.role === 'candidate' && (
-            <NavLink className="nav-link" to="/portal">Portal</NavLink>
+            <NavLink className="nav-link" to="/portal">
+              Portal
+            </NavLink>
           )}
           {session?.role === 'admin' && (
-            <NavLink className="nav-link" to="/recruiter">Recruiter</NavLink>
+            <NavLink className="nav-link" to="/recruiter">
+              Recruiter
+            </NavLink>
           )}
         </nav>
-        {authenticated || session ? (
-          <button className="session-control logout-button" type="button" onClick={onLogout}>
-            Logout
-          </button>
-        ) : (
-          <Link className="session-control login-link" to={accessEnabled ? '/login' : '/admin'}>
-            Login
-          </Link>
-        )}
+        <div className="header-actions">
+          <ThemeToggle />
+          {authenticated || session ? (
+            <button className="session-control logout-button" type="button" onClick={onLogout}>
+              Logout
+            </button>
+          ) : (
+            <Link className="session-control login-link" to={accessEnabled ? '/login' : '/admin'}>
+              Login
+            </Link>
+          )}
+        </div>
       </div>
     </header>
   );
