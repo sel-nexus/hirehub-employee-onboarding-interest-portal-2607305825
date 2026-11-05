@@ -9,6 +9,8 @@ import { AUTH_KEY, INVALID_CREDENTIALS, LOGOUT_STORAGE_ERROR } from './features/
 beforeEach(() => {
   sessionStorage.clear();
   localStorage.clear();
+  // These legacy routing cases deliberately exercise an empty submissions dashboard.
+  localStorage.setItem('hirehub_submissions', '[]');
 });
 
 afterEach(() => {

@@ -7,6 +7,8 @@ import Apply from './features/apply/Apply';
 import Login from './features/admin/Login';
 import Dashboard from './features/admin/Dashboard';
 import { isAuthenticated, logout } from './features/admin/auth';
+import { DemoFooter } from './features/demo/DemoFooter';
+import { initializeDemo, DEMO_RESET_EVENT } from './features/demo/storage';
 
 /**
  * Share the persisted demo session across navigation and the admin route.
@@ -20,6 +22,20 @@ export default function App() {
   const { pathname } = useLocation();
   const [authenticated, setAuthenticated] = useState(isAuthenticated);
   const [storageError, setStorageError] = useState('');
+  const [demoFeedback] = useState(initializeDemo);
+  const [demoRevision, setDemoRevision] = useState(0);
+
+  /** Refresh mounted consumers and legacy auth after a successful local reset. */
+  useEffect(() => {
+    /** Remount stale route data without changing the current URL. */
+    function onDemoReset() {
+      setAuthenticated(isAuthenticated());
+      setStorageError('');
+      setDemoRevision((revision) => revision + 1);
+    }
+    window.addEventListener(DEMO_RESET_EVENT, onDemoReset);
+    return () => window.removeEventListener(DEMO_RESET_EVENT, onDemoReset);
+  }, []);
 
   /** Requery storage when navigation or browser session activity changes. */
   useEffect(() => {
@@ -65,7 +81,7 @@ export default function App() {
           {storageError}
         </p>
       )}
-      <Routes>
+      <Routes key={demoRevision}>
         <Route path="/" element={<Home />} />
         <Route path="/apply" element={<Apply />} />
         <Route
@@ -78,6 +94,7 @@ export default function App() {
         />
         <Route path="*" element={<Home />} />
       </Routes>
+      <DemoFooter feedback={demoFeedback} />
     </>
   );
 }
