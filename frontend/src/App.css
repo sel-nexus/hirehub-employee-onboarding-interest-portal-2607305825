@@ -871,6 +871,12 @@ button:disabled {
   color: var(--color-danger);
 }
 
+/* Allow grid children to shrink around the locally scrollable stage stepper. */
+.apply-container, .apply-container > *, .apply-container article {
+  min-width: 0;
+  max-width: 100%;
+}
+
 /* Existing candidate articles remain in their original vertical reading order. */
 .application-card, .apply-container article[aria-label] {
   margin-block: var(--space-4);

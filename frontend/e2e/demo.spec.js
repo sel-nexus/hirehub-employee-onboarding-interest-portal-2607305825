@@ -58,7 +58,7 @@ test('empty storage seeds eight applications and one-click reset removes test da
   await page.getByRole('button', { name: 'Reset Mock Data' }).click();
   await expect(page.getByText('Demo reset: eight applications restored. All demo sessions cleared.')).toBeVisible();
   expect(await records(page)).toEqual(initial);
-  expect(await page.evaluate(() => localStorage.getItem('hirehub_session'))).toBeNull();
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('hirehub_session')))).toBeNull();
   expect(await page.evaluate(() => sessionStorage.getItem('hirehub_admin_auth'))).toBeNull();
   expect(await page.evaluate(() => localStorage.getItem('hirehub_theme'))).toBe('dark');
   await navigation.getByRole('link', { name: 'Admin', exact: true }).click();

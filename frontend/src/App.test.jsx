@@ -2,11 +2,12 @@
 import { beforeEach, afterEach, describe, it, expect, vi } from 'vitest';
 import { act, cleanup, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { StrictMode } from 'react';
 import { MemoryRouter, useLocation } from 'react-router-dom';
 import App from './App';
 import { AUTH_KEY, INVALID_CREDENTIALS, LOGOUT_STORAGE_ERROR } from './features/admin/auth';
 import { authenticate, logout as accessLogout, SESSION_EVENT } from './features/access/accounts';
-import { SESSION_KEY, DEMO_RESET_EVENT, resetMockData } from './features/demo/storage';
+import { SESSION_KEY, DEMO_SUBMISSIONS_KEY, DEMO_RESET_EVENT, resetMockData } from './features/demo/storage';
 
 beforeEach(() => {
   sessionStorage.clear();
@@ -225,6 +226,27 @@ describe('App session routing', () => {
 describe('App persistent access routing', () => {
   afterEach(() => { accessLogout(); });
 
+  it('candidate logout from the StrictMode portal settles on Home and remains gated afterward', async () => {
+    const user = userEvent.setup();
+    authenticate('alex@example.com', 'password123', 'candidate');
+    render(
+      <StrictMode>
+        <MemoryRouter initialEntries={['/portal']} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <App />
+          <CurrentRoute />
+        </MemoryRouter>
+      </StrictMode>,
+    );
+    expect(screen.getByRole('heading', { name: 'Candidate Portal' })).toBeVisible();
+    await user.click(header().getByRole('button', { name: 'Logout', exact: true }));
+    expect(await screen.findByRole('heading', { name: 'Build Your Future With Us' })).toBeVisible();
+    expect(screen.getByLabelText('Current route')).toHaveTextContent(/^\/$/);
+    expect(JSON.parse(localStorage.getItem(SESSION_KEY))).toBeNull();
+    expect(screen.queryByRole('heading', { name: 'HireHub Login' })).not.toBeInTheDocument();
+    act(() => window.dispatchEvent(new Event('focus')));
+    expect(header().queryByRole('link', { name: 'Portal', exact: true })).not.toBeInTheDocument();
+  });
+
   it.each(['/portal', '/recruiter'])('denies anonymous and legacy-only access to %s', (route) => {
     sessionStorage.setItem(AUTH_KEY, 'true');
     renderApp(route);
@@ -319,5 +341,32 @@ describe('App persistent access routing', () => {
     act(() => window.dispatchEvent(new Event('focus')));
     expect(header().queryByRole('link', { name: 'Portal', exact: true })).not.toBeInTheDocument();
     expect(screen.getAllByRole('alert').length).toBeGreaterThan(0);
+  });
+});
+
+describe('App StrictMode initialization', () => {
+  it.each([
+    ['/', '{bad'],
+    ['/admin', '[{}]'],
+  ])('retains recovery feedback and eight applications at %s for corrupt %s', (route, raw) => {
+    localStorage.setItem(DEMO_SUBMISSIONS_KEY, raw);
+    localStorage.setItem('hirehub_users', '[]');
+    if (route === '/admin') sessionStorage.setItem(AUTH_KEY, 'true');
+    const mount = () => render(
+      <StrictMode>
+        <MemoryRouter initialEntries={[route]}>
+          <App />
+        </MemoryRouter>
+      </StrictMode>,
+    );
+    const first = mount();
+    expect(screen.getByText('Corrupted hirehub_submissions data was recovered.')).toHaveAttribute('role', 'alert');
+    expect(JSON.parse(localStorage.getItem(DEMO_SUBMISSIONS_KEY))).toHaveLength(8);
+    expect(JSON.parse(localStorage.getItem('hirehub_users'))).toEqual([]);
+    if (route === '/admin') expect(screen.getAllByRole('row')).toHaveLength(9);
+    first.unmount();
+    mount();
+    expect(screen.queryByText('Corrupted hirehub_submissions data was recovered.')).not.toBeInTheDocument();
+    expect(JSON.parse(localStorage.getItem(DEMO_SUBMISSIONS_KEY))).toHaveLength(8);
   });
 });
