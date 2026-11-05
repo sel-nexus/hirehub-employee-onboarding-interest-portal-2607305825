@@ -11,6 +11,7 @@ import { DemoFooter } from './features/demo/DemoFooter';
 import { initializeDemo, DEMO_RESET_EVENT } from './features/demo/storage';
 import AccessLogin, { AccessLanding } from './features/access/AccessLogin';
 import Register from './features/access/Register';
+import Portal from './features/candidate/Portal';
 import { readSession, logout as accessLogout, SESSION_EVENT } from './features/access/accounts';
 
 /**
@@ -116,7 +117,7 @@ export default function App() {
         <Route path="/register" element={<Register onLogin={refreshAccess} />} />
         <Route path="/admin/login" element={<Login onLogin={onLogin} />} />
         <Route path="/portal" element={accessSession.success && accessSession.data?.role === 'candidate'
-          ? <AccessLanding session={accessSession.data} /> : <Navigate to="/login" replace />} />
+          ? <Portal key={accessSession.data.userId} /> : <Navigate to="/login" replace />} />
         <Route path="/recruiter" element={accessSession.success && accessSession.data?.role === 'admin'
           ? <AccessLanding session={accessSession.data} /> : <Navigate to="/login" replace />} />
         <Route
