@@ -23,7 +23,13 @@ function Field({ name, label, value, onChange, error, options, type = 'text', re
             <option key={option} value={option}>{option}</option>
           ))}
         </select>
-      ) : <input {...props} type={type} autoComplete={name === 'fullName' ? 'name' : name === 'mobile' ? 'tel' : name === 'email' ? 'email' : 'url'} />}
+      ) : (
+        <input
+          {...props}
+          type={type}
+          autoComplete={name === 'fullName' ? 'name' : name === 'mobile' ? 'tel' : name === 'email' ? 'email' : 'url'}
+        />
+      )}
       {error && <p id={`${id}-error`} className="field-error" role="alert">{error}</p>}
     </div>
   );
@@ -110,8 +116,15 @@ export default function Portal() {
                 </div>
               )}
               {portal.data.applications.map((record) => (
-                <article key={record.id} aria-label={`${record.department} application`}
-                  style={{ paddingBlock: 'var(--space-6)', borderBottom: '1px solid var(--color-border)', overflowWrap: 'anywhere' }}>
+                <article
+                  key={record.id}
+                  aria-label={`${record.department} application`}
+                  style={{
+                    paddingBlock: 'var(--space-6)',
+                    borderBottom: '1px solid var(--color-border)',
+                    overflowWrap: 'anywhere',
+                  }}
+                >
                   <h3>{record.department}</h3>
                   <p>Submitted {new Date(record.submittedAt).toLocaleDateString()}</p>
                   <StageStepper status={record.status} />
@@ -135,25 +148,62 @@ export default function Portal() {
                 </article>
               ))}
             </section>
-            <form className="submission-form" aria-label="Contact details" noValidate onSubmit={(event) => submit(event, 'contact')}>
+            <form
+              className="submission-form"
+              aria-label="Contact details"
+              noValidate
+              onSubmit={(event) => submit(event, 'contact')}
+            >
               <h2>Contact details</h2>
               <p>Your login username stays unchanged when you update your email.</p>
               {[['fullName', 'Full name', 'text'], ['email', 'Email', 'email'], ['mobile', 'Mobile', 'tel']].map(([name, label, type]) => (
-                <Field key={name} name={name} label={label} type={type} value={contact[name]} onChange={changeContact}
-                  error={form === 'contact' ? feedback?.fields?.[name] : undefined} required />
+                <Field
+                  key={name}
+                  name={name}
+                  label={label}
+                  type={type}
+                  value={contact[name]}
+                  onChange={changeContact}
+                  error={form === 'contact' ? feedback?.fields?.[name] : undefined}
+                  required
+                />
               ))}
               <button type="submit" disabled={busy}>Save contact details</button>
             </form>
-            <form id="new-application" className="submission-form" aria-label="New application"
-              noValidate onSubmit={(event) => submit(event, 'application')}>
+            <form
+              id="new-application"
+              className="submission-form"
+              aria-label="New application"
+              noValidate
+              onSubmit={(event) => submit(event, 'application')}
+            >
               <h2>New application</h2>
               <p>Apply once per department. Add a portfolio or mock resume. No documents are fetched automatically.</p>
-              <Field name="department" label="Department" value={application.department} options={DEMO_DEPARTMENTS}
-                onChange={changeApplication} error={form === 'application' ? feedback?.fields?.department : undefined} required />
-              <Field name="portfolioUrl" label="Portfolio URL" type="url" value={application.portfolioUrl}
-                onChange={changeApplication} error={form === 'application' ? feedback?.fields?.portfolioUrl : undefined} />
-              <Field name="sampleResume" label="Mock resume" value={application.sampleResume} options={RESUME_PRESETS}
-                onChange={changeApplication} error={form === 'application' ? feedback?.fields?.sampleResume : undefined} />
+              <Field
+                name="department"
+                label="Department"
+                value={application.department}
+                options={DEMO_DEPARTMENTS}
+                onChange={changeApplication}
+                error={form === 'application' ? feedback?.fields?.department : undefined}
+                required
+              />
+              <Field
+                name="portfolioUrl"
+                label="Portfolio URL"
+                type="url"
+                value={application.portfolioUrl}
+                onChange={changeApplication}
+                error={form === 'application' ? feedback?.fields?.portfolioUrl : undefined}
+              />
+              <Field
+                name="sampleResume"
+                label="Mock resume"
+                value={application.sampleResume}
+                options={RESUME_PRESETS}
+                onChange={changeApplication}
+                error={form === 'application' ? feedback?.fields?.sampleResume : undefined}
+              />
               <button type="submit" disabled={busy}>Submit application</button>
             </form>
           </>

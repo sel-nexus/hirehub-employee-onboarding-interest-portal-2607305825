@@ -13,6 +13,12 @@ test.beforeEach(async ({ page }) => {
   page.on('pageerror', (error) => {
     page.applyErrors.push(error.message);
   });
+  // Isolate legacy submissions without replacing reload-created records or corrupt input.
+  await page.addInitScript(() => {
+    if (localStorage.getItem('hirehub_submissions') === null) {
+      localStorage.setItem('hirehub_submissions', '[]');
+    }
+  });
   await page.goto('/');
   await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Apply', exact: true }).click();
   await expect(page).toHaveURL(/\/apply$/);
@@ -88,7 +94,7 @@ test('invalid application shows errors below all fields and preserves invalid in
   await expect(page.getByLabel('Full Name')).toHaveValue('Alice1');
   await expect(page.getByLabel('Email Address')).toHaveValue('not-an-email');
   await expect(page.getByLabel('Mobile Number')).toHaveValue('123456789');
-  expect(await page.evaluate(() => localStorage.getItem('hirehub_submissions'))).toBeNull();
+  expect(await page.evaluate(() => localStorage.getItem('hirehub_submissions'))).toBe('[]');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await captureInvalidForm(page, testInfo, 'malformed-invalid-form');
 });

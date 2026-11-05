@@ -107,9 +107,9 @@ export const DEFAULT_SUBMISSIONS = [
   submission(1, 0, 'Engineering', 'interview'),
   submission(2, 0, 'Product', 'review'),
   submission(3, 0, 'Operations', 'applied'),
-  submission(4, 1, 'Design', 'offer'),
+  submission(4, 1, 'Design', 'review'),
   submission(5, 1, 'Marketing', 'review'),
   submission(6, 1, 'Product', 'archived'),
-  submission(7, 2, 'Marketing', 'applied'),
+  submission(7, 2, 'Marketing', 'offer'),
   submission(8, 2, 'Operations', 'interview'),
 ];

@@ -49,6 +49,77 @@ it('traps Tab in both directions, closes Escape, restores trigger and previous s
   expect(document.body.style.overflow).toBe('auto');
 });
 
+it.each([
+  ['Tab', false, 'first'],
+  ['Shift+Tab', true, 'last'],
+])('recovers background trigger focus with %s without dismissing', async (_, shift, edge) => {
+  const user = userEvent.setup();
+  render(<Harness />);
+  const trigger = screen.getByRole('button', { name: 'Open record' });
+  await user.click(trigger);
+  const before = localStorage.getItem(DEMO_SUBMISSIONS_KEY);
+  trigger.focus();
+  expect(trigger).toHaveFocus();
+
+  await user.tab({ shift });
+
+  const target = edge === 'first'
+    ? screen.getByLabelText('Full name')
+    : screen.getByRole('button', { name: 'Save changes' });
+  expect(target).toHaveFocus();
+  expect(screen.getByRole('dialog')).toBeVisible();
+  expect(document.body.style.overflow).toBe('hidden');
+  expect(localStorage.getItem(DEMO_SUBMISSIONS_KEY)).toBe(before);
+});
+
+it('allows ordinary interior Tab and non-Tab keys without dismissal or persistence', async () => {
+  const user = userEvent.setup();
+  render(<Harness />);
+  await user.click(screen.getByRole('button', { name: 'Open record' }));
+  const before = localStorage.getItem(DEMO_SUBMISSIONS_KEY);
+  expect(screen.getByLabelText('Full name')).toHaveFocus();
+  await user.tab();
+  expect(screen.getByLabelText('Mobile')).toHaveFocus();
+  expect(screen.getByRole('dialog')).toBeVisible();
+  await user.tab();
+  expect(screen.getByLabelText('Department')).toHaveFocus();
+  await user.tab({ shift: true });
+  expect(screen.getByLabelText('Mobile')).toHaveFocus();
+  await user.keyboard('{ArrowLeft}');
+  expect(screen.getByLabelText('Mobile')).toHaveFocus();
+  expect(screen.getByRole('dialog')).toBeVisible();
+  expect(localStorage.getItem(DEMO_SUBMISSIONS_KEY)).toBe(before);
+});
+
+it('cleans up the keyboard listener and scroll lock when the original trigger is detached', async () => {
+  const user = userEvent.setup();
+  const trigger = document.createElement('button');
+  trigger.textContent = 'Detached trigger';
+  document.body.append(trigger);
+  document.body.style.overflow = 'auto';
+  trigger.focus();
+  const view = render(
+    <RecordDialog record={record} mode="edit" onClose={() => view.unmount()} onSaved={() => view.unmount()} />,
+  );
+  try {
+    expect(screen.getByLabelText('Full name')).toHaveFocus();
+    const before = localStorage.getItem(DEMO_SUBMISSIONS_KEY);
+    trigger.remove();
+    expect(trigger.isConnected).toBe(false);
+    await user.keyboard('{Escape}');
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(document.body.style.overflow).toBe('auto');
+    expect(trigger).not.toHaveFocus();
+    const tab = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true });
+    document.dispatchEvent(tab);
+    expect(tab.defaultPrevented).toBe(false);
+    expect(localStorage.getItem(DEMO_SUBMISSIONS_KEY)).toBe(before);
+  } finally {
+    trigger.remove();
+    view.unmount();
+  }
+});
+
 it('ignores clicks inside the dialog and closes on its backdrop without saving', async () => {
   const user = userEvent.setup();
   render(<Harness />);

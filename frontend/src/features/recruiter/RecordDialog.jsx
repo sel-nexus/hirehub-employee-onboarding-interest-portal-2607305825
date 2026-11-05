@@ -76,7 +76,9 @@ export default function RecordDialog({ record, mode, onClose, onSaved }) {
             <p>Local mock materials only; no documents or external content are fetched.</p>
             <h3>Resume</h3>
             <p>{record.sampleResume || 'Legacy interest record — no resume supplied'}</p>
-            <pre style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>{record.resumeText || 'No resume was supplied with this public interest record.'}</pre>
+            <pre style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>
+              {record.resumeText || 'No resume was supplied with this public interest record.'}
+            </pre>
             <h3>Cover letter</h3>
             <p>{record.coverLetterText || 'No cover letter was supplied with this public interest record.'}</p>
             {record.portfolioUrl && safePortfolio(record.portfolioUrl) ? (

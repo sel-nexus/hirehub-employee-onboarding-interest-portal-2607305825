@@ -1,12 +1,12 @@
 /** Present four accessible lifecycle stages with distinct final outcomes. */
 import PropTypes from 'prop-types';
 
-const STAGES = ['Received', 'Screening', 'Interview Scheduled', 'Final Decision'];
+const STAGES = ['Application Received', 'Profile Screening', 'Interview Scheduled', 'Final Decision'];
 const STATES = {
   applied: { step: 0, message: 'Thanks for applying! Your application is received. We will review your profile next.' },
   review: { step: 1, message: 'Your profile is being screened. Keep your contact details up to date while we review.' },
   interview: { step: 2, message: 'Your interview is scheduled. Check the details below and prepare to share your work.' },
-  offer: { step: 3, message: 'Congratulations! You have an offer. Watch your email for the next steps.' },
+  offer: { step: 3, label: 'Offer Extended', message: 'Congratulations! You have an offer. Watch your email for the next steps.' },
   archived: { step: 3, message: 'This application is closed. Thank you for your interest; you can explore another department.' },
 };
 const ICONS = ['M4 5h16v14H4z M4 7l8 6 8-6', 'M10 4a6 6 0 1 0 0 12 6 6 0 0 0 0-12 M15 15l5 5',
@@ -31,7 +31,11 @@ export default function StageStepper({ status }) {
           </li>
         ))}
       </ol>
-      <p role="status">{state.message}</p>
+      <p role="status">
+        {state.label && <strong>{state.label}</strong>}
+        {state.label && ' — '}
+        {state.message}
+      </p>
     </div>
   );
 }

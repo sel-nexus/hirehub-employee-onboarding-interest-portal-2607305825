@@ -75,6 +75,77 @@ describe('recruiter services', () => {
     expect(persisted()).toEqual(before);
   });
 
+  it.each([
+    ['fullName', 'Enter a name using letters and spaces (up to 100 characters).', [
+      ['omitted'], ['undefined', undefined], ['null', null], ['number', 123],
+      ['object', {}], ['array', ['Alex']], ['boolean', true], ['empty', ''],
+      ['whitespace', '   '], ['invalid characters', 'Alex1'], ['over limit', 'A'.repeat(101)],
+    ]],
+    ['mobile', 'Enter a 10-digit mobile number.', [
+      ['omitted'], ['undefined', undefined], ['null', null], ['number', 2025550198],
+      ['object', {}], ['array', ['2025550198']], ['boolean', true], ['empty', ''],
+      ['whitespace', '   '], ['below limit', '202555019'], ['above limit', '20255501988'],
+      ['non-digit', '202555019x'],
+    ]],
+    ['department', 'Choose a valid department.', [
+      ['omitted'], ['undefined', undefined], ['null', null], ['number', 1],
+      ['object', {}], ['array', ['Engineering']], ['boolean', true], ['empty', ''],
+      ['whitespace', '   '], ['unknown', 'Legal'], ['wrong case', 'engineering'],
+      ['padded', ' Engineering '],
+    ]],
+  ].flatMap(([field, error, cases]) => cases.map(([kind, value]) => ({ field, error, kind, value }))))(
+    'rejects $field $kind independently with a specific field error and unchanged whole storage',
+    ({ field, error, kind, value }) => {
+      const details = { ...edits };
+      if (kind === 'omitted') delete details[field];
+      else details[field] = value;
+      const before = persisted();
+      const storageBefore = { ...localStorage };
+
+      const result = editRecord('submission-1', details);
+
+      expect(result.success).toBe(false);
+      expect(result.error).toBe('Check the highlighted fields.');
+      expect(result.fields).toEqual({ [field]: error });
+      expect(persisted()).toEqual(before);
+      expect({ ...localStorage }).toEqual(storageBefore);
+    },
+  );
+
+  it.each([
+    ['minimum name length', { ...edits, fullName: 'A' }],
+    ['maximum name length', { ...edits, fullName: 'A'.repeat(100) }],
+    ['ten digits including leading zeros', { ...edits, mobile: '0000000000' }],
+    ['trimmed contacts', { ...edits, fullName: ' Alex Smith ', mobile: ' 2025550198 ' }],
+  ])('persists valid contact boundary: %s without changing other rows or metadata', (_, details) => {
+    const before = persisted();
+    const users = localStorage.getItem(USERS_KEY);
+    const session = localStorage.getItem(SESSION_KEY);
+    expect(editRecord('submission-1', details).success).toBe(true);
+    expect(persisted()).toEqual([
+      { ...before[0], ...details, fullName: details.fullName.trim(), mobile: details.mobile.trim() },
+      ...before.slice(1),
+    ]);
+    expect(localStorage.getItem(USERS_KEY)).toBe(users);
+    expect(localStorage.getItem(SESSION_KEY)).toBe(session);
+  });
+
+  it.each(DEPARTMENTS)('persists supported department %s while preserving all other records', (department) => {
+    const independentRecord = {
+      ...persisted()[0],
+      id: 'independent-record',
+      userId: 'independent-candidate',
+      email: 'independent-recruiter-test@example.com',
+    };
+    expect(saveDemoSubmissions([...persisted(), independentRecord]).success).toBe(true);
+    const before = persisted();
+    expect(editRecord(independentRecord.id, { ...edits, department }).success).toBe(true);
+    expect(persisted()).toEqual([
+      ...before.slice(0, -1),
+      { ...independentRecord, ...edits, department },
+    ]);
+  });
+
   it('rejects candidate-department collisions and preserves full dataset', () => {
     const before = persisted();
     expect(editRecord('submission-1', { ...edits, department: 'Product' }).error).toMatch(/already/);

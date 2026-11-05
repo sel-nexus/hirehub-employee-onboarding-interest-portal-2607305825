@@ -74,7 +74,14 @@ export default function RecruiterDashboard() {
       <input id="recruiter-search" type="search" value={search} onChange={(event) => filter('search', event.target.value)} />
       <div role="group" aria-label="Department filters">
         {['All', ...DEPARTMENTS].map((item) => (
-          <button key={item} className="cancel-button" aria-pressed={department === item} onClick={() => filter('department', item)}>{item}</button>
+          <button
+            key={item}
+            className="cancel-button"
+            aria-pressed={department === item}
+            onClick={() => filter('department', item)}
+          >
+            {item}
+          </button>
         ))}
       </div>
       {message && (
@@ -115,18 +122,32 @@ export default function RecruiterDashboard() {
                       </td>
                       <td>{record.department}</td>
                       <td>
-                        <select aria-label={`Status for ${record.fullName} ${record.department} ${record.id}`} value={record.status || 'applied'} onChange={(event) => status(record.id, event.target.value)}>
+                        <select
+                          aria-label={`Status for ${record.fullName} ${record.department} ${record.id}`}
+                          value={record.status || 'applied'}
+                          onChange={(event) => status(record.id, event.target.value)}
+                        >
                           {Object.entries(STATUS_LABELS).map(([value, label]) => (
                             <option key={value} value={value}>{label}</option>
                           ))}
                         </select>
                         {record.interview && (
-                          <p>Mock interview schedule: {record.interview.date} at {record.interview.time} ({record.interview.timezone}) — {record.interview.location}</p>
+                          <p>
+                            Mock interview schedule: {record.interview.date} at {record.interview.time}{' '}
+                            ({record.interview.timezone}) — {record.interview.location}
+                          </p>
                         )}
                       </td>
                       <td>
                         {['edit', 'notes', 'materials', 'delete'].map((mode) => (
-                          <button key={mode} className={mode === 'delete' ? 'row-delete cancel-button' : 'row-edit cancel-button'} aria-label={`${mode} ${record.fullName} ${record.department} ${record.id}`} onClick={() => setActive({ record, mode })}>{mode[0].toUpperCase() + mode.slice(1)}</button>
+                          <button
+                            key={mode}
+                            className={mode === 'delete' ? 'row-delete cancel-button' : 'row-edit cancel-button'}
+                            aria-label={`${mode} ${record.fullName} ${record.department} ${record.id}`}
+                            onClick={() => setActive({ record, mode })}
+                          >
+                            {mode[0].toUpperCase() + mode.slice(1)}
+                          </button>
                         ))}
                       </td>
                     </tr>

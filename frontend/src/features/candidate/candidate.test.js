@@ -75,6 +75,39 @@ describe('updateContact', () => {
     expect(updateContact({ ...contacts, ...invalid }).success).toBe(false);
     expect(localStorage.getItem(USERS_KEY)).toBe(before);
   });
+  it.each(['fullName', 'email', 'mobile'])('rejects an omitted %s independently without changing any serialized records', (field) => {
+    const details = { ...contacts };
+    delete details[field];
+    const before = [USERS_KEY, DEMO_SUBMISSIONS_KEY, SESSION_KEY].map((key) => localStorage.getItem(key));
+    const result = updateContact(details);
+    expect(result.success).toBe(false);
+    expect(Object.keys(result.fields)).toEqual([field]);
+    expect([USERS_KEY, DEMO_SUBMISSIONS_KEY, SESSION_KEY].map((key) => localStorage.getItem(key))).toEqual(before);
+  });
+  it.each(['fullName', 'email', 'mobile'].flatMap((field) => (
+    [undefined, null, 123, {}, [], true, '', '   '].map((value) => [field, value])
+  )))('rejects invalid %s value %j independently without changing serialized records', (field, value) => {
+    const before = [USERS_KEY, DEMO_SUBMISSIONS_KEY, SESSION_KEY].map((key) => localStorage.getItem(key));
+    const result = updateContact({ ...contacts, [field]: value });
+    expect(result.success).toBe(false);
+    expect(Object.keys(result.fields)).toEqual([field]);
+    expect([USERS_KEY, DEMO_SUBMISSIONS_KEY, SESSION_KEY].map((key) => localStorage.getItem(key))).toEqual(before);
+  });
+  it.each([
+    ['fullName', 'A'.repeat(100), 'A'.repeat(101)],
+    ['email', `${'a'.repeat(242)}@example.com`, `${'a'.repeat(243)}@example.com`],
+    ['mobile', '0123456789', '01234567890'],
+  ])('accepts the %s maximum and rejects one character over independently', (field, maximum, over) => {
+    expect(updateContact({ ...contacts, [field]: maximum }).success).toBe(true);
+    expect(persisted(USERS_KEY).find((user) => user.id === 'user-alex')[field]).toBe(maximum);
+    expect(persisted(DEMO_SUBMISSIONS_KEY).filter((record) => record.userId === 'user-alex')
+      .every((record) => record[field] === maximum)).toBe(true);
+    const before = [USERS_KEY, DEMO_SUBMISSIONS_KEY, SESSION_KEY].map((key) => localStorage.getItem(key));
+    const result = updateContact({ ...contacts, [field]: over });
+    expect(result.success).toBe(false);
+    expect(Object.keys(result.fields)).toEqual([field]);
+    expect([USERS_KEY, DEMO_SUBMISSIONS_KEY, SESSION_KEY].map((key) => localStorage.getItem(key))).toEqual(before);
+  });
   it('rejects another account email without changing ownership', () => {
     expect(updateContact({ ...contacts, email: 'jordan@example.com' }).fields.email).toBeTruthy();
     expect(persisted(USERS_KEY)[1].fullName).toBe('Jordan Lee');
@@ -139,8 +172,71 @@ describe('createApplication', () => {
     });
   it.each([{}, { department: 'Other', sampleResume: RESUME_PRESETS[0] }, { department: 'Design', sampleResume: 'unknown' }])(
     'rejects missing or invalid material/department %j', (details) => {
+      const before = localStorage.getItem(DEMO_SUBMISSIONS_KEY);
       expect(createApplication(details).success).toBe(false);
+      expect(localStorage.getItem(DEMO_SUBMISSIONS_KEY)).toBe(before);
     });
+  it.each([undefined, null, '', '   ', 123, {}, [], true, 'Other'])(
+    'requires a valid department even with valid materials: %j', (department) => {
+      const before = [USERS_KEY, DEMO_SUBMISSIONS_KEY, SESSION_KEY].map((key) => localStorage.getItem(key));
+      const result = createApplication({ department, sampleResume: RESUME_PRESETS[0] });
+      expect(result.success).toBe(false);
+      expect(Object.keys(result.fields)).toEqual(['department']);
+      expect([USERS_KEY, DEMO_SUBMISSIONS_KEY, SESSION_KEY].map((key) => localStorage.getItem(key))).toEqual(before);
+    });
+  it('requires an omitted department independently of valid materials', () => {
+    const before = localStorage.getItem(DEMO_SUBMISSIONS_KEY);
+    expect(createApplication({ sampleResume: RESUME_PRESETS[0] }).fields).toEqual({ department: expect.any(String) });
+    expect(localStorage.getItem(DEMO_SUBMISSIONS_KEY)).toBe(before);
+  });
+  it.each([{}, { portfolioUrl: undefined, sampleResume: undefined }, { portfolioUrl: null, sampleResume: null },
+    { portfolioUrl: '', sampleResume: '' }, { portfolioUrl: '   ' }])(
+    'requires at least one material with a valid department: %j', (materials) => {
+      const before = localStorage.getItem(DEMO_SUBMISSIONS_KEY);
+      const result = createApplication({ department: 'Design', ...materials });
+      expect(result.success).toBe(false);
+      expect(Object.keys(result.fields)).toEqual(['sampleResume']);
+      expect(localStorage.getItem(DEMO_SUBMISSIONS_KEY)).toBe(before);
+    });
+  it.each([undefined, null, '', '   '])('allows an optional empty portfolio %j with a valid resume', (portfolioUrl) => {
+    expect(createApplication({ department: 'Design', sampleResume: RESUME_PRESETS[0], portfolioUrl }).success).toBe(true);
+    expect(persisted(DEMO_SUBMISSIONS_KEY).at(-1).portfolioUrl).toBe('');
+  });
+  it.each([undefined, null, ''])('allows an optional empty resume %j with a valid portfolio', (sampleResume) => {
+    expect(createApplication({ department: 'Design', portfolioUrl: 'https://example.com/work', sampleResume }).success).toBe(true);
+    expect(persisted(DEMO_SUBMISSIONS_KEY).at(-1).sampleResume).toBe('Portfolio supplied; no mock resume selected');
+  });
+  it.each([false, 0])('rejects falsy non-string resume %j with a valid portfolio without changing serialized records', (sampleResume) => {
+    const before = [USERS_KEY, DEMO_SUBMISSIONS_KEY, SESSION_KEY].map((key) => localStorage.getItem(key));
+    const result = createApplication({ department: 'Design', portfolioUrl: 'https://example.com/work', sampleResume });
+    expect(result.success).toBe(false);
+    expect(result.fields).toEqual({ sampleResume: 'Choose a supplied mock resume.' });
+    expect([USERS_KEY, DEMO_SUBMISSIONS_KEY, SESSION_KEY].map((key) => localStorage.getItem(key))).toEqual(before);
+  });
+  it.each([
+    ...[123, {}, [], true].map((value) => ['portfolioUrl', value]),
+    ...[123, {}, [], true, '   ', 'unknown'].map((value) => ['sampleResume', value]),
+  ])('rejects invalid optional %s value %j despite another valid material', (field, value) => {
+    const before = [USERS_KEY, DEMO_SUBMISSIONS_KEY, SESSION_KEY].map((key) => localStorage.getItem(key));
+    const result = createApplication({ department: 'Design', portfolioUrl: 'https://example.com/work',
+      sampleResume: RESUME_PRESETS[0], [field]: value });
+    expect(result.success).toBe(false);
+    expect(Object.keys(result.fields)).toEqual([field]);
+    expect([USERS_KEY, DEMO_SUBMISSIONS_KEY, SESSION_KEY].map((key) => localStorage.getItem(key))).toEqual(before);
+  });
+  it('accepts a 2000-character URL and rejects 2001 without weakening storage validation', () => {
+    const prefix = 'https://example.com/';
+    const portfolioUrl = prefix + 'a'.repeat(2000 - prefix.length);
+    expect(portfolioUrl).toHaveLength(2000);
+    expect(createApplication({ department: 'Design', portfolioUrl }).success).toBe(true);
+    expect(persisted(DEMO_SUBMISSIONS_KEY).at(-1).portfolioUrl).toBe(portfolioUrl);
+    expect(readDemoSubmissions().success).toBe(true);
+    const before = [USERS_KEY, DEMO_SUBMISSIONS_KEY, SESSION_KEY].map((key) => localStorage.getItem(key));
+    const result = createApplication({ department: 'Marketing', portfolioUrl: `${portfolioUrl}a`, sampleResume: RESUME_PRESETS[0] });
+    expect(result.success).toBe(false);
+    expect(Object.keys(result.fields)).toEqual(['portfolioUrl']);
+    expect([USERS_KEY, DEMO_SUBMISSIONS_KEY, SESSION_KEY].map((key) => localStorage.getItem(key))).toEqual(before);
+  });
   it('persists and re-reads a safe portfolio-only application without inventing a resume', () => {
     const before = persisted(DEMO_SUBMISSIONS_KEY);
     const result = createApplication({ department: 'Design', portfolioUrl: 'https://example.com/work' });

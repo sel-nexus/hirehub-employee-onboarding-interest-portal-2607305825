@@ -15,8 +15,14 @@ function captureAuthErrors(page) {
 }
 
 /** Capture failures before the original page's initial navigation. */
-test.beforeEach(async ({ page }) => {
+test.beforeEach(async ({ page, context }) => {
   captureAuthErrors(page);
+  // Isolate legacy submissions without replacing reload-created records or corrupt input.
+  await context.addInitScript(() => {
+    if (localStorage.getItem('hirehub_submissions') === null) {
+      localStorage.setItem('hirehub_submissions', '[]');
+    }
+  });
   await page.goto('/');
 });
 

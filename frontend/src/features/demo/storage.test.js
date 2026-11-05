@@ -37,14 +37,27 @@ describe('demo persistence', () => {
       .toEqual(['alex@example.com', 'jordan@example.com', 'taylor@example.com']);
     expect(DEFAULT_USERS.every((user) => Object.keys(user).sort().join(',')
       === ['id', 'role', 'username', 'password', 'displayName', 'fullName', 'email', 'mobile'].sort().join(','))).toBe(true);
-    expect(DEFAULT_SUBMISSIONS.map((record) => record.status))
-      .toEqual(['interview', 'review', 'applied', 'offer', 'review', 'archived', 'applied', 'interview']);
+    const records = persisted(DEMO_SUBMISSIONS_KEY);
+    expect(new Set(records.map((record) => `${record.userId}:${record.department}`)).size).toBe(8);
     expect(new Set(DEFAULT_SUBMISSIONS.map((record) => record.sampleResume)))
       .toEqual(new Set(['Full-Stack Developer Resume (Sample)', 'UI/UX Case Study']));
     expect(DEFAULT_USERS.slice(0, 3).map((user) => user.password)).toEqual(Array(3).fill('password123'));
     expect(DEFAULT_USERS[3]).toMatchObject({ username: 'admin', password: 'admin', role: 'admin' });
     expect(DEFAULT_USERS[4]).toMatchObject({ username: 'recruiter@hirehub.demo', password: 'admin123', role: 'admin' });
     expect(readSession().data).toBeNull();
+  });
+
+  it.each([
+    ['alex@example.com', 'Engineering', 'interview'],
+    ['jordan@example.com', 'Design', 'review'],
+    ['taylor@example.com', 'Marketing', 'offer'],
+  ])('seeds the required %s account status independently of record order', (username, department, status) => {
+    initializeDemo();
+    const account = persisted(USERS_KEY).find((user) => user.username === username);
+    expect(account).toMatchObject({ role: 'candidate', password: 'password123' });
+    const owned = persisted(DEMO_SUBMISSIONS_KEY).filter((record) => record.userId === account.id);
+    expect(owned.find((record) => record.department === department)).toMatchObject({ status, email: username });
+    if (username === 'jordan@example.com') expect(owned.some((record) => record.status === 'offer')).toBe(false);
   });
 
   it('preserves intentional empty arrays and returns fresh reads', () => {

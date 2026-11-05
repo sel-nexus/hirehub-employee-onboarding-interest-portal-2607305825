@@ -128,18 +128,47 @@ it.each(['preset', 'portfolio-only'])('shows persistence failures and preserves 
 it.each(['storage', CANDIDATE_EVENT, 'focus'])('refreshes changed lifecycle data on %s without render loops', (event) => {
   mount();
   const records = readDemoSubmissions().data;
-  records[0] = { ...records[0], status: 'offer' };
+  const index = records.findIndex((record) => record.userId === 'user-alex' && record.department === 'Engineering');
+  records[index] = { ...records[index], status: 'offer' };
   saveDemoSubmissions(records);
   act(() => window.dispatchEvent(new Event(event)));
-  expect(within(screen.getByRole('article', { name: 'Engineering application' })).getByText(/Congratulations!/)).toBeTruthy();
+  const application = within(screen.getByRole('article', { name: 'Engineering application' }));
+  expect(application.getByText('Offer Extended', { exact: true })).toBeTruthy();
+  ['Application Received', 'Profile Screening', 'Interview Scheduled', 'Final Decision'].forEach((label) => {
+    expect(application.getByText(label, { exact: true })).toBeTruthy();
+  });
+  expect(within(application.getByRole('listitem', { current: 'step' })).getByText('Final Decision', { exact: true })).toBeTruthy();
 });
 
-it('renders distinct closed and offer outcomes for another signed-in candidate', () => {
+it('shows Alex an explicit extended offer on a later portal visit', () => {
+  const view = mount();
+  view.unmount();
+  const records = readDemoSubmissions().data.map((record) => (
+    record.userId === 'user-alex' && record.department === 'Engineering' ? { ...record, status: 'offer' } : record
+  ));
+  expect(saveDemoSubmissions(records).success).toBe(true);
+  mount();
+  const application = within(screen.getByRole('article', { name: 'Engineering application' }));
+  expect(application.getByText('Offer Extended', { exact: true })).toBeTruthy();
+  expect(within(application.getByRole('listitem', { current: 'step' })).getByText('Final Decision', { exact: true })).toBeTruthy();
+});
+
+it('renders Jordan in screening with a distinct closed outcome and no offer', () => {
   authenticate('jordan@example.com', 'password123', 'candidate');
   mount();
-  expect(screen.getByText(/Congratulations!/)).toBeTruthy();
+  const application = within(screen.getByRole('article', { name: 'Design application' }));
+  expect(within(application.getByRole('listitem', { current: 'step' })).getByText('Profile Screening', { exact: true })).toBeTruthy();
+  expect(screen.queryByText('Offer Extended', { exact: true })).toBeNull();
   expect(screen.getByText(/This application is closed/)).toBeTruthy();
   expect(screen.queryByRole('article', { name: 'Engineering application' })).toBeNull();
+});
+
+it('renders Taylor with the required extended offer', () => {
+  authenticate('taylor@example.com', 'password123', 'candidate');
+  mount();
+  const application = within(screen.getByRole('article', { name: 'Marketing application' }));
+  expect(application.getByText('Offer Extended', { exact: true })).toBeTruthy();
+  expect(within(application.getByRole('listitem', { current: 'step' })).getByText('Final Decision', { exact: true })).toBeTruthy();
 });
 
 it('provides readable unauthorized state and retry after login', async () => {

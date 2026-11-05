@@ -111,13 +111,15 @@ export function createApplication(details = {}) {
   const fields = {};
   const department = details?.department;
   const portfolioUrl = typeof details?.portfolioUrl === 'string' ? details.portfolioUrl.trim() : '';
-  const sampleResume = details?.sampleResume || '';
+  const sampleResume = details?.sampleResume ?? '';
   if (!DEMO_DEPARTMENTS.includes(department)) fields.department = 'Choose a valid department.';
   if ((details?.portfolioUrl != null && typeof details.portfolioUrl !== 'string') || !safePortfolio(portfolioUrl)) {
     fields.portfolioUrl = 'Use a complete HTTP(S) URL without username or password.';
   }
-  if (sampleResume && !RESUME_PRESETS.includes(sampleResume)) fields.sampleResume = 'Choose a supplied mock resume.';
-  if (!portfolioUrl && !sampleResume) fields.sampleResume = 'Add a portfolio URL or choose a mock resume.';
+  if (typeof sampleResume !== 'string' || (sampleResume !== '' && !RESUME_PRESETS.includes(sampleResume))) {
+    fields.sampleResume = 'Choose a supplied mock resume.';
+  }
+  if (!portfolioUrl && sampleResume === '') fields.sampleResume = 'Add a portfolio URL or choose a mock resume.';
   if (Object.keys(fields).length) return failure('Check the highlighted fields.', state.warning, fields);
   const { user, records } = state.data;
   if (records.some((record) => record.userId === user.id && record.department === department)) {

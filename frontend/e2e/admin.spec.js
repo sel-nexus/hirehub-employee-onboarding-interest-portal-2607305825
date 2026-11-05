@@ -1,5 +1,6 @@
 /** Specify the real candidate-to-admin CRUD journey on the existing desktop and mobile projects. */
 import { test, expect } from '@playwright/test';
+import { DEFAULT_SUBMISSIONS, validDemoSubmission } from '../src/features/demo/seed.js';
 
 /** Capture every browser failure before the first navigation. */
 test.beforeEach(async ({ page }) => {
@@ -8,6 +9,12 @@ test.beforeEach(async ({ page }) => {
     if (message.type() === 'error') page.adminErrors.push(message.text());
   });
   page.on('pageerror', (error) => page.adminErrors.push(error.message));
+  // Isolate legacy submissions without replacing reload-created records or corrupt input.
+  await page.addInitScript(() => {
+    if (localStorage.getItem('hirehub_submissions') === null) {
+      localStorage.setItem('hirehub_submissions', '[]');
+    }
+  });
 });
 
 /** Fail each journey on console errors and uncaught page exceptions. */
@@ -15,7 +22,7 @@ test.afterEach(async ({ page }) => {
   expect(page.adminErrors, 'Browser console and uncaught page errors').toEqual([]);
 });
 
-/** Requery the actual application dataset rather than mocking or seeding it. */
+/** Requery the actual application dataset after fixture setup and real mutations. */
 async function storedRecords(page) {
   return page.evaluate(() => JSON.parse(localStorage.getItem('hirehub_submissions')));
 }
@@ -197,10 +204,30 @@ test('admin dashboard resets corrupted submissions storage without browser error
   await page.reload();
   await expect(page).toHaveURL(/\/admin$/);
   await expect(page.getByRole('heading', { name: 'Submissions Dashboard' })).toBeVisible();
-  await expect(page.getByText('No submissions yet.', { exact: true })).toBeVisible();
-  await expect(stats.locator('.stat-total dd')).toHaveText('0');
-  await expect(stats.locator('.stat-departments dd')).toHaveText('0');
-  await expect(stats.locator('.stat-latest dd')).toHaveText('N/A');
-  expect(await storedRecords(page)).toEqual([]);
-  expect(await page.evaluate(() => localStorage.getItem('hirehub_submissions'))).toBe('[]');
+  // Full-App initialization recovers corrupt data to the complete curated demo dataset.
+  const recovered = await storedRecords(page);
+  expect(recovered).toHaveLength(8);
+  expect(recovered).toEqual(DEFAULT_SUBMISSIONS);
+  for (const record of recovered) expect(validDemoSubmission(record)).toBe(true);
+  expect(await page.evaluate(() => localStorage.getItem('hirehub_submissions'))).toBe(JSON.stringify(DEFAULT_SUBMISSIONS));
+  await expect(page.getByText('No submissions yet.', { exact: true })).toHaveCount(0);
+  await expect(stats.locator('.stat-total dd')).toHaveText('8');
+  await expect(stats.locator('.stat-departments dd')).toHaveText('5');
+  const latestDate = new Date('2026-03-09T12:00:00.000Z').toLocaleDateString('en-US', {
+    month: 'short', day: 'numeric', year: 'numeric',
+  });
+  await expect(stats.locator('.stat-latest dd')).toHaveText(latestDate);
+  const rows = page.getByRole('table', { name: 'Submissions', exact: true }).locator('tbody tr');
+  await expect(rows).toHaveCount(8);
+  for (const [index, record] of recovered.entries()) {
+    const formattedDate = new Date(record.submittedAt).toLocaleDateString('en-US', {
+      month: 'short', day: 'numeric', year: 'numeric',
+    });
+    for (const value of [String(index + 1), record.fullName, record.email, record.mobile, record.department, formattedDate]) {
+      await expect(rows.nth(index).getByRole('cell', { name: value, exact: true })).toBeVisible();
+    }
+  }
+  await expect(page.getByRole('contentinfo', { name: 'Demo controls' }).getByRole('alert'))
+    .toHaveText('Corrupted hirehub_submissions data was recovered.');
+  await expect(page.getByRole('contentinfo', { name: 'Demo controls' }).getByRole('alert')).toBeVisible();
 });

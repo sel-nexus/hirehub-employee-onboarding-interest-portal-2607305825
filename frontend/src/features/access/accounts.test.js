@@ -89,6 +89,95 @@ describe('demo accounts', () => {
     expect(register({ ...details, password: '12345678', fullName: 'A'.repeat(100) }).success).toBe(true);
   });
 
+  describe('independent required-field validation', () => {
+    const errors = {
+      fullName: 'Enter a name using letters and spaces (up to 100 characters).',
+      email: 'Enter a valid email address (up to 254 characters).',
+      mobile: 'Enter a 10-digit mobile number.',
+      password: 'Use 8–200 characters without leading or trailing spaces.',
+    };
+    const invalidValues = [
+      ['deleted', undefined], ['undefined', undefined], ['null', null],
+      ['number', 42], ['boolean', true], ['object', {}], ['array', []],
+      ['empty', ''], ['whitespace-only', ' \t\n '],
+    ];
+    const registrationCases = Object.keys(errors).flatMap((field) =>
+      invalidValues.map(([kind, value]) => [field, kind, value]));
+    const contactCases = registrationCases.filter(([field]) => field !== 'password');
+    const rejectedBoundaries = [
+      ['fullName', 'over maximum (101)', 'A'.repeat(101)],
+      ['email', 'over maximum (255)', 'a'.repeat(249) + '@b.com'],
+      ['mobile', 'below exact length (9)', '123456789'],
+      ['mobile', 'above exact length (11)', '12345678901'],
+      ['password', 'below minimum (7)', 'a'.repeat(7)],
+      ['password', 'over maximum (201)', 'a'.repeat(201)],
+    ];
+    const acceptedBoundaries = [
+      ['fullName', 'minimum nonblank (1)', 'A'],
+      ['fullName', 'maximum (100)', 'A'.repeat(100)],
+      ['email', 'maximum (254)', 'a'.repeat(248) + '@b.com'],
+      ['mobile', 'exact length (10)', '1234567890'],
+      ['password', 'minimum (8)', 'a'.repeat(8)],
+      ['password', 'maximum (200)', 'a'.repeat(200)],
+    ];
+
+    it.each([...registrationCases, ...rejectedBoundaries])(
+      'rejects registration %s with %s, preserving users and active session', (field, kind, value) => {
+        expect(authenticate('admin', 'admin', 'admin').success).toBe(true);
+        const usersBefore = localStorage.getItem(USERS_KEY);
+        const sessionBefore = localStorage.getItem(SESSION_KEY);
+        const input = { ...details, [field]: value };
+        if (kind === 'deleted') delete input[field];
+
+        const result = register(input);
+
+        expect(result).toMatchObject({ success: false, data: null, error: 'Check the highlighted fields.' });
+        expect(result.fields).toEqual({ [field]: errors[field] });
+        expect(localStorage.getItem(USERS_KEY)).toBe(usersBefore);
+        expect(localStorage.getItem(SESSION_KEY)).toBe(sessionBefore);
+      });
+
+    it.each([...contactCases, ...rejectedBoundaries.filter(([field]) => field !== 'password')])(
+      'rejects contact %s with %s, preserving users and active session', (field, kind, value) => {
+        expect(authenticate('admin', 'admin', 'admin').success).toBe(true);
+        const usersBefore = localStorage.getItem(USERS_KEY);
+        const sessionBefore = localStorage.getItem(SESSION_KEY);
+        const { password, ...contact } = details;
+        const input = { ...contact, [field]: value };
+        if (kind === 'deleted') delete input[field];
+
+        expect(validateContact(input)).toEqual({ [field]: errors[field] });
+        expect(localStorage.getItem(USERS_KEY)).toBe(usersBefore);
+        expect(localStorage.getItem(SESSION_KEY)).toBe(sessionBefore);
+      });
+
+    it.each(acceptedBoundaries)(
+      'accepts registration %s at %s with all other fields valid', (field, boundary, value) => {
+        const input = { ...details, [field]: value };
+
+        expect(register(input).success).toBe(true);
+
+        const users = JSON.parse(localStorage.getItem(USERS_KEY));
+        const user = users.find((item) => item.email === input.email);
+        expect(user).toMatchObject({ ...input, role: 'candidate', username: input.email });
+        expect(JSON.parse(localStorage.getItem(SESSION_KEY))).toMatchObject({
+          userId: user.id, role: 'candidate', displayName: input.fullName,
+        });
+      });
+
+    it.each(acceptedBoundaries.filter(([field]) => field !== 'password'))(
+      'accepts contact %s at %s without changing users or session', (field, boundary, value) => {
+        expect(authenticate('admin', 'admin', 'admin').success).toBe(true);
+        const usersBefore = localStorage.getItem(USERS_KEY);
+        const sessionBefore = localStorage.getItem(SESSION_KEY);
+        const { password, ...contact } = details;
+
+        expect(validateContact({ ...contact, [field]: value })).toEqual({});
+        expect(localStorage.getItem(USERS_KEY)).toBe(usersBefore);
+        expect(localStorage.getItem(SESSION_KEY)).toBe(sessionBefore);
+      });
+  });
+
   it.each([{}, [], { userId: 'user-alex', role: 'admin', displayName: 'Alex Morgan', loginTimestamp: new Date().toISOString() },
     { userId: 'missing', role: 'candidate', displayName: 'Alex Morgan', loginTimestamp: new Date().toISOString() },
     { userId: 'user-alex', role: 'candidate', displayName: 'Other', loginTimestamp: new Date().toISOString() },
