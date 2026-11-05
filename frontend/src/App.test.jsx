@@ -5,6 +5,8 @@ import userEvent from '@testing-library/user-event';
 import { MemoryRouter, useLocation } from 'react-router-dom';
 import App from './App';
 import { AUTH_KEY, INVALID_CREDENTIALS, LOGOUT_STORAGE_ERROR } from './features/admin/auth';
+import { authenticate, logout as accessLogout, SESSION_EVENT } from './features/access/accounts';
+import { SESSION_KEY, DEMO_RESET_EVENT, resetMockData } from './features/demo/storage';
 
 beforeEach(() => {
   sessionStorage.clear();
@@ -216,5 +218,106 @@ describe('App session routing', () => {
     }
     expect(screen.queryByRole('banner')).not.toBeInTheDocument();
     expect(screen.queryByRole('main')).not.toBeInTheDocument();
+  });
+});
+
+
+describe('App persistent access routing', () => {
+  afterEach(() => { accessLogout(); });
+
+  it.each(['/portal', '/recruiter'])('denies anonymous and legacy-only access to %s', (route) => {
+    sessionStorage.setItem(AUTH_KEY, 'true');
+    renderApp(route);
+    expect(screen.getByRole('heading', { name: 'HireHub Login' })).toBeVisible();
+    expect(screen.getByLabelText('Current route')).toHaveTextContent('/login');
+  });
+
+  it.each([
+    ['candidate', 'alex@example.com', 'password123', '/portal', 'Candidate Portal', 'Portal'],
+    ['admin', 'admin', 'admin', '/recruiter', 'Recruiter Access', 'Recruiter'],
+  ])('restores %s from persisted identity, navigates and logs out', async (role, username, password, route, heading, link) => {
+    const user = userEvent.setup();
+    authenticate(username, password, role);
+    renderApp(route);
+    expect(screen.getByRole('heading', { name: heading })).toBeVisible();
+    const session = JSON.parse(localStorage.getItem(SESSION_KEY));
+    expect(screen.getByText(`Welcome, ${session.displayName}.`)).toBeVisible();
+    await user.click(header().getByRole('link', { name: 'Home', exact: true }));
+    await user.click(header().getByRole('link', { name: link, exact: true }));
+    expect(screen.getByRole('heading', { name: heading })).toBeVisible();
+    await user.click(header().getByRole('button', { name: 'Logout' }));
+    // Demo reads recreate an absent session key as JSON null; neither form grants access.
+    expect(JSON.parse(localStorage.getItem(SESSION_KEY))).toBeNull();
+    expect(screen.getByLabelText('Current route')).toHaveTextContent(/^\/$/);
+    expect(header().queryByRole('link', { name: link, exact: true })).not.toBeInTheDocument();
+    expect(header().getByRole('link', { name: 'Login', exact: true })).toHaveAttribute('href', '/login');
+  });
+
+  it.each([
+    ['candidate', 'alex@example.com', 'password123', '/recruiter'],
+    ['admin', 'admin', 'admin', '/portal'],
+  ])('rejects wrong-role %s at %s', (role, username, password, route) => {
+    authenticate(username, password, role);
+    renderApp(route);
+    expect(screen.getByRole('heading', { name: 'HireHub Login' })).toBeVisible();
+    expect(screen.getByLabelText('Current route')).toHaveTextContent('/login');
+  });
+
+  it('reaches new login and registration from public links, preserving legacy login', async () => {
+    const user = userEvent.setup();
+    renderApp('/');
+    await user.click(header().getByRole('link', { name: 'Register', exact: true }));
+    expect(screen.getByRole('heading', { name: 'Register as a candidate' })).toBeVisible();
+    await user.click(screen.getByRole('link', { name: 'Already registered? Login' }));
+    expect(screen.getByRole('heading', { name: 'HireHub Login' })).toBeVisible();
+    await user.click(screen.getByRole('link', { name: 'Legacy admin login' }));
+    expect(screen.getByRole('heading', { name: 'Admin Login' })).toBeVisible();
+    expect(screen.getByLabelText('Current route')).toHaveTextContent('/admin/login');
+  });
+
+  it.each(['storage', SESSION_EVENT, 'focus', DEMO_RESET_EVENT])('revokes persistent access on %s', (event) => {
+    authenticate('alex@example.com', 'password123', 'candidate');
+    renderApp('/portal');
+    localStorage.removeItem(SESSION_KEY);
+    act(() => window.dispatchEvent(new Event(event)));
+    expect(screen.getByRole('heading', { name: 'HireHub Login' })).toBeVisible();
+    expect(header().queryByRole('link', { name: 'Portal', exact: true })).not.toBeInTheDocument();
+  });
+
+  it('reset clears a candidate session and denies the current protected route', () => {
+    authenticate('alex@example.com', 'password123', 'candidate');
+    renderApp('/portal');
+    act(() => resetMockData());
+    expect(screen.getByRole('heading', { name: 'HireHub Login' })).toBeVisible();
+    expect(JSON.parse(localStorage.getItem(SESSION_KEY))).toBeNull();
+  });
+
+  it('recovers malformed stored identity without rendering protected content', () => {
+    localStorage.setItem(SESSION_KEY, '{');
+    renderApp('/recruiter');
+    expect(screen.getByRole('heading', { name: 'HireHub Login' })).toBeVisible();
+    expect(JSON.parse(localStorage.getItem(SESSION_KEY))).toBeNull();
+  });
+
+  it('fails closed after an active-session read failure', () => {
+    authenticate('alex@example.com', 'password123', 'candidate');
+    renderApp('/portal');
+    vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => { throw new Error('Blocked'); });
+    act(() => window.dispatchEvent(new Event('storage')));
+    expect(screen.getByRole('heading', { name: 'HireHub Login' })).toBeVisible();
+    expect(screen.getAllByRole('alert').some((item) => item.textContent.includes('Unable to read'))).toBe(true);
+    expect(header().queryByRole('link', { name: 'Portal', exact: true })).not.toBeInTheDocument();
+  });
+
+  it('failed persistent logout navigates home but cannot revive stale access', async () => {
+    const user = userEvent.setup();
+    authenticate('alex@example.com', 'password123', 'candidate');
+    renderApp('/portal');
+    vi.spyOn(Storage.prototype, 'removeItem').mockImplementation(() => { throw new Error('Blocked'); });
+    await user.click(header().getByRole('button', { name: 'Logout' }));
+    expect(screen.getByRole('heading', { name: 'Build Your Future With Us' })).toBeVisible();
+    act(() => window.dispatchEvent(new Event('focus')));
+    expect(header().queryByRole('link', { name: 'Portal', exact: true })).not.toBeInTheDocument();
+    expect(screen.getAllByRole('alert').length).toBeGreaterThan(0);
   });
 });

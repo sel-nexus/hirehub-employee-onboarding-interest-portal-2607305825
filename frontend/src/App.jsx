@@ -1,6 +1,6 @@
 /** Compose public routes and the browser-only demo login with shared navigation. */
 import { useState, useEffect } from 'react';
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { Header } from './components/Header';
 import Home from './features/home/Home';
 import Apply from './features/apply/Apply';
@@ -9,6 +9,9 @@ import Dashboard from './features/admin/Dashboard';
 import { isAuthenticated, logout } from './features/admin/auth';
 import { DemoFooter } from './features/demo/DemoFooter';
 import { initializeDemo, DEMO_RESET_EVENT } from './features/demo/storage';
+import AccessLogin, { AccessLanding } from './features/access/AccessLogin';
+import Register from './features/access/Register';
+import { readSession, logout as accessLogout, SESSION_EVENT } from './features/access/accounts';
 
 /**
  * Share the persisted demo session across navigation and the admin route.
@@ -24,12 +27,24 @@ export default function App() {
   const [storageError, setStorageError] = useState('');
   const [demoFeedback] = useState(initializeDemo);
   const [demoRevision, setDemoRevision] = useState(0);
+  const [accessSession, setAccessSession] = useState(readSession);
+
+  /** Refresh persistent identity and visibly report unreadable session data. */
+  function refreshAccess() {
+    setAccessSession(readSession());
+  }
+
+  useEffect(() => {
+    window.addEventListener(SESSION_EVENT, refreshAccess);
+    return () => window.removeEventListener(SESSION_EVENT, refreshAccess);
+  }, []);
 
   /** Refresh mounted consumers and legacy auth after a successful local reset. */
   useEffect(() => {
     /** Remount stale route data without changing the current URL. */
     function onDemoReset() {
       setAuthenticated(isAuthenticated());
+      refreshAccess();
       setStorageError('');
       setDemoRevision((revision) => revision + 1);
     }
@@ -42,6 +57,7 @@ export default function App() {
     /** Synchronize the shared state, failing closed if reads are unavailable. */
     function refreshSession() {
       setAuthenticated(isAuthenticated());
+      refreshAccess();
     }
     refreshSession();
     window.addEventListener('storage', refreshSession);
@@ -60,6 +76,13 @@ export default function App() {
 
   /** Return home only after session removal succeeds; retain failure feedback. */
   function onLogout() {
+    if (accessSession.data || !accessSession.success) {
+      const result = accessLogout();
+      setAccessSession({ ...result, data: null });
+      setStorageError(result.error);
+      navigate('/');
+      return;
+    }
     const result = logout();
     if (!result.success) {
       setStorageError(result.error);
@@ -75,7 +98,12 @@ export default function App() {
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
-      <Header authenticated={authenticated} onLogout={onLogout} />
+      <Header authenticated={authenticated} session={accessSession.data} accessEnabled onLogout={onLogout} />
+      {(accessSession.error || accessSession.warning) && (
+        <p className="auth-storage-error" role={accessSession.error ? 'alert' : 'status'}>
+          {accessSession.error || accessSession.warning}
+        </p>
+      )}
       {storageError && (
         <p className="auth-storage-error" role="alert">
           {storageError}
@@ -84,6 +112,13 @@ export default function App() {
       <Routes key={demoRevision}>
         <Route path="/" element={<Home />} />
         <Route path="/apply" element={<Apply />} />
+        <Route path="/login" element={<AccessLogin onLogin={refreshAccess} />} />
+        <Route path="/register" element={<Register onLogin={refreshAccess} />} />
+        <Route path="/admin/login" element={<Login onLogin={onLogin} />} />
+        <Route path="/portal" element={accessSession.success && accessSession.data?.role === 'candidate'
+          ? <AccessLanding session={accessSession.data} /> : <Navigate to="/login" replace />} />
+        <Route path="/recruiter" element={accessSession.success && accessSession.data?.role === 'admin'
+          ? <AccessLanding session={accessSession.data} /> : <Navigate to="/login" replace />} />
         <Route
           path="/admin"
           element={authenticated ? (

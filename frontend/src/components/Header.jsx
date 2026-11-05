@@ -10,7 +10,7 @@ import { Link, NavLink } from 'react-router-dom';
  * Returns:
  *   A semantic sticky header with accessible active navigation.
  */
-export function Header({ authenticated = false, onLogout }) {
+export function Header({ authenticated = false, session = null, accessEnabled = false, onLogout }) {
   return (
     <header className="site-header">
       <div className="header-inner">
@@ -27,13 +27,22 @@ export function Header({ authenticated = false, onLogout }) {
           <NavLink className="nav-link" to="/admin">
             Admin
           </NavLink>
+          {accessEnabled && !session && (
+            <NavLink className="nav-link" to="/register">Register</NavLink>
+          )}
+          {session?.role === 'candidate' && (
+            <NavLink className="nav-link" to="/portal">Portal</NavLink>
+          )}
+          {session?.role === 'admin' && (
+            <NavLink className="nav-link" to="/recruiter">Recruiter</NavLink>
+          )}
         </nav>
-        {authenticated ? (
+        {authenticated || session ? (
           <button className="session-control logout-button" type="button" onClick={onLogout}>
             Logout
           </button>
         ) : (
-          <Link className="session-control login-link" to="/admin">
+          <Link className="session-control login-link" to={accessEnabled ? '/login' : '/admin'}>
             Login
           </Link>
         )}
@@ -44,5 +53,7 @@ export function Header({ authenticated = false, onLogout }) {
 
 Header.propTypes = {
   authenticated: PropTypes.bool,
+  accessEnabled: PropTypes.bool,
+  session: PropTypes.shape({ role: PropTypes.oneOf(['candidate', 'admin']), displayName: PropTypes.string }),
   onLogout: PropTypes.func.isRequired,
 };
