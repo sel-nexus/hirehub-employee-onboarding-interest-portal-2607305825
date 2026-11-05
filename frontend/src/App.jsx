@@ -9,7 +9,8 @@ import Dashboard from './features/admin/Dashboard';
 import { isAuthenticated, logout } from './features/admin/auth';
 import { DemoFooter } from './features/demo/DemoFooter';
 import { initializeDemo, DEMO_RESET_EVENT } from './features/demo/storage';
-import AccessLogin, { AccessLanding } from './features/access/AccessLogin';
+import AccessLogin from './features/access/AccessLogin';
+import RecruiterDashboard from './features/recruiter/RecruiterDashboard';
 import Register from './features/access/Register';
 import Portal from './features/candidate/Portal';
 import { readSession, logout as accessLogout, SESSION_EVENT } from './features/access/accounts';
@@ -119,7 +120,7 @@ export default function App() {
         <Route path="/portal" element={accessSession.success && accessSession.data?.role === 'candidate'
           ? <Portal key={accessSession.data.userId} /> : <Navigate to="/login" replace />} />
         <Route path="/recruiter" element={accessSession.success && accessSession.data?.role === 'admin'
-          ? <AccessLanding session={accessSession.data} /> : <Navigate to="/login" replace />} />
+          ? <RecruiterDashboard /> : <Navigate to="/login" replace />} />
         <Route
           path="/admin"
           element={authenticated ? (
